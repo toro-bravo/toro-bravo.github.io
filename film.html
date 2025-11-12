@@ -55,7 +55,7 @@
             transform: translate(-50%, -50%);
             white-space: pre;
             font-family: monospace;
-            /* REDUCCIÓN DEL 20%: 25px * 0.80 = 20px */
+            /* REDUCCIÓN DEL 20% */
             font-size: 20px; 
             line-height: 0.8;
             text-align: center;
@@ -103,7 +103,7 @@
             // URLs alternantes de Are.na (los videos .mp4)
             const areanaVideoUrls = [
                 "https://attachments.are.na/40639420/49cba57fd621af86dd418f1d5ff3e83d.mp4?1761601404",
-                "https://attachments.are.na/38956475/f8a7c58ca261b3924c4495cb3fba2cdb.mp4?1755854571", // URL REEMPLAZADA
+                "https://attachments.are.na/38956475/f8a7c58ca261b3924c4495cb3fba2cdb.mp4?1755854571", 
                 "https://attachments.are.na/40460920/cfaa4638ba61e1d3018ea6db62b2d1a1.mp4?1760992063"
             ];
             
@@ -144,35 +144,38 @@
                 }
             });
 
-            // 2. Posicionamiento sin solapamiento (Ajuste para iniciar desde 0 y usar margin como separador)
+            // 2. Posicionamiento sin solapamiento (Ajuste de distribución)
             
             // Margen mínimo entre ventanas (en píxeles) y borde de la pantalla
             const margin = 15; 
             
             // Acumuladores de posición (Inician en el borde 0 + margin)
-            let currentX_T = margin; // Posición horizontal para TOP
-            let currentX_B = margin; // Posición horizontal para BOTTOM
-            let currentY_L = margin; // Posición vertical para LEFT
-            let currentY_R = margin; // Posición vertical para RIGHT
+            let currentX_T = margin; // Posición horizontal para TOP (Ítems 0, 1, 2)
+            let currentX_B = margin; // Posición horizontal para BOTTOM (Ítems 3, 4, 5)
+            let currentY_L = margin; // Posición vertical para LEFT (Ítem 6)
+            let currentY_R = margin; // Posición vertical para RIGHT (Ítems 7, 8, 9)
 
             for (let i = 0; i < placeholders.length; i++) {
                 const item = placeholders[i];
                 const { width, height } = sizes[i];
 
+                // Los IDs de los ítems en el HTML son 1-10, pero en el bucle son 0-9.
+                // i = 6 (ítem 7) y i = 7 (ítem 8) ahora van a la derecha.
+
                 if (i >= 0 && i <= 2) { // TOP (0, 1, 2)
-                    item.style.top = `0px`; // Pegado al borde superior
+                    item.style.top = `0px`; 
                     item.style.left = `${currentX_T}px`;
                     currentX_T += width + margin;
                 } else if (i >= 3 && i <= 5) { // BOTTOM (3, 4, 5)
-                    item.style.bottom = `0px`; // Pegado al borde inferior
+                    item.style.bottom = `0px`; 
                     item.style.left = `${currentX_B}px`;
                     currentX_B += width + margin;
-                } else if (i >= 6 && i <= 7) { // LEFT (6, 7)
-                    item.style.left = `0px`; // Pegado al borde izquierdo
+                } else if (i === 6) { // LEFT (Solo el ítem 6)
+                    item.style.left = `0px`; 
                     item.style.top = `${currentY_L}px`;
                     currentY_L += height + margin;
-                } else { // RIGHT (8, 9)
-                    item.style.right = `0px`; // Pegado al borde derecho
+                } else { // RIGHT (7, 8, 9)
+                    item.style.right = `0px`; 
                     item.style.top = `${currentY_R}px`;
                     currentY_R += height + margin;
                 }
