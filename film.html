@@ -62,7 +62,7 @@
             z-index: 5;
         }
 
-        /* --- Estilos para los 5 Placeholders (Video) --- */
+        /* --- Estilos para los 8 Placeholders (Video) --- */
 
         .highlights-container {
             position: absolute;
@@ -98,9 +98,9 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            // Solo hay 5 placeholders
+            // Ahora hay 8 placeholders
             const placeholders = document.querySelectorAll('.highlights-container .highlight-item'); 
-            const totalItems = placeholders.length; // totalItems ahora es 5
+            const totalItems = placeholders.length; // totalItems ahora es 8
             
             // URLs alternantes de Are.na (los videos .mp4)
             const areanaVideoUrls = [
@@ -110,7 +110,7 @@
             ];
             
             const placeholderData = [];
-            for (let i = 0; i < totalItems; i++) {
+            for (let i = 0; i < totalItems; i++) { // Bucle hasta 8
                 placeholderData.push({
                     url: areanaVideoUrls[i % areanaVideoUrls.length], 
                 });
@@ -154,15 +154,17 @@
             // Acumuladores de posición (Inician en el borde 0)
             let currentX_T = edgeMargin; // TOP (Ítems 0, 1)
             let currentX_B = edgeMargin; // BOTTOM (Ítems 2, 3)
+            let currentY_L = edgeMargin; // LEFT (Ítems 5, 6, 7 - Nuevos)
 
             for (let i = 0; i < totalItems; i++) {
                 const item = placeholders[i];
-                const { width } = sizes[i];
+                const { width, height } = sizes[i];
                 
-                // Distribución de índices (0 a 4):
+                // Distribución de índices (0 a 7):
                 // TOP: 0, 1 (2 ítems)
                 // BOTTOM: 2, 3 (2 ítems)
                 // RIGHT: 4 (1 ítem)
+                // LEFT: 5, 6, 7 (3 ítems nuevos)
 
                 if (i <= 1) { // TOP (0, 1)
                     item.style.top = `0px`; 
@@ -172,9 +174,13 @@
                     item.style.bottom = `0px`; 
                     item.style.left = `${currentX_B}px`;
                     currentX_B += width + margin;
-                } else if (i === 4) { // RIGHT (4)
-                    item.style.right = `0px`; // Pegado al borde derecho
-                    item.style.top = `0px`;   // Pegado al borde superior
+                } else if (i === 4) { // RIGHT (4) - Posición fija
+                    item.style.right = `0px`; 
+                    item.style.top = `0px`;   
+                } else { // LEFT (5, 6, 7) - Acumulación secuencial
+                    item.style.left = `0px`; 
+                    item.style.top = `${currentY_L}px`;
+                    currentY_L += height + margin; // Acumula hacia abajo
                 }
             }
         });
@@ -231,21 +237,27 @@
         <div class="highlight-item window" id="item-1">
             <video id="video-1" src="about:blank" loop muted preload="auto" playsinline title="Video Placeholder 1"></video>
         </div>
-
         <div class="highlight-item window" id="item-2">
             <video id="video-2" src="about:blank" loop muted preload="auto" playsinline title="Video Placeholder 2"></video>
         </div>
-        
         <div class="highlight-item window" id="item-3">
             <video id="video-3" src="about:blank" loop muted preload="auto" playsinline title="Video Placeholder 3"></video>
         </div>
-
         <div class="highlight-item window" id="item-4">
             <video id="video-4" src="about:blank" loop muted preload="auto" playsinline title="Video Placeholder 4"></video>
         </div>
-
         <div class="highlight-item window" id="item-5">
             <video id="video-5" src="about:blank" loop muted preload="auto" playsinline title="Video Placeholder 5"></video>
+        </div>
+        
+        <div class="highlight-item window" id="item-6">
+            <video id="video-6" src="about:blank" loop muted preload="auto" playsinline title="Video Placeholder 6"></video>
+        </div>
+        <div class="highlight-item window" id="item-7">
+            <video id="video-7" src="about:blank" loop muted preload="auto" playsinline title="Video Placeholder 7"></video>
+        </div>
+        <div class="highlight-item window" id="item-8">
+            <video id="video-8" src="about:blank" loop muted preload="auto" playsinline title="Video Placeholder 8"></video>
         </div>
         
     </div>
