@@ -1,9 +1,8 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <title>toro bravo</title>
-    <meta name="description" content="intuitive tarot readings">
-    <meta name="keywords" content="tarot, readings, intuitive, madeline, being with madeline">
+    <title>toro bravo - film</title>
+    <meta name="description" content="Toro Bravo film project page.">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
     <link rel="icon" href="assets/Ten-Gallon-Hat-icon.png">
@@ -14,12 +13,11 @@
             color: black;
             font-family: 'Times New Roman', Times, serif;
             padding-bottom: 2rem;
-            /* El cuerpo define el contexto de posicionamiento */
             position: relative; 
-            min-height: 100vh; /* Asegura que el cuerpo cubra toda la altura de la vista */
+            min-height: 100vh;
             margin: 0;
             text-align: center;
-            overflow-x: hidden; /* **Clave: Evita la barra de desplazamiento horizontal** */
+            overflow: hidden; /* **Ajuste: Oculta cualquier barra de desplazamiento (incluida la vertical) para mantener el diseño fijo.** */
         }
 
         a, h1 {
@@ -56,16 +54,16 @@
             white-space: pre;
             font-family: monospace;
             color: black;
-            font-size: 25px; /* Tamaño grande para imitar la referencia */
+            font-size: 25px;
             line-height: 0.8;
             text-align: center;
             z-index: 5;
         }
 
-        /* --- Estilos para los 10 Placeholders de Ventana (NUEVOS) --- */
+        /* --- Estilos para los 10 Placeholders de Ventana (REFINADOS) --- */
 
         .highlights-container {
-            position: absolute; /* Contenedor que abarca toda la pantalla para posicionamiento absoluto */
+            position: absolute;
             width: 100%;
             height: 100vh;
             top: 0;
@@ -73,17 +71,16 @@
         }
 
         .highlight-item {
-            position: absolute; /* Permite posicionamiento con top/left/right/bottom */
+            position: absolute; /* Permite posicionamiento fijo en el margen */
             z-index: 20;
-            box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5);
-            transition: transform 0.3s ease;
-            overflow: hidden; /* Asegura que el contenido no se salga de la ventana */
+            box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+            /* QUITADO: transition: transform 0.3s ease; */
+            overflow: hidden;
+            /* **Ajuste:** Usamos 'border-box' para que el padding y borde no sumen al tamaño final y faciliten el no-solapamiento. */
+            box-sizing: border-box; 
         }
         
-        .highlight-item:hover {
-             z-index: 30;
-             transform: scale(1.05);
-        }
+        /* QUITADO: .highlight-item:hover para eliminar el efecto de aumento */
 
         .window {
             border: 1px solid #aaa;
@@ -91,7 +88,7 @@
             color: #333;
             display: flex;
             flex-direction: column;
-            height: 100%; /* Ocupa todo el tamaño aleatorio asignado */
+            height: 100%;
         }
 
         .window-header {
@@ -126,80 +123,78 @@
         .filename-text {
             font-weight: bold;
         }
-
-        /* --- Contenido Secundario (debajo de la zona principal) --- */
-        .text-container {
-            width: 100%;
-            max-width: 600px;
-            text-align: left;
-            margin: 50px auto; 
-            padding-top: 100vh; /* Empuja el contenido debajo de la zona central con placeholders */
-        }
     </style>
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            // Asegúrate de que este selector coincida con los 10 elementos de tu HTML
             const placeholders = document.querySelectorAll('.highlights-container .highlight-item'); 
             
-            // Datos de ejemplo para los 10 placeholders.
-            // **REEMPLAZA ESTAS URLs con las de tus bloques de Are.na.**
-            const placeholderData = [
-                { url: "https://www.are.na/embed/22026367", filename: "PROYECTO_01.mp4" }, 
-                { url: "https://www.are.na/embed/22026368", filename: "SAND-II.png" },
-                { url: "https://www.are.na/embed/22026369", filename: "IMG_0894.jpg" },
-                { url: "https://www.are.na/embed/22026370", filename: "TEST.gif" },
-                { url: "https://www.are.na/embed/22026371", filename: "ToroBravo.mov" },
-                { url: "https://www.are.na/embed/22026372", filename: "M.B.M.jpeg" },
-                { url: "https://www.are.na/embed/22026373", filename: "GRAPHIC_D.pdf" },
-                { url: "https://www.are.na/embed/22026374", filename: "ANIM_LOOP.mp4" },
-                { url: "https://www.are.na/embed/22026375", filename: "COVER.psd" },
-                { url: "https://www.are.na/embed/22026376", filename: "POSTER_23.png" },
+            // URLs alternantes de Are.na (los videos .mp4)
+            const areanaUrls = [
+                "https://attachments.are.na/40639420/49cba57fd621af86dd418f1d5ff3e83d.mp4?1761601404",
+                "https://attachments.are.na/40461475/c7d3143746527fc2da5deb4721a8226b.mp4?1760993060",
+                "https://attachments.are.na/40460920/cfaa4638ba61e1d3018ea6db62b2d1a1.mp4?1760992063"
             ];
 
+            const placeholderData = [];
+            // Generar 10 entradas, alternando las URLs
+            for (let i = 0; i < 10; i++) {
+                placeholderData.push({
+                    url: areanaUrls[i % areanaUrls.length], // Alterna entre las 3 URLs
+                    filename: `video_${i + 1}.mp4`
+                });
+            }
+
             // Rango de tamaños (en píxeles) para la aleatoriedad
-            const minWidth = 150;
-            const maxWidth = 280;
-            const minHeight = 100;
-            const maxHeight = 220;
+            const minSize = 120;
+            const maxSize = 250;
 
             const rand = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min;
 
+            // Puntos de posicionamiento fijos y secuenciales a lo largo de los bordes
+            // Distribuimos los 10 placeholders: 3 en Top/Bottom, 2 en Left/Right (Total 10)
+            const positions = [
+                // TOP (3 elementos)
+                { side: 'top', offset: 15 }, { side: 'top', offset: 50 }, { side: 'top', offset: 85 },
+                // BOTTOM (3 elementos)
+                { side: 'bottom', offset: 15 }, { side: 'bottom', offset: 50 }, { side: 'bottom', offset: 85 },
+                // LEFT (2 elementos)
+                { side: 'left', offset: 30 }, { side: 'left', offset: 70 },
+                // RIGHT (2 elementos)
+                { side: 'right', offset: 30 }, { side: 'right', offset: 70 },
+            ];
+
             placeholders.forEach((item, index) => {
                 const data = placeholderData[index];
+                const pos = positions[index];
                 
-                // 1. Asignar tamaño aleatorio
-                const width = rand(minWidth, maxWidth);
-                const height = rand(minHeight, maxHeight);
+                // 1. Asignar tamaño aleatorio (para ancho y alto)
+                const width = rand(minSize, maxSize);
+                const height = rand(minSize, maxSize);
 
                 item.style.width = `${width}px`;
                 item.style.height = `${height}px`;
 
-                // 2. Asignar posición aleatoria en los márgenes (Top, Right, Bottom, Left)
-                const side = index % 4; 
-                // Offset aleatorio del 5% al 90% del viewport
-                const offset = rand(5, 90); 
-
-                switch (side) {
-                    case 0: // TOP
-                        item.style.top = '10px';
-                        item.style.left = `${offset}vw`;
-                        break;
-                    case 1: // RIGHT
-                        item.style.right = '10px';
-                        item.style.top = `${offset}vh`;
-                        break;
-                    case 2: // BOTTOM
-                        item.style.bottom = '10px';
-                        item.style.left = `${offset}vw`;
-                        break;
-                    case 3: // LEFT
-                        item.style.left = '10px';
-                        item.style.top = `${offset}vh`;
-                        break;
+                // 2. Asignar posición "imantada" fija
+                if (pos.side === 'top') {
+                    item.style.top = '0';
+                    item.style.left = `${pos.offset}vw`;
+                    item.style.transform = 'translateX(-50%)'; // Centra en el eje X
+                } else if (pos.side === 'bottom') {
+                    item.style.bottom = '0';
+                    item.style.left = `${pos.offset}vw`;
+                    item.style.transform = 'translateX(-50%)'; // Centra en el eje X
+                } else if (pos.side === 'left') {
+                    item.style.left = '0';
+                    item.style.top = `${pos.offset}vh`;
+                    item.style.transform = 'translateY(-50%)'; // Centra en el eje Y
+                } else if (pos.side === 'right') {
+                    item.style.right = '0';
+                    item.style.top = `${pos.offset}vh`;
+                    item.style.transform = 'translateY(-50%)'; // Centra en el eje Y
                 }
                 
-                // 3. Rellenar contenido (URL y pie de página)
+                // 3. Rellenar contenido
                 const iframe = item.querySelector('iframe');
                 const filenameSpan = item.querySelector('.filename-text');
                 const dimsSpan = item.querySelector('.dimensions-text');
@@ -236,29 +231,29 @@
 ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⠔⠟⠉⢁⣀⡈⠉⠉⠑⠀⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
 ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⡆⠀⠒⠀⠀⠀⠀⠀⠠⠤⠀⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
 ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢬⣴⠶⠶⠶⡾⡞⡯⢿⣷⣶⣷⢦⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣰⡼⠛⠉⠀⠀⠀⠀⠀⠀⠀⠀⠈⠉⠐⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⡀⠁⠄⠀⡀⣀⣴⣴⠐⠶⣶⣶⣄⡤⣀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-⠀⠀⠀⠀⠀⠀⣀⡀⣀⣀⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠠⢀⠀⡀⣠⢈⡤⠻⠛⠁⠀⠀⠀⠀⠀⠁⠉⠘⠹⡐⢄⢀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-⠀⠀⠀⠈⠩⠂⠀⢰⣻⠿⠀⠀⠀⢨⣗⣫⠏⠁⠘⣰⣯⠂⠑⠁⠘⡠⠥⣺⠏⠀⠀⠀⣀⣤⣤⢤⡤⣄⡄⠀⠀⠈⠻⢿⣕⠄⠱⡠⠢⢖⡀⠂⠳⣢⢚⠉⠙⣯⢣⠙⣉⠖⠀⠀⠀
-⠀⠀⠀⠀⠀⠀⠒⢸⣯⣇⠀⠀⠘⢥⢖⠟⠀⠀⢀⢳⡏⠀⠀⠀⠄⢰⣟⡇⠀⢀⣴⡾⠫⠛⠋⠀⠓⠙⡿⣷⢤⡀⠀⠀⠙⣿⡂⠀⠁⢣⠷⠄⠀⢰⡷⡁⠀⢨⠟⠀⠀⠀⠀⠀⠀
-⠀⠀⠀⠀⠀⠀⠀⠀⠁⠈⡀⠀⠀⣸⠺⠂⠀⠀⢸⠚⡁⠀⠀⠀⠀⢊⣧⠀⢀⣾⠋⠀⠠⡠⢢⠂⠀⠀⠀⠙⠌⢷⠀⠀⠀⠈⢴⠀⠀⠠⢆⡆⠀⠈⣷⠷⠀⠀⠀⠀⠀⠀⠀⠀⠀
-⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠉⠰⠄⣿⠧⠄⠀⠀⣈⣝⠁⠀⠀⡀⢀⢨⢿⠀⠸⣙⠂⠀⢷⡇⠉⠡⢱⡄⠀⠀⠀⠪⣧⠂⠀⠀⣾⡄⠀⠀⢺⡭⠄⠀⠉⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠉⣿⠄⡄⢈⣿⡀⠀⠀⠃⡀⢰⣿⡀⠠⠟⡈⠀⠉⠂⠀⠀⣘⡇⠀⠀⠀⢴⡞⠀⠀⠀⡟⡷⠀⠀⠸⠋⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠁⠢⣟⢇⠀⠀⠙⠐⠘⡝⢧⡀⠘⢝⡦⣘⠁⢂⡨⡼⠀⠀⠀⡰⠿⠀⠀⠀⢀⣿⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⣷⡆⠀⠈⠀⢀⠀⠻⣷⣅⣀⠌⠙⠚⠋⠉⠁⢀⣠⣾⡻⠁⠀⠀⢠⣎⠇⢀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⢻⣤⢀⠀⠀⠀⠄⠙⠛⠿⣟⡿⣴⣶⡲⣾⠿⠟⠊⠀⠀⢀⣴⠗⠇⠀⢈⣾⡄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠑⠀⠈⠻⢿⣆⣄⡀⠀⠀⠀⠀⠀⠀⠉⠈⠁⢈⢁⣀⣤⣪⠛⠉⠀⠀⣀⣾⣯⡟⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢐⠃⠀⠀⠠⠀⠀⠈⠙⠻⢻⣶⣶⣦⣤⢤⠶⣶⡿⡿⠟⠋⠃⠀⠀⠀⢀⣞⣾⡻⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠠⠽⣿⣶⣤⣀⠀⠀⠀⠀⠀⠀⠐⠀⠨⠥⠁⠈⠉⠀⠀⠀⠀⠀⠀⡀⡰⣟⠙⠋⠀⠀⠀⠀⣀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠂⠀⠈⠉⠙⠿⢿⣶⣤⣀⣀⣀⡀⠀⠀⠀⠀⠀⠀⠀⠀⡠⣤⡶⡭⡿⠙⠂⠁⠀⠀⠀⢀⠼⣫⠦⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣂⠰⠀⠀⠀⠀⠀⠀⠌⣙⠟⣻⠟⠃⠀⠀⠀⠀⠀⠀⠀⠀⠈⠛⠝⡉⠀⠀⠀⠀⠀⠀⡠⢾⡻⠉⠊⠂⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠲⢿⣷⣶⣄⡀⠀⠀⠀⠀⠀⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣀⠤⡺⠿⠃⠀⠀⠀⠈⢐⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⠻⠹⠟⢿⣿⠟⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠁⠁⠁⠀⠀⠀⠀⠀⢀⣼⣆⠀⠀⠀⠀⠀⠀⠀⠀⠀
-⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⡠⣢⣤⣀⣀⣀⠂⠄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠁⠀⠀⣐⡮⡫⠏⡠⠀⠀⠀⠀⠀⠀⠀⠀
-⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⠛⠛⣽⠋⠊⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⠙⠅⠀⠀⠁⠀⠀⠀⠀⠀⠀⠀
-⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⢠⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢠⠞⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀\⡼⠛⠉⠀⠀⠀⠀⠀⠀⠀⠀⠈⠉⠐⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀\⠁⠄⠀⡀⣀⣴⣴⠐⠶⣶⣶⣄\⣀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⣀\⣀⣀\⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀\⢀⠀\⣠\\⠻⠛\⠀⠀⠀⠀⠀\⠉\\\\\⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀\⠈\\⠀\\⠿⠀⠀⠀\\\\\\\\\⠑\\\\\\⠀⠀⠀⣀⣤⣤\\\\⠀⠀\⠈\⢿\\⠄\\\\\\\\\⠉\\\\\\⠀⠀⠀
+⠀⠀⠀⠀⠀⠀\\⢸\\⠀⠀\\\\⠀⠀\\\⠀⠀⠀⠄\\\⠀\\\\⠛\⠀\\\\\\⠀⠀\\⣿\⠀\\\⠄⠀\\\⠀\\⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀\⠈\⠀⠀\\\⠀⠀\⢸\\⠀⠀⠀⠀\\⠀\\\⠀\\\\⠀⠀⠀\\\⠀⠀⠀\⠈\⠀⠀\\\⠀\⠈\\⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠉\⠄\⣿\⠄⠀⠀\\\⠀⠀\\\\⢿⠀\\\⠀\\⠉\\\⠀⠀⠀\\\⠀⠀\\⠀⠀\\⠄⠀⠉⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠉\⣿⠄\\\⣿\⠀⠀\\\\⣿\\\\⠀⠉\⠀⠀\\⠀⠀⠀\\⠀⠀⠀\\⠀⠀\\\⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀\\\\⠀⠀\\\\\\\\\\\\\\⠀⠀⠀\⠿⠀⠀⠀\\⣿⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀\⠈\\⠀\⠈⠀\⠀\\\⣀\\\\⠉\\\\\\⠀⠀\\\\⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀\⠈\\⣤\⠀⠀⠀⠄\⠛⠿\\\\⣶\\⠿\⠊⠀⠀\\\\⠀\\\⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠑⠀\⠈\⢿\\\⠀⠀⠀⠀⠀⠀⠉\⠈\\\⣀⣤\\⠛⠉⠀⠀⣀\\\⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀\\⠀⠀\⠀⠀\⠈\\\\⣶\⣶\\⣤\\\⣶\\\\\⠀⠀⠀\\\\⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀\\\⣿\⣶\⣤⣀⠀⠀⠀⠀⠀⠀\⠀\\\ \⠈⠉⠀⠀⠀⠀⠀⠀\\\\\⠀⠀⠀⠀⣀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀\⠀\⠈⠉\⠿⢿\⣶\⣤⣀⣀⣀\⠀⠀⠀⠀⠀⠀⠀⠀\\⣤\\\\\\⠀⠀⠀\\\\⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀\\⠀⠀⠀⠀⠀⠀\\\\\\⠀⠀⠀⠀⠀⠀⠀⠀\⠈⠛\\⠀⠀⠀⠀⠀⠀\\\⠉⠊\⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀\⢿\\⣶\\⠀⠀⠀⠀⠀\⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣀\\⠿\⠀⠀⠀\⠈\\⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀\⠈\\\⢿\⣿\\⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀\\\⠀⠀⠀⠀⠀\\\⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀\\\⣤⣀⣀⣀\⠄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀\⠀⠀\\\\\⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀\⠈⠛⠛\\⠊⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀\⠈\\⠀⠀\⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀\\⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀\\\⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀\⠈⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
         </div>
         
     </div>
@@ -377,40 +372,5 @@
         
     </div>
 
-    <div class="text-container">
-        <p>
-            Mateo is a film director based in Barcelona. Specialized on having and creating unique pieces mixing multiformat, playing with artificially flawed imagery.
-        </p>
-        
-        <h2>graphic</h2>
-
-        <p style="font-style: italic;">
-        "some graphic designs I've made lately"
-        </p>
-        
-        <h2>film</h2>
-
-        <p>
-        Check this out!
-        </p>
-        
-        <br/><br/>
-        
-        <h2>connect with me</h2>
-        <ul>
-            <li>
-                <a href="https://www.instagram.com/toro.bm">main instagram</a>
-            </li>
-            <li>
-                <a href="https://www.instagram.com/_.atomico">business instagram</a>
-            </li>
-            <li>
-                <a href="https://soundcloud.com/toromekaniko/sets/on-the-fringe-of-the-spine">toro mekaniko ♬⋆.˚ 01:43 ━━━━●───── 03:50 ⇆ㅤ ㅤ◁ㅤ ❚❚ ㅤ▷ ㅤㅤ↻﻿</a>
-            </li>
-            <li>
-                <a href="mailto:mbm.bravomir@gmail.com">email</a>
-            </li>
-        </ul>
-    </div>
-</body>
+    </body>
 </html>
