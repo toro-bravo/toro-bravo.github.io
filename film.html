@@ -2,6 +2,9 @@
 <html lang="es">
 <head>
     <title>toro bravo</title>
+    <meta name="description" content="intuitive tarot readings">
+    <meta name="keywords" content="tarot, readings, intuitive, madeline, being with madeline">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
     <link rel="icon" href="assets/Ten-Gallon-Hat-icon.png">
     
@@ -15,77 +18,204 @@
             position: relative; 
             min-height: 100vh; /* Asegura que el cuerpo cubra toda la altura de la vista */
             margin: 0;
-            overflow-x: hidden; /* Evita la barra de desplazamiento horizontal no deseada */
+            text-align: center;
+            overflow-x: hidden; /* **Clave: Evita la barra de desplazamiento horizontal** */
         }
 
         a, h1 {
             color: #0D47A1
         }
 
-        /* Contenedor que maneja la disposición central y los elementos posicionados */
+        /* --- Contenedor de la Zona Central (Estrella y Título) --- */
         .central-layout {
             position: relative;
             width: 100%;
-            height: 100vh; /* Ocupa la altura completa de la vista para el diseño central */
+            height: 100vh; 
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: center; /* Centra el contenido verticalmente */
+            justify-content: center;
             text-align: center;
             padding: 0;
             margin: 0;
         }
 
-        /* Estilos para el título principal, ahora dentro del layout central */
+        /* Estilos para el título principal */
         .central-layout h1 {
             position: relative;
             z-index: 10;
-            margin-top: -150px; /* Ajuste para mover el título ligeramente hacia arriba */
+            margin-top: -150px; 
         }
 
-        /* Estilos para la estrella ASCII, ahora más grande y en el centro */
+        /* Estilos para la estrella ASCII */
         .ascii-art {
-            position: absolute; /* Posicionamiento absoluto */
+            position: absolute;
             top: 50%;
             left: 50%;
-            transform: translate(-50%, -50%); /* Centra el elemento exactamente */
+            transform: translate(-50%, -50%);
             white-space: pre;
             font-family: monospace;
-            color: #FFC107;
-            font-size: 25px; /* Aumentado significativamente para la referencia visual */
+            color: black;
+            font-size: 25px; /* Tamaño grande para imitar la referencia */
             line-height: 0.8;
             text-align: center;
-            z-index: 5; /* Asegura que esté detrás del texto clave si es necesario */
-            
+            z-index: 5;
         }
 
-        /* Estilos para los iframes de video (placeholders) */
-        .video-placeholder {
-            width: 180px; /* Ancho ajustado */
-            height: 120px; /* Alto ajustado */
-            border: 0px solid yellow;
-            background-color: #000;
-            position: absolute; /* Crucial para posicionarlos en los márgenes */
+        /* --- Estilos para los 10 Placeholders de Ventana (NUEVOS) --- */
+
+        .highlights-container {
+            position: absolute; /* Contenedor que abarca toda la pantalla para posicionamiento absoluto */
+            width: 100%;
+            height: 100vh;
+            top: 0;
+            left: 0;
+        }
+
+        .highlight-item {
+            position: absolute; /* Permite posicionamiento con top/left/right/bottom */
             z-index: 20;
-            box-shadow: 0 0 10px rgba(255, 255, 0, 0.5); /* Sombra para destacarlos */
+            box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5);
+            transition: transform 0.3s ease;
+            overflow: hidden; /* Asegura que el contenido no se salga de la ventana */
         }
-
-        /* Posicionamiento específico de los placeholders - IMIITANDO LA REFERENCIA */
         
-        /* Video Superior Izquierdo (Similar a la imagen (5)) */
-        #video-left-top {
-            top: 15vh;
-            left: 5vw;
+        .highlight-item:hover {
+             z-index: 30;
+             transform: scale(1.05);
         }
 
-        /* Video Inferior Derecho (Similar a la imagen (2)) */
-        #video-right-bottom {
-            bottom: 20vh;
-            right: 5vw;
+        .window {
+            border: 1px solid #aaa;
+            background-color: #eee;
+            color: #333;
+            display: flex;
+            flex-direction: column;
+            height: 100%; /* Ocupa todo el tamaño aleatorio asignado */
         }
 
-        
+        .window-header {
+            background-color: #5d5d5d;
+            height: 10px;
+        }
+
+        .window-body {
+            flex-grow: 1;
+            padding: 5px;
+            background-color: #fff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .window-body iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+            display: block;
+        }
+
+        .window-footer {
+            background-color: #ccc;
+            padding: 2px 5px;
+            font-size: 0.7em;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .filename-text {
+            font-weight: bold;
+        }
+
+        /* --- Contenido Secundario (debajo de la zona principal) --- */
+        .text-container {
+            width: 100%;
+            max-width: 600px;
+            text-align: left;
+            margin: 50px auto; 
+            padding-top: 100vh; /* Empuja el contenido debajo de la zona central con placeholders */
+        }
     </style>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Asegúrate de que este selector coincida con los 10 elementos de tu HTML
+            const placeholders = document.querySelectorAll('.highlights-container .highlight-item'); 
+            
+            // Datos de ejemplo para los 10 placeholders.
+            // **REEMPLAZA ESTAS URLs con las de tus bloques de Are.na.**
+            const placeholderData = [
+                { url: "https://www.are.na/embed/22026367", filename: "PROYECTO_01.mp4" }, 
+                { url: "https://www.are.na/embed/22026368", filename: "SAND-II.png" },
+                { url: "https://www.are.na/embed/22026369", filename: "IMG_0894.jpg" },
+                { url: "https://www.are.na/embed/22026370", filename: "TEST.gif" },
+                { url: "https://www.are.na/embed/22026371", filename: "ToroBravo.mov" },
+                { url: "https://www.are.na/embed/22026372", filename: "M.B.M.jpeg" },
+                { url: "https://www.are.na/embed/22026373", filename: "GRAPHIC_D.pdf" },
+                { url: "https://www.are.na/embed/22026374", filename: "ANIM_LOOP.mp4" },
+                { url: "https://www.are.na/embed/22026375", filename: "COVER.psd" },
+                { url: "https://www.are.na/embed/22026376", filename: "POSTER_23.png" },
+            ];
+
+            // Rango de tamaños (en píxeles) para la aleatoriedad
+            const minWidth = 150;
+            const maxWidth = 280;
+            const minHeight = 100;
+            const maxHeight = 220;
+
+            const rand = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min;
+
+            placeholders.forEach((item, index) => {
+                const data = placeholderData[index];
+                
+                // 1. Asignar tamaño aleatorio
+                const width = rand(minWidth, maxWidth);
+                const height = rand(minHeight, maxHeight);
+
+                item.style.width = `${width}px`;
+                item.style.height = `${height}px`;
+
+                // 2. Asignar posición aleatoria en los márgenes (Top, Right, Bottom, Left)
+                const side = index % 4; 
+                // Offset aleatorio del 5% al 90% del viewport
+                const offset = rand(5, 90); 
+
+                switch (side) {
+                    case 0: // TOP
+                        item.style.top = '10px';
+                        item.style.left = `${offset}vw`;
+                        break;
+                    case 1: // RIGHT
+                        item.style.right = '10px';
+                        item.style.top = `${offset}vh`;
+                        break;
+                    case 2: // BOTTOM
+                        item.style.bottom = '10px';
+                        item.style.left = `${offset}vw`;
+                        break;
+                    case 3: // LEFT
+                        item.style.left = '10px';
+                        item.style.top = `${offset}vh`;
+                        break;
+                }
+                
+                // 3. Rellenar contenido (URL y pie de página)
+                const iframe = item.querySelector('iframe');
+                const filenameSpan = item.querySelector('.filename-text');
+                const dimsSpan = item.querySelector('.dimensions-text');
+
+                if (iframe) {
+                    iframe.src = data.url;
+                }
+                if (filenameSpan) {
+                    filenameSpan.textContent = data.filename;
+                }
+                if (dimsSpan) {
+                    dimsSpan.textContent = `${width}x${height}`; 
+                }
+            });
+        });
+    </script>
 </head>
 
 <body>
@@ -131,24 +261,154 @@
 ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
         </div>
         
-        <iframe 
-            id="video-left-top"
-            class="video-placeholder" 
-            src="about:blank" 
-            allowfullscreen 
-            title="Video Placeholder Izquierdo (Are.na)">
-        </iframe>
-        
-        <iframe 
-            id="video-right-bottom"
-            class="video-placeholder" 
-            src="about:blank" 
-            allowfullscreen 
-            title="Video Placeholder Derecho (Are.na)">
-        </iframe>
     </div>
 
-  
+    <div class="highlights-container">
+        
+        <div class="highlight-item window" id="item-1">
+            <div class="window-header"></div>
+            <div class="window-body">
+                <iframe id="iframe-1" src="about:blank" allowfullscreen title="Video Placeholder 1"></iframe>
+            </div>
+            <div class="window-footer">
+                <span class="filename-text"></span>
+                <span class="dimensions-text" id="dims-1"></span>
+            </div>
+        </div>
+
+        <div class="highlight-item window" id="item-2">
+            <div class="window-header"></div>
+            <div class="window-body">
+                <iframe id="iframe-2" src="about:blank" allowfullscreen title="Video Placeholder 2"></iframe>
+            </div>
+            <div class="window-footer">
+                <span class="filename-text"></span>
+                <span class="dimensions-text" id="dims-2"></span>
+            </div>
+        </div>
+        
+        <div class="highlight-item window" id="item-3">
+            <div class="window-header"></div>
+            <div class="window-body">
+                <iframe id="iframe-3" src="about:blank" allowfullscreen title="Video Placeholder 3"></iframe>
+            </div>
+            <div class="window-footer">
+                <span class="filename-text"></span>
+                <span class="dimensions-text" id="dims-3"></span>
+            </div>
+        </div>
+
+        <div class="highlight-item window" id="item-4">
+            <div class="window-header"></div>
+            <div class="window-body">
+                <iframe id="iframe-4" src="about:blank" allowfullscreen title="Video Placeholder 4"></iframe>
+            </div>
+            <div class="window-footer">
+                <span class="filename-text"></span>
+                <span class="dimensions-text" id="dims-4"></span>
+            </div>
+        </div>
+
+        <div class="highlight-item window" id="item-5">
+            <div class="window-header"></div>
+            <div class="window-body">
+                <iframe id="iframe-5" src="about:blank" allowfullscreen title="Video Placeholder 5"></iframe>
+            </div>
+            <div class="window-footer">
+                <span class="filename-text"></span>
+                <span class="dimensions-text" id="dims-5"></span>
+            </div>
+        </div>
+
+        <div class="highlight-item window" id="item-6">
+            <div class="window-header"></div>
+            <div class="window-body">
+                <iframe id="iframe-6" src="about:blank" allowfullscreen title="Video Placeholder 6"></iframe>
+            </div>
+            <div class="window-footer">
+                <span class="filename-text"></span>
+                <span class="dimensions-text" id="dims-6"></span>
+            </div>
+        </div>
+
+        <div class="highlight-item window" id="item-7">
+            <div class="window-header"></div>
+            <div class="window-body">
+                <iframe id="iframe-7" src="about:blank" allowfullscreen title="Video Placeholder 7"></iframe>
+            </div>
+            <div class="window-footer">
+                <span class="filename-text"></span>
+                <span class="dimensions-text" id="dims-7"></span>
+            </div>
+        </div>
+
+        <div class="highlight-item window" id="item-8">
+            <div class="window-header"></div>
+            <div class="window-body">
+                <iframe id="iframe-8" src="about:blank" allowfullscreen title="Video Placeholder 8"></iframe>
+            </div>
+            <div class="window-footer">
+                <span class="filename-text"></span>
+                <span class="dimensions-text" id="dims-8"></span>
+            </div>
+        </div>
+        
+        <div class="highlight-item window" id="item-9">
+            <div class="window-header"></div>
+            <div class="window-body">
+                <iframe id="iframe-9" src="about:blank" allowfullscreen title="Video Placeholder 9"></iframe>
+            </div>
+            <div class="window-footer">
+                <span class="filename-text"></span>
+                <span class="dimensions-text" id="dims-9"></span>
+            </div>
+        </div>
+
+        <div class="highlight-item window" id="item-10">
+            <div class="window-header"></div>
+            <div class="window-body">
+                <iframe id="iframe-10" src="about:blank" allowfullscreen title="Video Placeholder 10"></iframe>
+            </div>
+            <div class="window-footer">
+                <span class="filename-text"></span>
+                <span class="dimensions-text" id="dims-10"></span>
+            </div>
+        </div>
+        
+    </div>
+
+    <div class="text-container">
+        <p>
+            Mateo is a film director based in Barcelona. Specialized on having and creating unique pieces mixing multiformat, playing with artificially flawed imagery.
+        </p>
+        
+        <h2>graphic</h2>
+
+        <p style="font-style: italic;">
+        "some graphic designs I've made lately"
+        </p>
+        
+        <h2>film</h2>
+
+        <p>
+        Check this out!
+        </p>
+        
+        <br/><br/>
+        
+        <h2>connect with me</h2>
+        <ul>
+            <li>
+                <a href="https://www.instagram.com/toro.bm">main instagram</a>
+            </li>
+            <li>
+                <a href="https://www.instagram.com/_.atomico">business instagram</a>
+            </li>
+            <li>
+                <a href="https://soundcloud.com/toromekaniko/sets/on-the-fringe-of-the-spine">toro mekaniko ♬⋆.˚ 01:43 ━━━━●───── 03:50 ⇆ㅤ ㅤ◁ㅤ ❚❚ ㅤ▷ ㅤㅤ↻﻿</a>
+            </li>
+            <li>
+                <a href="mailto:mbm.bravomir@gmail.com">email</a>
             </li>
         </ul>
     </div>
