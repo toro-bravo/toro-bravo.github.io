@@ -144,145 +144,22 @@
                 }
             });
 
-            // 2. Posicionamiento sin solapamiento (Ajuste de distribución)
+            // 2. Posicionamiento SIN MARGEN (Contiguo) y Ajuste de Distribución
             
             // Margen mínimo entre ventanas (en píxeles) y borde de la pantalla
-            const margin = 15; 
+            const margin = 0; // <<<<<<<< AJUSTE: CERO MARGEN ENTRE VENTANAS
             
-            // Acumuladores de posición (Inician en el borde 0 + margin)
-            let currentX_T = margin; // Posición horizontal para TOP (Ítems 0, 1, 2)
-            let currentX_B = margin; // Posición horizontal para BOTTOM (Ítems 3, 4, 5)
-            let currentY_L = margin; // Posición vertical para LEFT (Ítem 6)
-            let currentY_R = margin; // Posición vertical para RIGHT (Ítems 8, 9, 7 - orden de colocación)
-
-            // **NOTA:** Para cumplir con la nueva ubicación de ítem 7 (central derecha abajo), 
-            // lo posicionaremos primero y luego secuencialmente pondremos 8 y 9 encima.
+            // Margen para el inicio y fin de las líneas (las ventanas SÍ inician pegadas al borde)
+            const edgeMargin = 0; 
+            
+            // Acumuladores de posición (Inician en el borde 0)
+            let currentX_T = edgeMargin; // Posición horizontal para TOP (Ítems 0, 1, 2)
+            let currentX_B = edgeMargin; // Posición horizontal para BOTTOM (Ítems 3, 4, 5)
+            let currentY_L = edgeMargin; // Posición vertical para LEFT (Ítem 6)
+            let currentY_R = edgeMargin; // Posición vertical para RIGHT (Ítems 8, 9, 10)
 
             const viewportHeight = window.innerHeight;
 
-            for (let i = 0; i < placeholders.length; i++) {
-                const item = placeholders[i];
-                const { width, height } = sizes[i];
-
-                if (i >= 0 && i <= 2) { // TOP (0, 1, 2)
-                    item.style.top = `0px`; 
-                    item.style.left = `${currentX_T}px`;
-                    currentX_T += width + margin;
-                } else if (i >= 3 && i <= 5) { // BOTTOM (3, 4, 5)
-                    item.style.bottom = `0px`; 
-                    item.style.left = `${currentX_B}px`;
-                    currentX_B += width + margin;
-                } else if (i === 6) { // LEFT (Ítem 6)
-                    item.style.left = `0px`; 
-                    item.style.top = `${currentY_L}px`;
-                    currentY_L += height + margin;
-                } else if (i === 9) { // RIGHT (Ítem 10) - El que va más arriba de los tres del lado derecho
-                    item.style.right = `0px`; 
-                    item.style.top = `${currentY_R}px`;
-                    currentY_R += height + margin;
-                } else if (i === 8) { // RIGHT (Ítem 9) - El que va en medio
-                    item.style.right = `0px`; 
-                    item.style.top = `${currentY_R}px`;
-                    currentY_R += height + margin;
-                } else if (i === 7) { // RIGHT (Ítem 8) - El que va en la parte central derecha inferior
-                    
-                    // Queremos que esté pegado al borde derecho (`right: 0px`)
-                    // y centrado verticalmente en la mitad inferior (desde 50vh hasta 100vh).
-                    // Un buen punto de partida es el 75% de la altura, ajustando con el margen.
-                    
-                    const targetBottom = viewportHeight * 0.25; // Aprox. 75% desde arriba
-                    
-                    item.style.right = `0px`;
-                    // Centrar el ítem 7 verticalmente alrededor del 75% de la pantalla.
-                    // 75% (viewportHeight * 0.75) menos la mitad de la altura del ítem.
-                    item.style.top = `${(viewportHeight * 0.75) - (height / 2)}px`;
-                    
-                    // Para que los demás ítems (8 y 9) no se solapen con este, 
-                    // fijamos el acumulador currentY_R *por encima* del ítem 7 (alrededor del 50% de la altura)
-                    // para que los ítems 8 y 9 se acumulen hacia arriba desde ese punto.
-                    currentY_R = (viewportHeight * 0.5) + margin; 
-                    // Se reordenará el bucle de posicionamiento para que 8 y 9 se coloquen antes que 7, 
-                    // o ajustamos currentY_R para que el ítem 7 no choque con los de arriba (8 y 9).
-                    
-                    // REAJUSTE DE LÓGICA: Para evitar complejidad excesiva, definiremos la distribución
-                    // en base a la INDEXACIÓN (0-9) y NO a la posición exacta del ítem 7. 
-                    
-                    // Distribución Final: 3 Top (0,1,2), 3 Bottom (3,4,5), 1 Left (6), 3 Right (7,8,9)
-                    
-                    // Para poner el ítem 7 en la "parte central derecha abajo", 
-                    // lo posicionamos con 'bottom' y 'right'.
-                    item.style.right = `0px`; 
-                    // Posicionamos el borde inferior del ítem 7 justo por encima de la mitad inferior de la pantalla.
-                    item.style.bottom = `${viewportHeight * 0.25 - (height / 2)}px`; 
-                    
-                }
-            }
-            
-            // **REAJUSTE OBLIGATORIO DE LA LÓGICA DE POSICIONAMIENTO EN EL BORDE DERECHO**
-            // Dado que el ítem 7 tiene una posición fija especial, el posicionamiento secuencial (currentY_R)
-            // de los ítems 8 y 9 se complica si se mantiene en el mismo bucle.
-            
-            // Mejoraremos la lógica para que los ítems 8 y 9 se coloquen de forma secuencial
-            // en la parte superior derecha, y el ítem 7 se coloque de forma fija.
-            
-            // --- NUEVA LÓGICA DE POSICIONAMIENTO DERECHO ---
-            // 7: Fijo (Central Derecha Abajo)
-            // 8, 9: Secuencial (Derecha Arriba)
-            
-            // Reset y nueva colocación para el lado derecho (i=7, 8, 9)
-            
-            // Posicionamiento de Ítem 7 (Índice 6) - ¡No! El ítem 7 es el índice 6. Lo siento, la numeración es confusa.
-            // **Item 7 (índice 6), Item 8 (índice 7), Item 9 (índice 8), Item 10 (índice 9)**
-
-            // La solicitud es: Ítem 7 (índice 6) a la derecha, central-derecha-abajo.
-            
-            const item7 = placeholders[6]; // Ítem 7
-            const item8 = placeholders[7]; // Ítem 8
-            const item9 = placeholders[8]; // Ítem 9
-            const item10 = placeholders[9]; // Ítem 10
-
-            // 1. Colocación de los ítems en el lado derecho (7, 8, 9, 10)
-
-            // Ítem 7 (índice 6): Posición Fija: Derecha Abajo (aprox. 75% vertical)
-            const height7 = sizes[6].height;
-            item7.style.right = `0px`; 
-            // Posiciona el centro vertical del ítem 7 al 75% de la altura, pegado a la derecha.
-            item7.style.top = `${(viewportHeight * 0.75) - (height7 / 2)}px`;
-
-            // Ítems 8, 9, 10: Se acumulan desde la parte superior derecha
-            
-            currentY_R = margin; // Reiniciamos el acumulador Y para los de arriba (8, 9, 10)
-            
-            // Posicionamiento de Ítems 8, 9, 10 (índices 7, 8, 9)
-            const rightSideIndexes = [7, 8, 9];
-            rightSideIndexes.forEach(i => {
-                const item = placeholders[i];
-                const { height } = sizes[i];
-
-                item.style.right = `0px`;
-                item.style.top = `${currentY_R}px`;
-                currentY_R += height + margin;
-            });
-
-            // 2. Colocación de Ítem 6 (índice 5) a la izquierda (solo 1 ítem a la izquierda)
-
-            // leftSideIndexes = [6];
-            // // Reiniciamos el acumulador Y para la izquierda
-            // currentY_L = margin; 
-            
-            // // Posicionamiento de Ítem 6 (índice 5) - ERROR: el ítem 6 es el índice 5.
-            
-            // Item 6 es el índice 5. Item 7 es el índice 6.
-            
-            // *** CORRIGIENDO DISTRIBUCIÓN BASADA EN ÍNDICES (0-9) ***
-            // 0, 1, 2: TOP
-            // 3, 4, 5: BOTTOM
-            // 6: LEFT (Ítem 7) - Ahora la izquierda tiene solo 1
-            // 7, 8, 9: RIGHT (Ítems 8, 9, 10) - Ahora la derecha tiene 3
-
-            currentY_L = margin; // Posición vertical para LEFT (Ítem 7)
-            currentY_R = margin; // Posición vertical para RIGHT (Ítems 8, 9, 10)
-            
             for (let i = 0; i < placeholders.length; i++) {
                 const item = placeholders[i];
                 const { width, height } = sizes[i];
@@ -301,21 +178,19 @@
                     // Ya no hay acumulador para el lado izquierdo (solo 1 ítem)
                 } else if (i === 7) { // RIGHT (Ítem 8) - Posición especial (Central Derecha Abajo)
 
-                    // 75% de la altura, ajustado a la mitad del ítem para centrarlo.
+                    // 75% de la altura, ajustado a la mitad del ítem para centrarlo en la mitad inferior.
                     const targetTop = (viewportHeight * 0.75) - (height / 2);
                     
                     item.style.right = `0px`;
                     item.style.top = `${targetTop}px`;
 
-                    // Establecemos el inicio del acumulador para los ítems 9 y 10 (arriba)
-                    // para que no choquen con el ítem 8.
-                    // Empezaremos el acumulador de 9 y 10 desde el margen superior.
-                    currentY_R = margin; 
+                    // El acumulador para los ítems 9 y 10 (i=8, 9) debe empezar en la parte superior.
+                    currentY_R = edgeMargin; 
 
                 } else { // RIGHT (Ítems 9 y 10 - i=8, 9) - Acumulación secuencial desde arriba
                     item.style.right = `0px`; 
                     item.style.top = `${currentY_R}px`;
-                    currentY_R += height + margin;
+                    currentY_R += height + margin; // margin es 0, así que se pegan
                 }
             }
         });
