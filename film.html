@@ -12,7 +12,6 @@
             background-color: white;
             color: black;
             font-family: 'Times New Roman', Times, serif;
-            /* ELIMINAR CUALQUIER PADDING Y MARGEN DE LOS BORDES */
             padding-bottom: 0; 
             margin: 0;
             
@@ -55,14 +54,13 @@
             transform: translate(-50%, -50%);
             white-space: pre;
             font-family: monospace;
-            /* REDUCCIÓN DEL 20% */
             font-size: 20px; 
             line-height: 0.8;
             text-align: center;
             z-index: 5;
         }
 
-        /* --- Estilos para los 8 Placeholders (Video) --- */
+        /* --- Estilos para los 10 Placeholders (Video) --- */
 
         .highlights-container {
             position: absolute;
@@ -99,7 +97,7 @@
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             const placeholders = document.querySelectorAll('.highlights-container .highlight-item'); 
-            const totalItems = placeholders.length; 
+            const totalItems = placeholders.length; // Ahora es 10
             
             // URLs de video
             const areanaVideoUrls = [
@@ -112,7 +110,7 @@
                 url: areanaVideoUrls[i % areanaVideoUrls.length], 
             }));
 
-            // Tamaños
+            // Tamaños (se mantienen aleatorios)
             const increaseFactor = 1.15; 
             const minSizeBase = 120;
             const maxSizeBase = 250;
@@ -138,83 +136,63 @@
             });
 
             // ====================================================================
-            // === 2. NUEVA LÓGICA DE POSICIONAMIENTO DECLARATIVO ===
+            // === 2. LÓGICA DE POSICIONAMIENTO POR COORDENADAS FIJAS (10 Ítems) ===
             // 
-            // Para modificar la posición de una ventana, edita su objeto aquí.
-            // edge: A qué borde está anclada la ventana ("top", "bottom", "left", "right").
-            // axis: Determina la dirección de acumulación de las ventanas contiguas.
-            //       "x" (horizontal): El siguiente se mueve a la derecha.
-            //       "y" (vertical): El siguiente se mueve hacia abajo.
+            // MODIFICA SÓLO LOS VALORES NUMÉRICOS (en píxeles) aquí.
             // ====================================================================
 
-            const windowPositions = [
-                // Ítems 0, 1 (TOP)
-                { edge: "top", axis: "x" }, 
-                { edge: "top", axis: "x" },
+            const windowCoordinates = [
+                // [0] Ítem 1 (Anclado al borde Superior, 0px desde la Izquierda)
+                { top: 0, bottom: null, left: 0, right: null }, 
                 
-                // Ítems 2, 3 (BOTTOM)
-                { edge: "bottom", axis: "x" }, 
-                { edge: "bottom", axis: "x" },
+                // [1] Ítem 2 (Anclado al borde Superior, 200px desde la Izquierda)
+                { top: 0, bottom: null, left: 200, right: null },
                 
-                // Ítem 4 (RIGHT - Fijo, sin acumulación)
-                { edge: "right", axis: "y" }, // Usamos 'y' o 'x' para que no se reinicie el acumulador. Es fijo.
+                // [2] Ítem 3 (Anclado al borde Inferior, 0px desde la Izquierda)
+                { top: null, bottom: 0, left: 0, right: null }, 
+                
+                // [3] Ítem 4 (Anclado al borde Inferior, 200px desde la Izquierda)
+                { top: null, bottom: 0, left: 200, right: null },
+                
+                // [4] Ítem 5 (Esquina Superior Derecha - Fijo)
+                { top: 0, bottom: null, left: null, right: 0 }, 
 
-                // Ítems 5, 6, 7 (LEFT)
-                { edge: "left", axis: "y" }, 
-                { edge: "left", axis: "y" },
-                { edge: "left", axis: "y" }
+                // [5] Ítem 6 (Anclado al borde Izquierdo, 0px desde Arriba)
+                { top: 0, bottom: null, left: 0, right: null }, 
+                
+                // [6] Ítem 7 (Anclado al borde Izquierdo, 200px desde Arriba)
+                { top: 200, bottom: null, left: 0, right: null },
+                
+                // [7] Ítem 8 (Anclado al borde Izquierdo, 400px desde Arriba)
+                { top: 400, bottom: null, left: 0, right: null },
+                
+                // [8] Ítem 9 (NUEVO: Anclado al borde Inferior, 400px desde la Izquierda)
+                { top: null, bottom: 0, left: 400, right: null }, 
+                
+                // [9] Ítem 10 (NUEVO: Anclado al borde Inferior, 600px desde la Izquierda)
+                { top: null, bottom: 0, left: 600, right: null } 
             ];
 
-            const margin = 0; // CERO MARGEN ENTRE VENTANAS
-            const edgeMargin = 0; 
-            
-            // Acumuladores de posición (se reinician por cada borde 'edge')
-            const accumulators = {
-                'top': edgeMargin,
-                'bottom': edgeMargin,
-                'left': edgeMargin,
-                'right': edgeMargin
-            };
-
+            // 3. Aplicar las coordenadas
             for (let i = 0; i < totalItems; i++) {
                 const item = placeholders[i];
-                const { width, height } = sizes[i];
-                const config = windowPositions[i];
+                const coords = windowCoordinates[i];
 
-                const currentAccumulatorValue = accumulators[config.edge];
-
-                // 1. ANCLAR AL BORDE DEFINIDO EN EL CSS
-                if (config.edge === 'top') {
-                    item.style.top = '0px';
-                } else if (config.edge === 'bottom') {
-                    item.style.bottom = '0px';
-                } else if (config.edge === 'left') {
-                    item.style.left = '0px';
-                } else if (config.edge === 'right') {
-                    item.style.right = '0px';
+                // Aplicar solo los valores no nulos
+                if (coords.top !== null) {
+                    item.style.top = `${coords.top}px`;
+                    item.style.bottom = null;
+                } else if (coords.bottom !== null) {
+                    item.style.bottom = `${coords.bottom}px`;
+                    item.style.top = null;
                 }
 
-                // 2. POSICIONAR USANDO EL ACUMULADOR (Eje X o Y)
-                if (config.axis === 'x') {
-                    // Posicionamiento horizontal (left)
-                    item.style.left = `${currentAccumulatorValue}px`;
-                    // Actualizar acumulador
-                    accumulators[config.edge] += width + margin;
-                } else if (config.axis === 'y') {
-                    // Posicionamiento vertical (top)
-                    item.style.top = `${currentAccumulatorValue}px`;
-                    // Actualizar acumulador
-                    accumulators[config.edge] += height + margin;
-                }
-                
-                // NOTA: Para el Ítem 4 (índice 4, borde 'right'), aunque su axis es 'y', 
-                // se ancla a 0px en la parte superior derecha (ya que el acumulador 'right' vale 0).
-                // Si quieres que el Ítem 4 SIEMPRE esté en la esquina superior derecha y sea fijo:
-                if (i === 4) {
-                    item.style.right = '0px'; 
-                    item.style.top = '0px'; 
-                    // Y detenemos el acumulador para que el siguiente no dependa de él.
-                    accumulators[config.edge] = edgeMargin;
+                if (coords.left !== null) {
+                    item.style.left = `${coords.left}px`;
+                    item.style.right = null;
+                } else if (coords.right !== null) {
+                    item.style.right = `${coords.right}px`;
+                    item.style.left = null;
                 }
             }
         });
@@ -267,32 +245,16 @@
     </div>
 
     <div class="highlights-container">
-        
-        <div class="highlight-item window" id="item-1">
-            <video id="video-1" src="about:blank" loop muted preload="auto" playsinline title="Video Placeholder 1"></video>
-        </div>
-        <div class="highlight-item window" id="item-2">
-            <video id="video-2" src="about:blank" loop muted preload="auto" playsinline title="Video Placeholder 2"></video>
-        </div>
-        <div class="highlight-item window" id="item-3">
-            <video id="video-3" src="about:blank" loop muted preload="auto" playsinline title="Video Placeholder 3"></video>
-        </div>
-        <div class="highlight-item window" id="item-4">
-            <video id="video-4" src="about:blank" loop muted preload="auto" playsinline title="Video Placeholder 4"></video>
-        </div>
-        <div class="highlight-item window" id="item-5">
-            <video id="video-5" src="about:blank" loop muted preload="auto" playsinline title="Video Placeholder 5"></video>
-        </div>
-        <div class="highlight-item window" id="item-6">
-            <video id="video-6" src="about:blank" loop muted preload="auto" playsinline title="Video Placeholder 6"></video>
-        </div>
-        <div class="highlight-item window" id="item-7">
-            <video id="video-7" src="about:blank" loop muted preload="auto" playsinline title="Video Placeholder 7"></video>
-        </div>
-        <div class="highlight-item window" id="item-8">
-            <video id="video-8" src="about:blank" loop muted preload="auto" playsinline title="Video Placeholder 8"></video>
-        </div>
-        
+        <div class="highlight-item window" id="item-1"><video id="video-1" src="about:blank" loop muted preload="auto" playsinline title="Video Placeholder 1"></video></div>
+        <div class="highlight-item window" id="item-2"><video id="video-2" src="about:blank" loop muted preload="auto" playsinline title="Video Placeholder 2"></video></div>
+        <div class="highlight-item window" id="item-3"><video id="video-3" src="about:blank" loop muted preload="auto" playsinline title="Video Placeholder 3"></video></div>
+        <div class="highlight-item window" id="item-4"><video id="video-4" src="about:blank" loop muted preload="auto" playsinline title="Video Placeholder 4"></video></div>
+        <div class="highlight-item window" id="item-5"><video id="video-5" src="about:blank" loop muted preload="auto" playsinline title="Video Placeholder 5"></video></div>
+        <div class="highlight-item window" id="item-6"><video id="video-6" src="about:blank" loop muted preload="auto" playsinline title="Video Placeholder 6"></video></div>
+        <div class="highlight-item window" id="item-7"><video id="video-7" src="about:blank" loop muted preload="auto" playsinline title="Video Placeholder 7"></video></div>
+        <div class="highlight-item window" id="item-8"><video id="video-8" src="about:blank" loop muted preload="auto" playsinline title="Video Placeholder 8"></video></div>
+        <div class="highlight-item window" id="item-9"><video id="video-9" src="about:blank" loop muted preload="auto" playsinline title="Video Placeholder 9"></video></div>
+        <div class="highlight-item window" id="item-10"><video id="video-10" src="about:blank" loop muted preload="auto" playsinline title="Video Placeholder 10"></video></div>
     </div>
 
 </body>
