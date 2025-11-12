@@ -76,6 +76,9 @@
             overflow: hidden;
             box-sizing: border-box;
             background-color: black;
+            /* Añadimos transición para suavizar el efecto de zoom */
+            transition: width 0.3s ease, height 0.3s ease, transform 0.3s ease, top 0.3s ease, left 0.3s ease, right 0.3s ease, bottom 0.3s ease;
+            cursor: pointer; /* Indica que es interactivo */
         }
         
         .window {
@@ -90,16 +93,111 @@
             border: none;
             display: block;
             object-fit: cover; 
-            pointer-events: none;
+            pointer-events: none; /* Evita que el clic se quede en el video */
+        }
+
+        /* Estado de la ventana activa (pantalla completa / lightbox) */
+        .highlight-item.is-active {
+            position: fixed; /* Posición fija para no depender del scroll */
+            top: 50% !important; 
+            left: 50% !important; 
+            right: auto !important;
+            bottom: auto !important;
+            width: 80vw !important; /* Hazlo grande */
+            height: 80vh !important; /* Hazlo grande */
+            transform: translate(-50%, -50%); /* Centra el elemento */
+            z-index: 1000; /* Asegura que esté por encima de todo */
+            box-shadow: 0 0 50px rgba(0, 0, 0, 0.5);
+        }
+
+        /* Fondo oscuro (Overlay) para el modo de pantalla completa */
+        #video-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7); /* Oscurece la página */
+            z-index: 900;
+            display: none; /* Inicialmente oculto */
         }
     </style>
 
     <script>
+        // Función auxiliar para reaplicar las coordenadas originales (Necesita acceder a windowCoordinates)
+        // La definiremos globalmente para que sea accesible dentro del toggleVideo
+        let windowCoordinates = [];
+        
+        function applyCoordinates(item, index) {
+            const coords = windowCoordinates[index];
+            if (coords.top !== null) {
+                item.style.top = `${coords.top}px`;
+                item.style.bottom = null;
+            } else if (coords.bottom !== null) {
+                item.style.bottom = `${coords.bottom}px`;
+                item.style.top = null;
+            }
+
+            if (coords.left !== null) {
+                item.style.left = `${coords.left}px`;
+                item.style.right = null;
+            } else if (coords.right !== null) {
+                item.style.right = `${coords.right}px`;
+                item.style.left = null;
+            }
+        }
+        
+        // Función para manejar el estado de clic/pantalla completa
+        function toggleVideo(event) {
+            const item = event.currentTarget;
+            const video = item.querySelector('video');
+            const overlay = document.getElementById('video-overlay');
+
+            if (item.classList.contains('is-active')) {
+                // --- CERRAR: Vuelve a la posición de thumbnail ---
+                item.classList.remove('is-active');
+                
+                // Reaplicar las coordenadas originales (el item.style.* de la carga inicial)
+                const index = Array.from(item.parentElement.children).indexOf(item);
+                applyCoordinates(item, index);
+                
+                overlay.style.display = 'none';
+
+                // Pausar y congelar
+                video.pause();
+                video.removeAttribute('loop');
+                
+            } else {
+                // Asegurarse de que no haya otra ventana activa antes de abrir la nueva
+                document.querySelectorAll('.highlight-item.is-active').forEach(activeItem => {
+                    const activeVideo = activeItem.querySelector('video');
+                    activeItem.classList.remove('is-active');
+                    activeVideo.pause();
+                    activeVideo.removeAttribute('loop');
+                    // Reaplicar coordenadas originales al que se desactiva
+                    const activeIndex = Array.from(activeItem.parentElement.children).indexOf(activeItem);
+                    applyCoordinates(activeItem, activeIndex);
+                });
+                
+                // --- ABRIR: Mover al centro y reproducir en loop ---
+                
+                // Aplicar estilos y centrar (el CSS .is-active se encarga de top/left/transform)
+                item.classList.add('is-active');
+                overlay.style.display = 'block';
+
+                // Reproducir en loop
+                video.setAttribute('loop', '');
+                video.currentTime = 0; 
+                video.play().catch(e => console.error("Error al reproducir video en modo activo:", e));
+            }
+        }
+
+
         document.addEventListener('DOMContentLoaded', () => {
             const placeholders = document.querySelectorAll('.highlights-container .highlight-item'); 
-            const totalItems = placeholders.length; // Es 10
+            const totalItems = placeholders.length; 
             
-            // URLs de video
+            // URLs de video (se mantienen igual)
             const areanaVideoUrls = [
                 "https://attachments.are.na/40639420/49cba57fd621af86dd418f1d5ff3e83d.mp4?1761601404",
                 "https://attachments.are.na/38956475/f8a7c58ca261b3924c4495cb3fba2cdb.mp4?1755854571", 
@@ -111,9 +209,7 @@
             }));
 
             // ====================================================================
-            // === 1. NUEVA CONFIGURACIÓN DE TAMAÑOS Y ASPECT RATIOS ===
-            // 
-            // Modifica el 'width' y 'aspectRatio' para cada ítem.
+            // === 1. CONFIGURACIÓN DE TAMAÑOS Y ASPECT RATIOS (SIN CAMBIOS) ===
             // ====================================================================
             const windowSizes = [
                 // [0] Ítem 1 (16:9, horizontal)
@@ -138,7 +234,7 @@
                 { width: 260, aspectRatio: "16:9" }
             ];
 
-            // 2. Aplicar tamaños y aspect ratios
+            // 2. Aplicar tamaños, cargar video y configurar como "frozen"
             placeholders.forEach((item, index) => {
                 const sizeConfig = windowSizes[index];
                 let calculatedHeight;
@@ -148,13 +244,13 @@
                         calculatedHeight = (sizeConfig.width / 16) * 9;
                         break;
                     case "1:1":
-                        calculatedHeight = sizeConfig.width; // Altura igual al ancho
+                        calculatedHeight = sizeConfig.width;
                         break;
                     case "9:16":
                         calculatedHeight = (sizeConfig.width / 9) * 16;
                         break;
                     default:
-                        calculatedHeight = sizeConfig.width; // Fallback a 1:1
+                        calculatedHeight = sizeConfig.width;
                 }
 
                 item.style.width = `${sizeConfig.width}px`;
@@ -163,18 +259,20 @@
                 const videoEl = item.querySelector('video');
                 if (videoEl) {
                     videoEl.src = placeholderData[index].url;
-                    videoEl.play().catch(e => console.error("Error al intentar reproducir video:", e)); 
+                    videoEl.load(); // Cargar el primer frame
+                    videoEl.pause(); // Aseguramos que esté congelado
+
+                    // Añadir el evento de clic para la interacción
+                    item.addEventListener('click', toggleVideo);
                 }
             });
 
             // ====================================================================
-            // === 3. LÓGICA DE POSICIONAMIENTO POR COORDENADAS FIJAS (10 Ítems) ===
-            // 
-            // MODIFICA SÓLO LOS VALORES NUMÉRICOS (en píxeles) aquí.
-            // Usa 'null' para las propiedades que no quieres usar.
+            // === 3. LÓGICA DE POSICIONAMIENTO POR COORDENADAS FIJAS (SIN CAMBIOS) ===
             // ====================================================================
 
-            const windowCoordinates = [
+            // Definimos windowCoordinates globalmente
+            windowCoordinates = [
                 // [0] Ítem 1
                 { top: 0, bottom: null, left: 0, right: null }, 
                 
@@ -197,41 +295,37 @@
                 { top: 200, bottom: null, left: 0, right: null },
                 
                 // [7] Ítem 8
-                { top: null, bottom: null, left: 900, right: null },
+                { top: 400, bottom: null, left: 900, right: null },
                 
-                // [8] Ítem 9 (NUEVO: Borde inferior, 400px desde la izquierda)
+                // [8] Ítem 9 
                 { top: null, bottom: 0, left: 900, right: null }, 
                 
-                // [9] Ítem 10 (NUEVO: Borde inferior, 600px desde la izquierda)
+                // [9] Ítem 10 
                 { top: null, bottom: 0, left: 600, right: null } 
             ];
-
+            
             // 4. Aplicar las coordenadas
             for (let i = 0; i < totalItems; i++) {
-                const item = placeholders[i];
-                const coords = windowCoordinates[i];
-
-                if (coords.top !== null) {
-                    item.style.top = `${coords.top}px`;
-                    item.style.bottom = null;
-                } else if (coords.bottom !== null) {
-                    item.style.bottom = `${coords.bottom}px`;
-                    item.style.top = null;
-                }
-
-                if (coords.left !== null) {
-                    item.style.left = `${coords.left}px`;
-                    item.style.right = null;
-                } else if (coords.right !== null) {
-                    item.style.right = `${coords.right}px`;
-                    item.style.left = null;
-                }
+                applyCoordinates(placeholders[i], i);
             }
+            
+            // Añadir el evento de clic al overlay para cerrar
+            document.getElementById('video-overlay').addEventListener('click', (event) => {
+                // Solo cerrar si se hace clic directamente en el overlay
+                if (event.target.id === 'video-overlay') {
+                    const activeItem = document.querySelector('.highlight-item.is-active');
+                    if (activeItem) {
+                        toggleVideo({ currentTarget: activeItem });
+                    }
+                }
+            });
         });
     </script>
 </head>
 
 <body>
+    <div id="video-overlay"></div>
+    
     <div class="central-layout">
         
         <h1>
@@ -277,17 +371,17 @@
     </div>
 
     <div class="highlights-container">
-        <div class="highlight-item window" id="item-1"><video id="video-1" src="about:blank" loop muted preload="auto" playsinline title="Video Placeholder 1"></video></div>
-        <div class="highlight-item window" id="item-2"><video id="video-2" src="about:blank" loop muted preload="auto" playsinline title="Video Placeholder 2"></video></div>
-        <div class="highlight-item window" id="item-3"><video id="video-3" src="about:blank" loop muted preload="auto" playsinline title="Video Placeholder 3"></video></div>
-        <div class="highlight-item window" id="item-4"><video id="video-4" src="about:blank" loop muted preload="auto" playsinline title="Video Placeholder 4"></video></div>
-        <div class="highlight-item window" id="item-5"><video id="video-5" src="about:blank" loop muted preload="auto" playsinline title="Video Placeholder 5"></video></div>
-        <div class="highlight-item window" id="item-6"><video id="video-6" src="about:blank" loop muted preload="auto" playsinline title="Video Placeholder 6"></video></div>
-        <div class="highlight-item window" id="item-7"><video id="video-7" src="about:blank" loop muted preload="auto" playsinline title="Video Placeholder 7"></video></div>
-        <div class="highlight-item window" id="item-8"><video id="video-8" src="about:blank" loop muted preload="auto" playsinline title="Video Placeholder 8"></video></div>
+        <div class="highlight-item window" id="item-1"><video id="video-1" src="about:blank" muted preload="auto" playsinline title="Video Placeholder 1"></video></div>
+        <div class="highlight-item window" id="item-2"><video id="video-2" src="about:blank" muted preload="auto" playsinline title="Video Placeholder 2"></video></div>
+        <div class="highlight-item window" id="item-3"><video id="video-3" src="about:blank" muted preload="auto" playsinline title="Video Placeholder 3"></video></div>
+        <div class="highlight-item window" id="item-4"><video id="video-4" src="about:blank" muted preload="auto" playsinline title="Video Placeholder 4"></video></div>
+        <div class="highlight-item window" id="item-5"><video id="video-5" src="about:blank" muted preload="auto" playsinline title="Video Placeholder 5"></video></div>
+        <div class="highlight-item window" id="item-6"><video id="video-6" src="about:blank" muted preload="auto" playsinline title="Video Placeholder 6"></video></div>
+        <div class="highlight-item window" id="item-7"><video id="video-7" src="about:blank" muted preload="auto" playsinline title="Video Placeholder 7"></video></div>
+        <div class="highlight-item window" id="item-8"><video id="video-8" src="about:blank" muted preload="auto" playsinline title="Video Placeholder 8"></video></div>
         
-        <div class="highlight-item window" id="item-9"><video id="video-9" src="about:blank" loop muted preload="auto" playsinline title="Video Placeholder 9"></video></div>
-        <div class="highlight-item window" id="item-10"><video id="video-10" src="about:blank" loop muted preload="auto" playsinline title="Video Placeholder 10"></video></div>
+        <div class="highlight-item window" id="item-9"><video id="video-9" src="about:blank" muted preload="auto" playsinline title="Video Placeholder 9"></video></div>
+        <div class="highlight-item window" id="item-10"><video id="video-10" src="about:blank" muted preload="auto" playsinline title="Video Placeholder 10"></video></div>
     </div>
 
 </body>
