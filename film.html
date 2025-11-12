@@ -12,10 +12,12 @@
             background-color: white;
             color: black;
             font-family: 'Times New Roman', Times, serif;
-            padding-bottom: 2rem;
+            /* ELIMINAR CUALQUIER PADDING Y MARGEN DE LOS BORDES */
+            padding-bottom: 0; 
+            margin: 0;
+            
             position: relative; 
             min-height: 100vh;
-            margin: 0;
             text-align: center;
             overflow: hidden; 
         }
@@ -53,8 +55,8 @@
             transform: translate(-50%, -50%);
             white-space: pre;
             font-family: monospace;
-            color: black;
-            font-size: 25px;
+            /* REDUCCIÓN DEL 20%: 25px * 0.80 = 20px */
+            font-size: 20px; 
             line-height: 0.8;
             text-align: center;
             z-index: 5;
@@ -85,13 +87,12 @@
         }
 
         .highlight-item video {
-            /* AJUSTE A SANGRE DEL VIDEO */
             width: 100%;
             height: 100%;
             border: none;
             display: block;
             object-fit: cover; 
-            pointer-events: none; /* Deshabilita clics e interacción */
+            pointer-events: none;
         }
     </style>
 
@@ -102,7 +103,7 @@
             // URLs alternantes de Are.na (los videos .mp4)
             const areanaVideoUrls = [
                 "https://attachments.are.na/40639420/49cba57fd621af86dd418f1d5ff3e83d.mp4?1761601404",
-                "https://attachments.are.na/40461475/c7d3143746327fc2da5deb4721a8226b.mp4?1760993060",
+                "https://attachments.are.na/38956475/f8a7c58ca261b3924c4495cb3fba2cdb.mp4?1755854571", // URL REEMPLAZADA
                 "https://attachments.are.na/40460920/cfaa4638ba61e1d3018ea6db62b2d1a1.mp4?1760992063"
             ];
             
@@ -123,7 +124,7 @@
 
             const rand = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min;
 
-            // Almacenaremos los tamaños generados para calcular el posicionamiento sin solapamiento.
+            // Almacenaremos los tamaños generados
             const sizes = []; 
 
             // 1. Generar tamaños y URLs
@@ -139,17 +140,16 @@
                 const videoEl = item.querySelector('video');
                 if (videoEl) {
                     videoEl.src = placeholderData[index].url;
-                    // Inicia la reproducción en loop. El catch es para evitar errores si el navegador lo bloquea.
                     videoEl.play().catch(e => console.error("Error al intentar reproducir video:", e)); 
                 }
             });
 
-            // 2. Posicionamiento sin solapamiento (Fixed Layout)
+            // 2. Posicionamiento sin solapamiento (Ajuste para iniciar desde 0 y usar margin como separador)
             
             // Margen mínimo entre ventanas (en píxeles) y borde de la pantalla
             const margin = 15; 
             
-            // Acumuladores de posición 
+            // Acumuladores de posición (Inician en el borde 0 + margin)
             let currentX_T = margin; // Posición horizontal para TOP
             let currentX_B = margin; // Posición horizontal para BOTTOM
             let currentY_L = margin; // Posición vertical para LEFT
@@ -160,19 +160,19 @@
                 const { width, height } = sizes[i];
 
                 if (i >= 0 && i <= 2) { // TOP (0, 1, 2)
-                    item.style.top = `${margin}px`;
+                    item.style.top = `0px`; // Pegado al borde superior
                     item.style.left = `${currentX_T}px`;
                     currentX_T += width + margin;
                 } else if (i >= 3 && i <= 5) { // BOTTOM (3, 4, 5)
-                    item.style.bottom = `${margin}px`;
+                    item.style.bottom = `0px`; // Pegado al borde inferior
                     item.style.left = `${currentX_B}px`;
                     currentX_B += width + margin;
                 } else if (i >= 6 && i <= 7) { // LEFT (6, 7)
-                    item.style.left = `${margin}px`;
+                    item.style.left = `0px`; // Pegado al borde izquierdo
                     item.style.top = `${currentY_L}px`;
                     currentY_L += height + margin;
                 } else { // RIGHT (8, 9)
-                    item.style.right = `${margin}px`;
+                    item.style.right = `0px`; // Pegado al borde derecho
                     item.style.top = `${currentY_R}px`;
                     currentY_R += height + margin;
                 }
