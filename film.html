@@ -98,7 +98,7 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            // Ahora solo hay 5 placeholders
+            // Solo hay 5 placeholders
             const placeholders = document.querySelectorAll('.highlights-container .highlight-item'); 
             const totalItems = placeholders.length; // totalItems ahora es 5
             
@@ -110,7 +110,7 @@
             ];
             
             const placeholderData = [];
-            for (let i = 0; i < totalItems; i++) { // Bucle hasta 5
+            for (let i = 0; i < totalItems; i++) {
                 placeholderData.push({
                     url: areanaVideoUrls[i % areanaVideoUrls.length], 
                 });
@@ -154,16 +154,15 @@
             // Acumuladores de posición (Inician en el borde 0)
             let currentX_T = edgeMargin; // TOP (Ítems 0, 1)
             let currentX_B = edgeMargin; // BOTTOM (Ítems 2, 3)
-            let currentY_L = edgeMargin; // LEFT (Ítem 4)
 
             for (let i = 0; i < totalItems; i++) {
                 const item = placeholders[i];
-                const { width, height } = sizes[i];
+                const { width } = sizes[i];
                 
                 // Distribución de índices (0 a 4):
                 // TOP: 0, 1 (2 ítems)
                 // BOTTOM: 2, 3 (2 ítems)
-                // LEFT: 4 (1 ítem)
+                // RIGHT: 4 (1 ítem)
 
                 if (i <= 1) { // TOP (0, 1)
                     item.style.top = `0px`; 
@@ -173,10 +172,9 @@
                     item.style.bottom = `0px`; 
                     item.style.left = `${currentX_B}px`;
                     currentX_B += width + margin;
-                } else if (i === 4) { // LEFT (4)
-                    item.style.left = `0px`; 
-                    item.style.top = `${currentY_L}px`;
-                    // El último ítem se pega al borde superior izquierdo.
+                } else if (i === 4) { // RIGHT (4)
+                    item.style.right = `0px`; // Pegado al borde derecho
+                    item.style.top = `0px`;   // Pegado al borde superior
                 }
             }
         });
