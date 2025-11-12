@@ -17,7 +17,7 @@
             min-height: 100vh;
             margin: 0;
             text-align: center;
-            overflow: hidden; /* **Ajuste: Oculta cualquier barra de desplazamiento (incluida la vertical) para mantener el diseño fijo.** */
+            overflow: hidden; 
         }
 
         a, h1 {
@@ -60,7 +60,7 @@
             z-index: 5;
         }
 
-        /* --- Estilos para los 10 Placeholders de Ventana (REFINADOS) --- */
+        /* --- Estilos para los 10 Placeholders (SIMPLIFICADOS) --- */
 
         .highlights-container {
             position: absolute;
@@ -71,57 +71,33 @@
         }
 
         .highlight-item {
-            position: absolute; /* Permite posicionamiento fijo en el margen */
+            position: absolute;
             z-index: 20;
-            box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
-            /* QUITADO: transition: transform 0.3s ease; */
+            /* QUITAR ADORNOS: Eliminamos box-shadow, border y cualquier adorno de la ventana */
             overflow: hidden;
-            /* **Ajuste:** Usamos 'border-box' para que el padding y borde no sumen al tamaño final y faciliten el no-solapamiento. */
-            box-sizing: border-box; 
+            box-sizing: border-box;
+            background-color: black; /* Fondo negro para que los iframes destaquen */
         }
         
-        /* QUITADO: .highlight-item:hover para eliminar el efecto de aumento */
-
         .window {
-            border: 1px solid #aaa;
-            background-color: #eee;
-            color: #333;
-            display: flex;
-            flex-direction: column;
+            /* Simplificamos al máximo la ventana, eliminando marcos y colores */
+            display: block;
             height: 100%;
+            width: 100%;
         }
 
-        .window-header {
-            background-color: #5d5d5d;
-            height: 10px;
-        }
+        /* Eliminamos header y footer ya que no los usaremos */
+        /* Eliminamos window-header, window-body, window-footer, filename-text, dimensions-text */
 
-        .window-body {
-            flex-grow: 1;
-            padding: 5px;
-            background-color: #fff;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .window-body iframe {
+        .window iframe {
+            /* AJUSTE A SANGRE DEL VIDEO */
             width: 100%;
             height: 100%;
             border: none;
             display: block;
-        }
-
-        .window-footer {
-            background-color: #ccc;
-            padding: 2px 5px;
-            font-size: 0.7em;
-            display: flex;
-            justify-content: space-between;
-        }
-
-        .filename-text {
-            font-weight: bold;
+            /* Usamos object-fit para que el video siempre cubra la ventana, recortando si es necesario */
+            object-fit: cover; 
+            pointer-events: none; /* Deshabilita clics e interacción */
         }
     </style>
 
@@ -130,17 +106,29 @@
             const placeholders = document.querySelectorAll('.highlights-container .highlight-item'); 
             
             // URLs alternantes de Are.na (los videos .mp4)
-            const areanaUrls = [
+            const rawAreanaUrls = [
+                "40639420/49cba57fd621af86dd418f1d5ff3e83d.mp4?1761601404",
+                "40461475/c7d3143746327fc2da5deb4721a8226b.mp4?1760993060",
+                "40460920/cfaa4638ba61e1d3018ea6db62b2d1a1.mp4?1760992063"
+            ];
+            
+            const placeholderData = [];
+            // Generar 10 entradas, alternando las URLs y añadiendo parámetros de incrustación
+            // **IMPORTANTE:** Se asume que estos son links directos de Are.na. Para incrustación, se deben usar URLs de "embed". 
+            // Para congelar el video en el primer frame y quitar controles, usamos 't=0&autoplay=0&controls=0&loop=0&muted=1&iframe=1' 
+            // dentro de la URL del embed. Si la URL proporcionada es un link de descarga directa (.mp4), 
+            // el navegador lo renderizará como un <video> que podemos controlar con atributos HTML.
+            
+            // **Ajustaremos para usar la etiqueta <video> y controlarla directamente con atributos.**
+            const areanaVideoUrls = [
                 "https://attachments.are.na/40639420/49cba57fd621af86dd418f1d5ff3e83d.mp4?1761601404",
-                "https://attachments.are.na/40461475/c7d3143746527fc2da5deb4721a8226b.mp4?1760993060",
+                "https://attachments.are.na/40461475/c7d3143746327fc2da5deb4721a8226b.mp4?1760993060",
                 "https://attachments.are.na/40460920/cfaa4638ba61e1d3018ea6db62b2d1a1.mp4?1760992063"
             ];
 
-            const placeholderData = [];
-            // Generar 10 entradas, alternando las URLs
             for (let i = 0; i < 10; i++) {
                 placeholderData.push({
-                    url: areanaUrls[i % areanaUrls.length], // Alterna entre las 3 URLs
+                    url: areanaVideoUrls[i % areanaVideoUrls.length], // Alterna entre las 3 URLs
                     filename: `video_${i + 1}.mp4`
                 });
             }
@@ -148,11 +136,9 @@
             // Rango de tamaños (en píxeles) para la aleatoriedad
             const minSize = 120;
             const maxSize = 250;
-
             const rand = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min;
 
-            // Puntos de posicionamiento fijos y secuenciales a lo largo de los bordes
-            // Distribuimos los 10 placeholders: 3 en Top/Bottom, 2 en Left/Right (Total 10)
+            // Puntos de posicionamiento fijos y secuenciales a lo largo de los bordes (Mismos que antes)
             const positions = [
                 // TOP (3 elementos)
                 { side: 'top', offset: 15 }, { side: 'top', offset: 50 }, { side: 'top', offset: 85 },
@@ -174,39 +160,35 @@
 
                 item.style.width = `${width}px`;
                 item.style.height = `${height}px`;
-
+                
                 // 2. Asignar posición "imantada" fija
                 if (pos.side === 'top') {
                     item.style.top = '0';
                     item.style.left = `${pos.offset}vw`;
-                    item.style.transform = 'translateX(-50%)'; // Centra en el eje X
+                    item.style.transform = 'translateX(-50%)'; 
                 } else if (pos.side === 'bottom') {
                     item.style.bottom = '0';
                     item.style.left = `${pos.offset}vw`;
-                    item.style.transform = 'translateX(-50%)'; // Centra en el eje X
+                    item.style.transform = 'translateX(-50%)'; 
                 } else if (pos.side === 'left') {
                     item.style.left = '0';
                     item.style.top = `${pos.offset}vh`;
-                    item.style.transform = 'translateY(-50%)'; // Centra en el eje Y
+                    item.style.transform = 'translateY(-50%)'; 
                 } else if (pos.side === 'right') {
                     item.style.right = '0';
                     item.style.top = `${pos.offset}vh`;
-                    item.style.transform = 'translateY(-50%)'; // Centra en el eje Y
+                    item.style.transform = 'translateY(-50%)'; 
                 }
                 
-                // 3. Rellenar contenido
-                const iframe = item.querySelector('iframe');
-                const filenameSpan = item.querySelector('.filename-text');
-                const dimsSpan = item.querySelector('.dimensions-text');
+                // 3. Rellenar contenido (Cambiamos el <iframe> por <video> para control de frame)
+                const videoEl = item.querySelector('video');
 
-                if (iframe) {
-                    iframe.src = data.url;
-                }
-                if (filenameSpan) {
-                    filenameSpan.textContent = data.filename;
-                }
-                if (dimsSpan) {
-                    dimsSpan.textContent = `${width}x${height}`; 
+                if (videoEl) {
+                    videoEl.src = data.url;
+                    // Se establece poster con la URL del video. 
+                    // En navegadores modernos, esto forzará a que el video muestre el primer frame
+                    // sin necesidad de reproducirlo, asumiendo que los videos son accesibles y tienen metadatos.
+                    videoEl.poster = data.url; 
                 }
             });
         });
@@ -222,7 +204,7 @@
             <i style="color:gray">film</i>
         </h1>
 
-        <div class="ascii-art">
+       ⠀      <div class="ascii-art">
 ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢠⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
 ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠒⠀⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
 ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢈⣾⣿⢷⠄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
@@ -231,29 +213,29 @@
 ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⠔⠟⠉⢁⣀⡈⠉⠉⠑⠀⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
 ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⡆⠀⠒⠀⠀⠀⠀⠀⠠⠤⠀⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
 ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢬⣴⠶⠶⠶⡾⡞⡯⢿⣷⣶⣷⢦⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀\⡼⠛⠉⠀⠀⠀⠀⠀⠀⠀⠀⠈⠉⠐⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀\⠁⠄⠀⡀⣀⣴⣴⠐⠶⣶⣶⣄\⣀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-⠀⠀⠀⠀⠀⠀⣀\⣀⣀\⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀\⢀⠀\⣠\\⠻⠛\⠀⠀⠀⠀⠀\⠉\\\\\⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-⠀⠀⠀\⠈\\⠀\\⠿⠀⠀⠀\\\\\\\\\⠑\\\\\\⠀⠀⠀⣀⣤⣤\\\\⠀⠀\⠈\⢿\\⠄\\\\\\\\\⠉\\\\\\⠀⠀⠀
-⠀⠀⠀⠀⠀⠀\\⢸\\⠀⠀\\\\⠀⠀\\\⠀⠀⠀⠄\\\⠀\\\\⠛\⠀\\\\\\⠀⠀\\⣿\⠀\\\⠄⠀\\\⠀\\⠀⠀⠀⠀⠀⠀
-⠀⠀⠀⠀⠀⠀⠀⠀\⠈\⠀⠀\\\⠀⠀\⢸\\⠀⠀⠀⠀\\⠀\\\⠀\\\\⠀⠀⠀\\\⠀⠀⠀\⠈\⠀⠀\\\⠀\⠈\\⠀⠀⠀⠀⠀⠀⠀⠀⠀
-⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠉\⠄\⣿\⠄⠀⠀\\\⠀⠀\\\\⢿⠀\\\⠀\\⠉\\\⠀⠀⠀\\\⠀⠀\\⠀⠀\\⠄⠀⠉⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠉\⣿⠄\\\⣿\⠀⠀\\\\⣿\\\\⠀⠉\⠀⠀\\⠀⠀⠀\\⠀⠀⠀\\⠀⠀\\\⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀\\\\⠀⠀\\\\\\\\\\\\\\⠀⠀⠀\⠿⠀⠀⠀\\⣿⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀\⠈\\⠀\⠈⠀\⠀\\\⣀\\\\⠉\\\\\\⠀⠀\\\\⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀\⠈\\⣤\⠀⠀⠀⠄\⠛⠿\\\\⣶\\⠿\⠊⠀⠀\\\\⠀\\\⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠑⠀\⠈\⢿\\\⠀⠀⠀⠀⠀⠀⠉\⠈\\\⣀⣤\\⠛⠉⠀⠀⣀\\\⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀\\⠀⠀\⠀⠀\⠈\\\\⣶\⣶\\⣤\\\⣶\\\\\⠀⠀⠀\\\\⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀\\\⣿\⣶\⣤⣀⠀⠀⠀⠀⠀⠀\⠀\\\ \⠈⠉⠀⠀⠀⠀⠀⠀\\\\\⠀⠀⠀⠀⣀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀\⠀\⠈⠉\⠿⢿\⣶\⣤⣀⣀⣀\⠀⠀⠀⠀⠀⠀⠀⠀\\⣤\\\\\\⠀⠀⠀\\\\⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀\\⠀⠀⠀⠀⠀⠀\\\\\\⠀⠀⠀⠀⠀⠀⠀⠀\⠈⠛\\⠀⠀⠀⠀⠀⠀\\\⠉⠊\⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀\⢿\\⣶\\⠀⠀⠀⠀⠀\⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣀\\⠿\⠀⠀⠀\⠈\\⠀⠀⠀⠀⠀⠀⠀⠀⠀
-⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀\⠈\\\⢿\⣿\\⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀\\\⠀⠀⠀⠀⠀\\\⠀⠀⠀⠀⠀⠀⠀⠀⠀
-⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀\\\⣤⣀⣀⣀\⠄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀\⠀⠀\\\\\⠀⠀⠀⠀⠀⠀⠀⠀
-⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀\⠈⠛⠛\\⠊⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀\⠈\\⠀⠀\⠀⠀⠀⠀⠀⠀⠀
-⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀\\⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀\\\⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-⠀⠀⠀⠀⠀⠀⠀⠀⠀\⠈⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣰⡼⠛⠉⠀⠀⠀⠀⠀⠀⠀⠀⠈⠉⠐⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⡀⠁⠄⠀⡀⣀⣴⣴⠐⠶⣶⣶⣄⡤⣀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⣀⡀⣀⣀⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠠⢀⠀⡀⣠⢈⡤⠻⠛⠁⠀⠀⠀⠀⠀⠁⠉⠘⠹⡐⢄⢀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠈⠩⠂⠀⢰⣻⠿⠀⠀⠀⢨⣗⣫⠏⠁⠘⣰⣯⠂⠑⠁⠘⡠⠥⣺⠏⠀⠀⠀⣀⣤⣤⢤⡤⣄⡄⠀⠀⠈⠻⢿⣕⠄⠱⡠⠢⢖⡀⠂⠳⣢⢚⠉⠙⣯⢣⠙⣉⠖⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠒⢸⣯⣇⠀⠀⠘⢥⢖⠟⠀⠀⢀⢳⡏⠀⠀⠀⠄⢰⣟⡇⠀⢀⣴⡾⠫⠛⠋⠀⠓⠙⡿⣷⢤⡀⠀⠀⠙⣿⡂⠀⠁⢣⠷⠄⠀⢰⡷⡁⠀⢨⠟⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠁⠈⡀⠀⠀⣸⠺⠂⠀⠀⢸⠚⡁⠀⠀⠀⠀⢊⣧⠀⢀⣾⠋⠀⠠⡠⢢⠂⠀⠀⠀⠙⠌⢷⠀⠀⠀⠈⢴⠀⠀⠠⢆⡆⠀⠈⣷⠷⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠉⠰⠄⣿⠧⠄⠀⠀⣈⣝⠁⠀⠀⡀⢀⢨⢿⠀⠸⣙⠂⠀⢷⡇⠉⠡⢱⡄⠀⠀⠀⠪⣧⠂⠀⠀⣾⡄⠀⠀⢺⡭⠄⠀⠉⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠉⣿⠄⡄⢈⣿⡀⠀⠀⠃⡀⢰⣿⡀⠠⠟⡈⠀⠉⠂⠀⠀⣘⡇⠀⠀⠀⢴⡞⠀⠀⠀⡟⡷⠀⠀⠸⠋⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠁⠢⣟⢇⠀⠀⠙⠐⠘⡝⢧⡀⠘⢝⡦⣘⠁⢂⡨⡼⠀⠀⠀⡰⠿⠀⠀⠀⢀⣿⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⣷⡆⠀⠈⠀⢀⠀⠻⣷⣅⣀⠌⠙⠚⠋⠉⠁⢀⣠⣾⡻⠁⠀⠀⢠⣎⠇⢀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⢻⣤⢀⠀⠀⠀⠄⠙⠛⠿⣟⡿⣴⣶⡲⣾⠿⠟⠊⠀⠀⢀⣴⠗⠇⠀⢈⣾⡄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠑⠀⠈⠻⢿⣆⣄⡀⠀⠀⠀⠀⠀⠀⠉⠈⠁⢈⢁⣀⣤⣪⠛⠉⠀⠀⣀⣾⣯⡟⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢐⠃⠀⠀⠠⠀⠀⠈⠙⠻⢻⣶⣶⣦⣤⢤⠶⣶⡿⡿⠟⠋⠃⠀⠀⠀⢀⣞⣾⡻⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠠⠽⣿⣶⣤⣀⠀⠀⠀⠀⠀⠀⠐⠀⠨⠥⠁⠈⠉⠀⠀⠀⠀⠀⠀⡀⡰⣟⠙⠋⠀⠀⠀⠀⣀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠂⠀⠈⠉⠙⠿⢿⣶⣤⣀⣀⣀⡀⠀⠀⠀⠀⠀⠀⠀⠀⡠⣤⡶⡭⡿⠙⠂⠁⠀⠀⠀⢀⠼⣫⠦⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣂⠰⠀⠀⠀⠀⠀⠀⠌⣙⠟⣻⠟⠃⠀⠀⠀⠀⠀⠀⠀⠀⠈⠛⠝⡉⠀⠀⠀⠀⠀⠀⡠⢾⡻⠉⠊⠂⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠲⢿⣷⣶⣄⡀⠀⠀⠀⠀⠀⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣀⠤⡺⠿⠃⠀⠀⠀⠈⢐⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⠻⠹⠟⢿⣿⠟⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠁⠁⠁⠀⠀⠀⠀⠀⢀⣼⣆⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⡠⣢⣤⣀⣀⣀⠂⠄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠁⠀⠀⣐⡮⡫⠏⡠⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⠛⠛⣽⠋⠊⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⠙⠅⠀⠀⠁⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⢠⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢠⠞⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
         </div>
         
     </div>
@@ -261,113 +243,43 @@
     <div class="highlights-container">
         
         <div class="highlight-item window" id="item-1">
-            <div class="window-header"></div>
-            <div class="window-body">
-                <iframe id="iframe-1" src="about:blank" allowfullscreen title="Video Placeholder 1"></iframe>
-            </div>
-            <div class="window-footer">
-                <span class="filename-text"></span>
-                <span class="dimensions-text" id="dims-1"></span>
-            </div>
+            <video id="video-1" src="about:blank" loop muted preload="auto" playsinline title="Video Placeholder 1"></video>
         </div>
 
         <div class="highlight-item window" id="item-2">
-            <div class="window-header"></div>
-            <div class="window-body">
-                <iframe id="iframe-2" src="about:blank" allowfullscreen title="Video Placeholder 2"></iframe>
-            </div>
-            <div class="window-footer">
-                <span class="filename-text"></span>
-                <span class="dimensions-text" id="dims-2"></span>
-            </div>
+            <video id="video-2" src="about:blank" loop muted preload="auto" playsinline title="Video Placeholder 2"></video>
         </div>
         
         <div class="highlight-item window" id="item-3">
-            <div class="window-header"></div>
-            <div class="window-body">
-                <iframe id="iframe-3" src="about:blank" allowfullscreen title="Video Placeholder 3"></iframe>
-            </div>
-            <div class="window-footer">
-                <span class="filename-text"></span>
-                <span class="dimensions-text" id="dims-3"></span>
-            </div>
+            <video id="video-3" src="about:blank" loop muted preload="auto" playsinline title="Video Placeholder 3"></video>
         </div>
 
         <div class="highlight-item window" id="item-4">
-            <div class="window-header"></div>
-            <div class="window-body">
-                <iframe id="iframe-4" src="about:blank" allowfullscreen title="Video Placeholder 4"></iframe>
-            </div>
-            <div class="window-footer">
-                <span class="filename-text"></span>
-                <span class="dimensions-text" id="dims-4"></span>
-            </div>
+            <video id="video-4" src="about:blank" loop muted preload="auto" playsinline title="Video Placeholder 4"></video>
         </div>
 
         <div class="highlight-item window" id="item-5">
-            <div class="window-header"></div>
-            <div class="window-body">
-                <iframe id="iframe-5" src="about:blank" allowfullscreen title="Video Placeholder 5"></iframe>
-            </div>
-            <div class="window-footer">
-                <span class="filename-text"></span>
-                <span class="dimensions-text" id="dims-5"></span>
-            </div>
+            <video id="video-5" src="about:blank" loop muted preload="auto" playsinline title="Video Placeholder 5"></video>
         </div>
 
         <div class="highlight-item window" id="item-6">
-            <div class="window-header"></div>
-            <div class="window-body">
-                <iframe id="iframe-6" src="about:blank" allowfullscreen title="Video Placeholder 6"></iframe>
-            </div>
-            <div class="window-footer">
-                <span class="filename-text"></span>
-                <span class="dimensions-text" id="dims-6"></span>
-            </div>
+            <video id="video-6" src="about:blank" loop muted preload="auto" playsinline title="Video Placeholder 6"></video>
         </div>
 
         <div class="highlight-item window" id="item-7">
-            <div class="window-header"></div>
-            <div class="window-body">
-                <iframe id="iframe-7" src="about:blank" allowfullscreen title="Video Placeholder 7"></iframe>
-            </div>
-            <div class="window-footer">
-                <span class="filename-text"></span>
-                <span class="dimensions-text" id="dims-7"></span>
-            </div>
+            <video id="video-7" src="about:blank" loop muted preload="auto" playsinline title="Video Placeholder 7"></video>
         </div>
 
         <div class="highlight-item window" id="item-8">
-            <div class="window-header"></div>
-            <div class="window-body">
-                <iframe id="iframe-8" src="about:blank" allowfullscreen title="Video Placeholder 8"></iframe>
-            </div>
-            <div class="window-footer">
-                <span class="filename-text"></span>
-                <span class="dimensions-text" id="dims-8"></span>
-            </div>
+            <video id="video-8" src="about:blank" loop muted preload="auto" playsinline title="Video Placeholder 8"></video>
         </div>
         
         <div class="highlight-item window" id="item-9">
-            <div class="window-header"></div>
-            <div class="window-body">
-                <iframe id="iframe-9" src="about:blank" allowfullscreen title="Video Placeholder 9"></iframe>
-            </div>
-            <div class="window-footer">
-                <span class="filename-text"></span>
-                <span class="dimensions-text" id="dims-9"></span>
-            </div>
+            <video id="video-9" src="about:blank" loop muted preload="auto" playsinline title="Video Placeholder 9"></video>
         </div>
 
         <div class="highlight-item window" id="item-10">
-            <div class="window-header"></div>
-            <div class="window-body">
-                <iframe id="iframe-10" src="about:blank" allowfullscreen title="Video Placeholder 10"></iframe>
-            </div>
-            <div class="window-footer">
-                <span class="filename-text"></span>
-                <span class="dimensions-text" id="dims-10"></span>
-            </div>
+            <video id="video-10" src="about:blank" loop muted preload="auto" playsinline title="Video Placeholder 10"></video>
         </div>
         
     </div>
