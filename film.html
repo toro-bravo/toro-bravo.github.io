@@ -97,7 +97,7 @@
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             const placeholders = document.querySelectorAll('.highlights-container .highlight-item'); 
-            const totalItems = placeholders.length; // Ahora es 10
+            const totalItems = placeholders.length; // Es 10
             
             // URLs de video
             const areanaVideoUrls = [
@@ -110,23 +110,55 @@
                 url: areanaVideoUrls[i % areanaVideoUrls.length], 
             }));
 
-            // Tamaños (se mantienen aleatorios)
-            const increaseFactor = 1.15; 
-            const minSizeBase = 120;
-            const maxSizeBase = 250;
-            const minSize = Math.round(minSizeBase * increaseFactor); 
-            const maxSize = Math.round(maxSizeBase * increaseFactor); 
-            const rand = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min;
-            const sizes = []; 
+            // ====================================================================
+            // === 1. NUEVA CONFIGURACIÓN DE TAMAÑOS Y ASPECT RATIOS ===
+            // 
+            // Modifica el 'width' y 'aspectRatio' para cada ítem.
+            // ====================================================================
+            const windowSizes = [
+                // [0] Ítem 1 (16:9, horizontal)
+                { width: 250, aspectRatio: "16:9" }, 
+                // [1] Ítem 2 (1:1, cuadrado)
+                { width: 180, aspectRatio: "1:1" },
+                // [2] Ítem 3 (9:16, vertical)
+                { width: 150, aspectRatio: "9:16" }, 
+                // [3] Ítem 4 (16:9, horizontal)
+                { width: 280, aspectRatio: "16:9" },
+                // [4] Ítem 5 (1:1, cuadrado)
+                { width: 200, aspectRatio: "1:1" }, 
+                // [5] Ítem 6 (9:16, vertical)
+                { width: 160, aspectRatio: "9:16" }, 
+                // [6] Ítem 7 (16:9, horizontal)
+                { width: 220, aspectRatio: "16:9" },
+                // [7] Ítem 8 (1:1, cuadrado)
+                { width: 190, aspectRatio: "1:1" },
+                // [8] Ítem 9 (9:16, vertical)
+                { width: 170, aspectRatio: "9:16" }, 
+                // [9] Ítem 10 (16:9, horizontal)
+                { width: 260, aspectRatio: "16:9" }
+            ];
 
-            // 1. Generar tamaños y URLs
+            // 2. Aplicar tamaños y aspect ratios
             placeholders.forEach((item, index) => {
-                const width = rand(minSize, maxSize);
-                const height = rand(minSize, maxSize);
-                sizes.push({ width, height });
+                const sizeConfig = windowSizes[index];
+                let calculatedHeight;
 
-                item.style.width = `${width}px`;
-                item.style.height = `${height}px`;
+                switch (sizeConfig.aspectRatio) {
+                    case "16:9":
+                        calculatedHeight = (sizeConfig.width / 16) * 9;
+                        break;
+                    case "1:1":
+                        calculatedHeight = sizeConfig.width; // Altura igual al ancho
+                        break;
+                    case "9:16":
+                        calculatedHeight = (sizeConfig.width / 9) * 16;
+                        break;
+                    default:
+                        calculatedHeight = sizeConfig.width; // Fallback a 1:1
+                }
+
+                item.style.width = `${sizeConfig.width}px`;
+                item.style.height = `${calculatedHeight}px`;
                 
                 const videoEl = item.querySelector('video');
                 if (videoEl) {
@@ -136,49 +168,49 @@
             });
 
             // ====================================================================
-            // === 2. LÓGICA DE POSICIONAMIENTO POR COORDENADAS FIJAS (10 Ítems) ===
+            // === 3. LÓGICA DE POSICIONAMIENTO POR COORDENADAS FIJAS (10 Ítems) ===
             // 
             // MODIFICA SÓLO LOS VALORES NUMÉRICOS (en píxeles) aquí.
+            // Usa 'null' para las propiedades que no quieres usar.
             // ====================================================================
 
             const windowCoordinates = [
-                // [0] Ítem 1 (Anclado al borde Superior, 0px desde la Izquierda)
+                // [0] Ítem 1
                 { top: 0, bottom: null, left: 0, right: null }, 
                 
-                // [1] Ítem 2 (Anclado al borde Superior, 200px desde la Izquierda)
+                // [1] Ítem 2
                 { top: 0, bottom: null, left: 200, right: null },
                 
-                // [2] Ítem 3 (Anclado al borde Inferior, 0px desde la Izquierda)
+                // [2] Ítem 3
                 { top: null, bottom: 0, left: 0, right: null }, 
                 
-                // [3] Ítem 4 (Anclado al borde Inferior, 200px desde la Izquierda)
+                // [3] Ítem 4
                 { top: null, bottom: 0, left: 200, right: null },
                 
-                // [4] Ítem 5 (Esquina Superior Derecha - Fijo)
+                // [4] Ítem 5 (Esquina Superior Derecha)
                 { top: 0, bottom: null, left: null, right: 0 }, 
 
-                // [5] Ítem 6 (Anclado al borde Izquierdo, 0px desde Arriba)
-                { top: 0, bottom: null, left: 400, right: null }, 
+                // [5] Ítem 6
+                { top: 0, bottom: null, left: 0, right: null }, 
                 
-                // [6] Ítem 7 (Anclado al borde Izquierdo, 200px desde Arriba)
+                // [6] Ítem 7
                 { top: 200, bottom: null, left: 0, right: null },
                 
-                // [7] Ítem 8 (Anclado al borde Izquierdo, 400px desde Arriba)
-                { top: 200, bottom: null, left: 0, right: null },
+                // [7] Ítem 8
+                { top: 400, bottom: null, left: 0, right: null },
                 
-                // [8] Ítem 9 (NUEVO: Anclado al borde Inferior, 400px desde la Izquierda)
+                // [8] Ítem 9 (NUEVO: Borde inferior, 400px desde la izquierda)
                 { top: null, bottom: 0, left: 400, right: null }, 
                 
-                // [9] Ítem 10 (NUEVO: Anclado al borde Inferior, 600px desde la Izquierda)
+                // [9] Ítem 10 (NUEVO: Borde inferior, 600px desde la izquierda)
                 { top: null, bottom: 0, left: 600, right: null } 
             ];
 
-            // 3. Aplicar las coordenadas
+            // 4. Aplicar las coordenadas
             for (let i = 0; i < totalItems; i++) {
                 const item = placeholders[i];
                 const coords = windowCoordinates[i];
 
-                // Aplicar solo los valores no nulos
                 if (coords.top !== null) {
                     item.style.top = `${coords.top}px`;
                     item.style.bottom = null;
@@ -253,6 +285,7 @@
         <div class="highlight-item window" id="item-6"><video id="video-6" src="about:blank" loop muted preload="auto" playsinline title="Video Placeholder 6"></video></div>
         <div class="highlight-item window" id="item-7"><video id="video-7" src="about:blank" loop muted preload="auto" playsinline title="Video Placeholder 7"></video></div>
         <div class="highlight-item window" id="item-8"><video id="video-8" src="about:blank" loop muted preload="auto" playsinline title="Video Placeholder 8"></video></div>
+        
         <div class="highlight-item window" id="item-9"><video id="video-9" src="about:blank" loop muted preload="auto" playsinline title="Video Placeholder 9"></video></div>
         <div class="highlight-item window" id="item-10"><video id="video-10" src="about:blank" loop muted preload="auto" playsinline title="Video Placeholder 10"></video></div>
     </div>
