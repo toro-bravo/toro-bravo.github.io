@@ -98,7 +98,9 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
+            // Ahora solo hay 9 placeholders (del 1 al 6, y del 8 al 10).
             const placeholders = document.querySelectorAll('.highlights-container .highlight-item'); 
+            const totalItems = placeholders.length; // totalItems ahora es 9
             
             // URLs alternantes de Are.na (los videos .mp4)
             const areanaVideoUrls = [
@@ -108,9 +110,9 @@
             ];
             
             const placeholderData = [];
-            for (let i = 0; i < 10; i++) {
+            for (let i = 0; i < totalItems; i++) { // Bucle hasta 9
                 placeholderData.push({
-                    url: areanaVideoUrls[i % areanaVideoUrls.length], // Alterna entre las 3 URLs
+                    url: areanaVideoUrls[i % areanaVideoUrls.length], 
                 });
             }
 
@@ -146,24 +148,27 @@
 
             // 2. Posicionamiento SIN MARGEN (Contiguo) y Ajuste de Distribución
             
-            // Margen mínimo entre ventanas (en píxeles) y borde de la pantalla
-            const margin = 0; // <<<<<<<< AJUSTE: CERO MARGEN ENTRE VENTANAS
-            
-            // Margen para el inicio y fin de las líneas (las ventanas SÍ inician pegadas al borde)
+            const margin = 0; // CERO MARGEN ENTRE VENTANAS
             const edgeMargin = 0; 
             
             // Acumuladores de posición (Inician en el borde 0)
-            let currentX_T = edgeMargin; // Posición horizontal para TOP (Ítems 0, 1, 2)
-            let currentX_B = edgeMargin; // Posición horizontal para BOTTOM (Ítems 3, 4, 5)
-            let currentY_L = edgeMargin; // Posición vertical para LEFT (Ítem 6)
-            let currentY_R = edgeMargin; // Posición vertical para RIGHT (Ítems 8, 9, 10)
+            let currentX_T = edgeMargin; // TOP (Ítems 0, 1, 2)
+            let currentX_B = edgeMargin; // BOTTOM (Ítems 3, 4, 5)
+            let currentY_L = edgeMargin; // LEFT (Ítem 6 - ahora el único de la izquierda)
+            let currentY_R = edgeMargin; // RIGHT (Ítems 7, 8)
 
             const viewportHeight = window.innerHeight;
 
-            for (let i = 0; i < placeholders.length; i++) {
+            for (let i = 0; i < totalItems; i++) {
                 const item = placeholders[i];
                 const { width, height } = sizes[i];
                 
+                // La nueva distribución de índices (0 a 8) es:
+                // TOP: 0, 1, 2 (3 ítems)
+                // BOTTOM: 3, 4, 5 (3 ítems)
+                // LEFT: 6 (1 ítem)
+                // RIGHT: 7, 8 (2 ítems)
+
                 if (i >= 0 && i <= 2) { // TOP (0, 1, 2)
                     item.style.top = `0px`; 
                     item.style.left = `${currentX_T}px`;
@@ -172,11 +177,10 @@
                     item.style.bottom = `0px`; 
                     item.style.left = `${currentX_B}px`;
                     currentX_B += width + margin;
-                } else if (i === 6) { // LEFT (Ítem 7) - Un solo ítem a la izquierda
+                } else if (i === 6) { // LEFT (Ítem 8 - ahora índice 6)
                     item.style.left = `0px`; 
                     item.style.top = `${currentY_L}px`;
-                    // Ya no hay acumulador para el lado izquierdo (solo 1 ítem)
-                } else if (i === 7) { // RIGHT (Ítem 8) - Posición especial (Central Derecha Abajo)
+                } else if (i === 7) { // RIGHT (Ítem 9 - ahora índice 7) - Posición especial (Central Derecha Abajo)
 
                     // 75% de la altura, ajustado a la mitad del ítem para centrarlo en la mitad inferior.
                     const targetTop = (viewportHeight * 0.75) - (height / 2);
@@ -184,13 +188,13 @@
                     item.style.right = `0px`;
                     item.style.top = `${targetTop}px`;
 
-                    // El acumulador para los ítems 9 y 10 (i=8, 9) debe empezar en la parte superior.
+                    // El acumulador para el ítem 10 (i=8) debe empezar en la parte superior.
                     currentY_R = edgeMargin; 
 
-                } else { // RIGHT (Ítems 9 y 10 - i=8, 9) - Acumulación secuencial desde arriba
+                } else { // RIGHT (Ítem 10 - i=8) - Acumulación secuencial desde arriba
                     item.style.right = `0px`; 
                     item.style.top = `${currentY_R}px`;
-                    currentY_R += height + margin; // margin es 0, así que se pegan
+                    currentY_R += height + margin; // margin es 0, así que se pega
                 }
             }
         });
@@ -267,11 +271,7 @@
         <div class="highlight-item window" id="item-6">
             <video id="video-6" src="about:blank" loop muted preload="auto" playsinline title="Video Placeholder 6"></video>
         </div>
-
-        <div class="highlight-item window" id="item-7">
-            <video id="video-7" src="about:blank" loop muted preload="auto" playsinline title="Video Placeholder 7"></video>
-        </div>
-
+        
         <div class="highlight-item window" id="item-8">
             <video id="video-8" src="about:blank" loop muted preload="auto" playsinline title="Video Placeholder 8"></video>
         </div>
