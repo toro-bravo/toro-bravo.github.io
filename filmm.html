@@ -7,79 +7,106 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
     <link rel="icon" href="assets/Ten-Gallon-Hat-icon.png">
+    
     <style>
         body {
             background-color: #0D47A1;
             color: white;
             font-family: 'Times New Roman', Times, serif;
             padding-bottom: 2rem;
-            /* Agregado: centrar contenido y usar ancho completo */
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            text-align: center;
+            /* El cuerpo define el contexto de posicionamiento */
+            position: relative; 
+            min-height: 100vh; /* Asegura que el cuerpo cubra toda la altura de la vista */
+            margin: 0;
+            overflow-x: hidden; /* Evita la barra de desplazamiento horizontal no deseada */
         }
 
         a, h1 {
             color: yellow
         }
 
-        /* Agregado: Estilos para el contenedor principal que alineará videos y estrella */
-        .main-content-container {
+        /* Contenedor que maneja la disposición central y los elementos posicionados */
+        .central-layout {
+            position: relative;
             width: 100%;
-            max-width: 1200px; /* Limita el ancho para que los videos no se separen demasiado */
+            height: 100vh; /* Ocupa la altura completa de la vista para el diseño central */
             display: flex;
-            justify-content: space-between; /* Espacia los elementos: video-estrella-video */
-            align-items: flex-start; /* Alinea los elementos en la parte superior */
-            margin: 20px 0;
-            padding: 0 10px; /* Pequeño padding en los laterales */
+            flex-direction: column;
+            align-items: center;
+            justify-content: center; /* Centra el contenido verticalmente */
+            text-align: center;
+            padding: 0;
+            margin: 0;
         }
 
-        /* Agregado: Estilos para los iframes de video (placeholders) */
+        /* Estilos para el título principal, ahora dentro del layout central */
+        .central-layout h1 {
+            position: relative;
+            z-index: 10;
+            margin-top: -150px; /* Ajuste para mover el título ligeramente hacia arriba */
+        }
+
+        /* Estilos para la estrella ASCII, ahora más grande y en el centro */
+        .ascii-art {
+            position: absolute; /* Posicionamiento absoluto */
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%); /* Centra el elemento exactamente */
+            white-space: pre;
+            font-family: monospace;
+            color: #FFC107;
+            font-size: 1.5px; /* Aumentado significativamente para la referencia visual */
+            line-height: 0.8;
+            text-align: center;
+            z-index: 5; /* Asegura que esté detrás del texto clave si es necesario */
+            opacity: 0.8; /* Ligeramente transparente para que no domine */
+        }
+
+        /* Estilos para los iframes de video (placeholders) */
         .video-placeholder {
-            width: 200px; /* Ancho fijo para el placeholder */
-            height: 150px; /* Alto fijo para el placeholder */
+            width: 180px; /* Ancho ajustado */
+            height: 120px; /* Alto ajustado */
             border: 2px solid yellow;
             background-color: #000;
-            flex-shrink: 0; /* Evita que los iframes se reduzcan */
-        }
-        
-        /* Agregado: Estilos para la estrella ASCII */
-        .ascii-art {
-            white-space: pre; /* Mantiene el formato del ASCII art */
-            font-family: monospace; /* Fuente esencial para ASCII art */
-            color: #FFC107; /* Color de la estrella */
-            font-size: 0.5px; /* Tamaño muy pequeño para mostrar el ASCII art de forma compacta */
-            line-height: 0.8; /* Ajusta el espacio entre líneas */
-            text-align: center; /* Asegura el centrado del texto dentro de su div */
-            margin: 0 20px; /* Margen para separarlo de los videos */
-            overflow: hidden; /* Oculta cualquier desbordamiento si el arte es muy ancho */
+            position: absolute; /* Crucial para posicionarlos en los márgenes */
+            z-index: 20;
+            box-shadow: 0 0 10px rgba(255, 255, 0, 0.5); /* Sombra para destacarlos */
         }
 
-        /* Agregado: Estilos para el contenedor de texto principal */
+        /* Posicionamiento específico de los placeholders - IMIITANDO LA REFERENCIA */
+        
+        /* Video Superior Izquierdo (Similar a la imagen (5)) */
+        #video-left-top {
+            top: 15vh;
+            left: 5vw;
+        }
+
+        /* Video Inferior Derecho (Similar a la imagen (2)) */
+        #video-right-bottom {
+            bottom: 20vh;
+            right: 5vw;
+        }
+
+        /* Contenedor para el texto restante, forzado a alinearse a la izquierda */
         .text-container {
             width: 100%;
-            max-width: 600px; /* Ancho máximo para el texto */
+            max-width: 600px;
             text-align: left;
+            margin: 50px auto; /* Centra el contenedor de texto en la parte inferior */
+            padding-top: 100vh; /* Empuja el contenido debajo de la zona central */
         }
     </style>
 </head>
 
 <body>
-    <h1>
-        TORO BRAVO
-        <br/>
-        <i style="color:gray">film</i>
-    </h1>
-
-    <div class="main-content-container">
-        <iframe 
-            class="video-placeholder" 
-            src="about:blank" 
-            allowfullscreen 
-            title="Video Placeholder Izquierdo (Are.na)">
-        </iframe>
+    <div class="central-layout">
         
+        <h1>
+            TORO BRAVO
+            <br/>
+            <i style="color:gray">film</i>
+        </h1>
+
         <div class="ascii-art">
 ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢠⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
 ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠒⠀⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
@@ -115,6 +142,15 @@
         </div>
         
         <iframe 
+            id="video-left-top"
+            class="video-placeholder" 
+            src="about:blank" 
+            allowfullscreen 
+            title="Video Placeholder Izquierdo (Are.na)">
+        </iframe>
+        
+        <iframe 
+            id="video-right-bottom"
             class="video-placeholder" 
             src="about:blank" 
             allowfullscreen 
