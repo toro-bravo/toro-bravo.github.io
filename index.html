@@ -2,9 +2,9 @@
 <head>
     <title>toro bravo</title>
     <meta name="description" content="Portafolio de TORO BRAVO (Mateo Bravo Mir), director de cine de Barcelona y artista de postproducción, VFX y 3D. Creación de piezas audiovisuales únicas con multiformato y estética experimental.">
-    <meta name="keywords" content="director de cine, vfx artist, postproduccion, 3d artist, barcelona, toro bravo, atomico, film director, portfolio, multiformato, video experimental">   
+    <meta name="keywords" content="director de cine, vfx artist, postproduccion, 3d artist, barcelona, toro bravo, atomico, film director, portfolio, multiformato, video experimental">    
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
- 
+
     <link rel="icon" href="assets/Ten-Gallon-Hat-icon.png">
     <style>
         body {
@@ -23,7 +23,7 @@
             margin-top: 0; 
         }
 
-        /* NUEVOS ESTILOS PARA EL LAYOUT DE DOS COLUMNAS */
+        /* ESTILOS PARA EL LAYOUT DE DOS COLUMNAS */
 
         .two-column-layout {
             display: flex; 
@@ -57,6 +57,22 @@
         .right-column li {
             text-align: right; 
         }
+
+        /* NUEVOS ESTILOS PARA EL VIDEO DE FONDO */
+        #fullscreen-video {
+            position: fixed; /* Fija el video a la ventana */
+            right: 0;
+            bottom: 0;
+            min-width: 100%; 
+            min-height: 100%;
+            width: auto;
+            height: auto;
+            z-index: -999; /* Lo coloca detrás de todo el contenido */
+            display: none; /* Inicialmente oculto */
+            pointer-events: none; /* Asegura que no interfiera con otros clics */
+            background-color: #0D47A1; /* Color de fondo si el video no carga */
+            object-fit: cover; /* Asegura que el video cubra toda la pantalla sin distorsión */
+        }
     </style>
 </head>
 
@@ -64,14 +80,14 @@
     <h1>
         TORO BRAVO
         <br>
-        <i style="color:gray">director & postproduction / vfx / 3d artist [½ of <a href="https://www.instagram.com/_.atomico/" target="_blank">@_.atomico</a>]</i>
+        <i style="color:gray">director & postproduction / vfx / 3d artist [½ of <a href="https://www.instagram.com/_.atomico" target="_blank">@_.atomico</a>]</i>
     </h1>
 
     <div class="two-column-layout">
         
         <div class="about-column">
             <h2>about</h2>
-  <pre style="font-family: 'Times New Roman', Times, serif; font-size: 13px; line-height: 1;">
+ <pre style="font-family: 'Times New Roman', Times, serif; font-size: 13px; line-height: 1;">
 ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣀⣠⣤⣶⣶⣦⣤⡀⠀⠀⠀⣀⣀⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
 ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣠⣴⣶⣿⣿⣿⣿⣿⣿⣿⣿⣿⠛⠛⠛⠋⠉⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
 ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣰⣿⣿⡿⠿⠿⠟⠿⠿⠿⠛⠛⠛⠛⠛⠋⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
@@ -131,7 +147,7 @@
             </p>
             
             <h2>connect with me</h2>
-            <ul>
+            <ul style="margin-bottom: 50px;">
                 <li>
                     <a href="https://www.instagram.com/toro.bm">main instagram</a>
                 </li>
@@ -145,8 +161,45 @@
                     <a href="https://soundcloud.com/toromekaniko/sets/on-the-fringe-of-the-spine">toro mekaniko ♬⋆.˚ 01:43 ─────●─ 03:50 ⇆ㅤ ㅤ◁ㅤ ❚❚ ㅤ▷ ㅤㅤ↻﻿</a>
                 </li>
             </ul>
+            
+            <div id="secret-link-container" style="padding-top: 150px; text-align: center;"> 
+                <a href="#" id="video-trigger">don't click here</a>
+            </div>
         </div>
     </div>
+    
 <marquee> ᕦ(òᴥó)ᕥ LAUS ORO - TRABAJO LIBRE ESTUDIANTE - AUDIOVISUAL - “Primavera - Fun Train” // LAUS PLATA - TRABAJO LIBRE ESTUDIANTE - AUDIOVISUAL - “Friday the 13th” // ISABEL COIXET’S FASHIONERS OF THE WORLD - BEST FASHION FILM AWARD (2023) - “No Land to Call Our Own” // LCI FASHION FILM FESTIVAL 2023 OFFICIAL SELECTION - “Amenoia”</marquee>
+
+<video loop muted id="fullscreen-video" playsinline>
+    <source src="https://attachments.are.na/41087120/3d5dfa0d9a1cb5ef700407deb41fb777.mp4?1763050157" type="video/mp4">
+    Tu navegador no soporta el tag de video.
+</video>
+
+<script>
+    document.getElementById('video-trigger').addEventListener('click', function(e) {
+        // 1. Previene la navegación por defecto del enlace
+        e.preventDefault();
+
+        // 2. Obtiene el elemento de video
+        var video = document.getElementById('fullscreen-video');
+
+        // 3. Muestra el video (cambia el display de 'none' a 'block')
+        video.style.display = 'block'; 
+
+        // 4. Intenta reproducir el video
+        var playPromise = video.play();
+
+        if (playPromise !== undefined) {
+            playPromise.then(_ => {
+                console.log("Video de fondo iniciado.");
+            })
+            .catch(error => {
+                // Esto podría ocurrir si el navegador bloquea la reproducción por alguna razón.
+                console.error("Error al intentar reproducir el video:", error);
+            });
+        }
+    });
+</script>
+
 </body>
 </html>
