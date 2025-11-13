@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <title>film</title>
+    <title>toro bravo - film (Ajustes Finales)</title>
     <meta name="description" content="Toro Bravo film project page - Static list with video thumbnails.">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
@@ -29,7 +29,7 @@
         /* --- Contenedor de la Zona Central (Título) --- */
         .central-layout {
             position: relative;
-            padding: 50px 1rem 30px 1rem; /* Padding superior e inferior reducido */
+            padding: 50px 1rem 30px 1rem;
             text-align: left;
             z-index: 50; 
         }
@@ -47,27 +47,29 @@
             transform: translate(-50%, -50%); /* Centrar tanto en X como en Y */
             white-space: pre;
             font-family: monospace;
-            font-size: 35px; /* Más grande */
+            font-size: 35px; /* Grande */
             line-height: 0.8;
             text-align: center;
             z-index: 1; /* Fondo */
-            opacity: 0.35; /* Gris claro (usamos opacidad sobre blanco) */
+            opacity: 0.35; /* Gris claro */
             color: #CCCCCC; 
-            pointer-events: none; /* Asegurar que no bloquea clics */
+            pointer-events: none;
         }
 
         /* ========================================================= */
         /* === ESTILOS DE LA LISTA (TABLA B) ======================= */
         /* ========================================================= */
         .content-table {
-            margin-top: 20px; /* Margen superior reducido */
+            margin-top: 20px;
             margin-left: 1rem; 
             width: 100%;
             max-width: 800px;
+            z-index: 10; /* Asegurar que la tabla esté sobre el ASCII */
+            position: relative;
         }
         
         .content-table td {
-            padding: 2px 0; /* Padding vertical reducido para menos espaciado */
+            padding: 2px 0; /* Padding vertical reducido */
             color: white; 
         }
 
@@ -75,7 +77,7 @@
         /* === ESTILOS DE VIDEO INTERACTIVO DENTRO DE LA TABLA ===== */
         /* ========================================================= */
         
-        /* Contenedor de video (reemplaza a IMG) - DOBLE TAMAÑO */
+        /* Contenedor de video (reemplaza a IMG) - DOBLE TAMAÑO (100x80) */
         .highlight-item {
             display: block;
             overflow: hidden;
@@ -214,7 +216,30 @@
 ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠒⠀⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
 ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢈⣾⣿⢷⠄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
 ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢰⠈⡀⠐⠀⠐⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-... [El arte ASCII es largo, lo he cortado aquí por concisión, pero se mantiene el mismo bloque] ...
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣤⣃⣶⢤⡤⢤⣬⣄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⠔⠟⠉⢁⣀⡈⠉⠉⠑⠀⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⡆⠀⠒⠀⠀⠀⠀⠀⠠⠤⠀⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢬⣴⠶⠶⠶⡾⡞⡯⢿⣷⣶⣷⢦⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣰⡼⠛⠉⠀⠀⠀⠀⠀⠀⠀⠀⠈⠉⠐⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⡀⠁⠄⠀⡀⣀⣴⣴⠐⠶⣶⣶⣄⡤⣀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⣀⡀⣀⣀⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠠⢀⠀⡀⣠⢈⡤⠻⠛⠁⠀⠀⠀⠀⠀⠁⠉⠘⠹⡐⢄⢀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠈⠩⠂⠀⢰⣻⠿⠀⠀⠀⢨⣗⣫⠏⠁⠘⣰⣯⠂⠑⠁⠘⡠⠥⣺⠏⠀⠀⠀⣀⣤⣤⢤⡤⣄⡄⠀⠀⠈⠻⢿⣕⠄⠱⡠⠢⢖⡀⠂⠳⣢⢚⠉⠙⣯⢣⠙⣉⠖⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠒⢸⣯⣇⠀⠀⠘⢥⢖⠟⠀⠀⢀⢳⡏⠀⠀⠀⠄⢰⣟⡇⠀⢀⣴⡾⠫⠛⠋⠀⠓⠙⡿⣷⢤⡀⠀⠀⠙⣿⡂⠀⠁⢣⠷⠄⠀⢰⡷⡁⠀⢨⠟⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠁⠈⡀⠀⠀⣸⠺⠂⠀⠀⢸⠚⡁⠀⠀⠀⠀⢊⣧⠀⢀⣾⠋⠀⠠⡠⢢⠂⠀⠀⠀⠙⠌⢷⠀⠀⠀⠈⢴⠀⠀⠠⢆⡆⠀⠈⣷⠷⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠉⠰⠄⣿⠧⠄⠀⠀⣈⣝⠁⠀⠀⡀⢀⢨⢿⠀⠸⣙⠂⠀⢷⡇⠉⠡⢱⡄⠀⠀⠀⠪⣧⠂⠀⠀⣾⡄⠀⠀⢺⡭⠄⠀⠉⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠉⣿⠄⡄⢈⣿⡀⠀⠀⠃⡀⢰⣿⡀⠠⠟⡈⠀⠉⠂⠀⠀⣘⡇⠀⠀⠀⢴⡞⠀⠀⠀⡟⡷⠀⠀⠸⠋⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠁⠢⣟⢇⠀⠀⠙⠐⠘⡝⢧⡀⠘⢝⡦⣘⠁⢂⡨⡼⠀⠀⠀⡰⠿⠀⠀⠀⢀⣿⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⣷⡆⠀⠈⠀⢀⠀⠻⣷⣅⣀⠌⠙⠚⠋⠉⠁⢀⣠⣾⡻⠁⠀⠀⢠⣎⠇⢀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⢻⣤⢀⠀⠀⠀⠄⠙⠛⠿⣟⡿⣴⣶⡲⣾⠿⠟⠊⠀⠀⢀⣴⠗⠇⠀⢈⣾⡄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠑⠀⠈⠻⢿⣆⣄⡀⠀⠀⠀⠀⠀⠀⠉⠈⠁⢈⢁⣀⣤⣪⠛⠉⠀⠀⣀⣾⣯⡟⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢐⠃⠀⠀⠠⠀⠀⠈⠙⠻⢻⣶⣶⣦⣤⢤⠶⣶⡿⡿⠟⠋⠃⠀⠀⠀⢀⣞⣾⡻⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠠⠽⣿⣶⣤⣀⠀⠀⠀⠀⠀⠀⠐⠀⠨⠥⠁⠈⠉⠀⠀⠀⠀⠀⠀⡀⡰⣟⠙⠋⠀⠀⠀⠀⣀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠂⠀⠈⠉⠙⠿⢿⣶⣤⣀⣀⣀⡀⠀⠀⠀⠀⠀⠀⠀⠀⡠⣤⡶⡭⡿⠙⠂⠁⠀⠀⠀⢀⠼⣫⠦⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣂⠰⠀⠀⠀⠀⠀⠀⠌⣙⠟⣻⠟⠃⠀⠀⠀⠀⠀⠀⠀⠀⠈⠛⠝⡉⠀⠀⠀⠀⠀⠀⡠⢾⡻⠉⠊⠂⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠲⢿⣷⣶⣄⡀⠀⠀⠀⠀⠀⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣀⠤⡺⠿⠃⠀⠀⠀⠈⢐⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⠻⠹⠟⢿⣿⠟⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠁⠁⠁⠀⠀⠀⠀⠀⢀⣼⣆⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⡠⣢⣤⣀⣀⣀⠂⠄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠁⠀⠀⣐⡮⡫⠏⡠⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⠛⠛⣽⠋⠊⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⠙⠅⠀⠀⠁⠀⠀⠀⠀⠀⠀⠀
 ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⢠⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
 ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢠⠞⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
 ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
