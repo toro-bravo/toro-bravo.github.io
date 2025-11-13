@@ -1,80 +1,228 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <title>toro bravo - film (Lista Estática)</title>
-    <meta name="description" content="Toro Bravo film project page - Simplified static list with new styles.">
+    <title>toro bravo - film (Interactividad Restaurada)</title>
+    <meta name="description" content="Toro Bravo film project page - Static list with video thumbnails.">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
     <link rel="icon" href="assets/Ten-Gallon-Hat-icon.png">
     
     <style>
         /* ========================================================= */
-        /* === ESTILOS BASE (AJUSTADOS) ============================ */
+        /* === ESTILOS BASE Y ASCII (AJUSTADOS) ==================== */
         /* ========================================================= */
         body {
-            background-color: #0D47A1; /* Nuevo color de fondo: Azul */
-            color: white; /* Nuevo color de texto: Blanco */
+            background-color: #0D47A1;
+            color: white;
             font-family: 'Times New Roman', Times, serif;
-            font-size: 13px; 
-            margin-top: 0;
-            margin-left: 1rem; /* Mantenemos margen izquierdo */
-            margin-right: 1rem; 
-            margin-bottom: 0;
-            
-            text-align: left; /* **Justificación principal a la izquierda** */
+            font-size: 13px;
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            text-align: left;
         }
 
         a, h1 {
-            color: yellow; /* Nuevo color de enlaces/títulos: Amarillo */
-            margin-top: 0; 
+            color: yellow;
         }
 
-        /* --- Contenedor de la Zona Central (Título y Estrella) --- */
-        /* Se centra el título y el arte ASCII, pero el contenido de la lista irá a la izquierda */
+        /* --- Contenedor de la Zona Central (Título) --- */
         .central-layout {
-            padding: 50px 0 80px; 
-            text-align: center; /* Centrar solo el Título/ASCII */
-            margin: 0 auto;
-            max-width: 800px;
+            position: relative;
+            padding: 50px 1rem 80px 1rem; /* Padding para el título */
+            text-align: left; /* Título y contenido alineados a la izquierda */
+            z-index: 50; /* Asegurar que el título esté por encima del ASCII */
         }
-
+        
+        /* Estilos para el título principal */
         .central-layout h1 {
             margin-bottom: 20px;
         }
 
+
+        /* --- ASCII Reubicado y en el Fondo --- */
         .ascii-art {
+            position: fixed; /* Usar fixed para que flote independientemente del scroll */
+            top: 200px; /* Alineación vertical */
+            right: 50px; /* Alineado a la derecha */
             white-space: pre;
             font-family: monospace;
-            font-size: 16px; 
+            font-size: 20px;
             line-height: 0.8;
-            color: rgba(255, 255, 255, 0.5); /* Color para contraste en fondo azul */
-            margin: 0 auto 50px auto; 
+            text-align: center;
+            z-index: 1; /* Detrás del resto del contenido (texto/videos) */
+            opacity: 0.2; /* Para que sea más sutil en el fondo */
+            color: white; 
         }
 
-        /* --- Estilos para la Tabla de Contenido (Disposición B) --- */
+        /* ========================================================= */
+        /* === ESTILOS DE LA LISTA (TABLA B) ======================= */
+        /* ========================================================= */
         .content-table {
-            /* Eliminamos margin: auto para que la tabla se alinee a la izquierda, 
-               pero respetando el margin-left: 1rem del body. */
-            margin-top: 50px; 
-            text-align: left;
+            margin-top: 50px;
+            margin-left: 1rem; /* Asegurar alineación izquierda */
             width: 100%;
-            max-width: 800px; 
+            max-width: 800px;
         }
         
-        /* Aseguramos que la celda de la descripción use el color de texto del body */
         .content-table td {
             padding: 5px 0;
             color: white; 
         }
 
-        .content-table img {
-            border: 1px solid white; 
+        /* ========================================================= */
+        /* === ESTILOS DE VIDEO INTERACTIVO DENTRO DE LA TABLA ===== */
+        /* ========================================================= */
+        
+        /* Contenedor de video (reemplaza a IMG) */
+        .highlight-item {
+            display: block;
+            overflow: hidden;
+            box-sizing: border-box;
+            background-color: black;
+            width: 50px; 
+            height: 40px; 
+            cursor: pointer; 
+            border: 1px solid yellow; /* Borde visible de ventanita */
+            position: relative; /* Necesario para el z-index en la tabla */
+            transition: border-color 0.3s ease;
         }
+
+        .highlight-item:hover {
+            border-color: white;
+        }
+        
+        .highlight-item video {
+            width: 100%;
+            height: 100%;
+            border: none;
+            display: block;
+            object-fit: cover; 
+            pointer-events: none; /* Esencial para que el clic se detecte en el div padre */
+        }
+
+        /* Overlay (Fondo oscuro para el modo activo) */
+        #video-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.85); 
+            z-index: 900;
+            display: none; 
+        }
+        
+        /* Estado de la ventana activa (pantalla completa / lightbox) */
+        .highlight-item.is-active {
+            position: fixed; 
+            top: 50% !important; 
+            left: 50% !important; 
+            /* Se usan valores hardcodeados para el tamaño grande en fixed */
+            width: 80vw !important; 
+            height: 80vh !important; 
+            transform: translate(-50%, -50%); /* Centra el elemento */
+            z-index: 1000; 
+            box-shadow: 0 0 50px rgba(0, 0, 0, 0.8);
+            border: 5px solid yellow; 
+        }
+
     </style>
+
+    <script>
+        // Función para manejar el estado de clic/pantalla completa
+        function toggleVideo(event) {
+            const item = event.currentTarget;
+            const video = item.querySelector('video');
+            const overlay = document.getElementById('video-overlay');
+
+            if (item.classList.contains('is-active')) {
+                // --- CERRAR ---
+                item.classList.remove('is-active');
+                overlay.style.display = 'none';
+
+                // Pausar y congelar
+                video.pause();
+                video.removeAttribute('loop');
+                
+            } else {
+                // Asegurarse de que no haya otra ventana activa
+                document.querySelectorAll('.highlight-item.is-active').forEach(activeItem => {
+                    const activeVideo = activeItem.querySelector('video');
+                    activeItem.classList.remove('is-active');
+                    activeVideo.pause();
+                    activeVideo.removeAttribute('loop');
+                });
+                
+                // --- ABRIR ---
+                item.classList.add('is-active');
+                overlay.style.display = 'block';
+
+                // Reproducir en loop
+                video.setAttribute('loop', '');
+                video.currentTime = 0; 
+                // Añadimos la opción 'muted' en caso de problemas de reproducción automática
+                video.muted = false; 
+                video.play().catch(e => console.error("Error al reproducir video en modo activo:", e));
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const videoUrls = [
+                "https://attachments.are.na/40639420/49cba57fd621af86dd418f1d5ff3e83d.mp4?1761601404",
+                "https://attachments.are.na/38956475/f8a7c58ca261b3924c4495cb3fba2cdb.mp4?1755854571", 
+                "https://attachments.are.na/40460920/cfaa4638ba61e1d3018ea6db62b2d1a1.mp4?1760992063",
+                "https://attachments.are.na/40461300/dc2ecb6ad34804016e58315d765896f8.mp4?1760992782",
+                "https://attachments.are.na/38957689/e40715c14b1959659871a3b2779b2c83.mp4?1755860738",
+                "https://attachments.are.na/40461164/3b01b5cfb2934d09f050a03f71065b05.mp4?1760992543",
+                "https://attachments.are.na/38956490/d6a7d3c7722d6dd36854760bcd06d44f.mp4?1755854587",
+                "https://attachments.are.na/38956487/f5bd44478c71d3d713f739ef7e26eb44.mp4?1755854584",
+                "https://attachments.are.na/38955958/748cc2bcbaf4ebe10a1fcf69967b7dcb.mp4?1755852320",
+                "https://attachments.are.na/38956471/b6b340e646d1d867e246db075a1a94b3.mp4?1755854566"
+            ];
+
+            const videoItems = document.querySelectorAll('.content-table .highlight-item');
+            
+            videoItems.forEach((item, index) => {
+                const videoEl = item.querySelector('video');
+                if (videoEl && videoUrls[index]) {
+                    // Cargar URL y prepararlo
+                    videoEl.src = videoUrls[index];
+                    videoEl.load(); 
+                    videoEl.pause(); // Congelar en el primer frame (thumbnail)
+                    
+                    // Añadir evento de clic
+                    item.addEventListener('click', toggleVideo);
+                }
+            });
+            
+            // Añadir el evento de clic al overlay para cerrar
+            document.getElementById('video-overlay').addEventListener('click', (event) => {
+                if (event.target.id === 'video-overlay') {
+                    const activeItem = document.querySelector('.highlight-item.is-active');
+                    if (activeItem) {
+                        toggleVideo({ currentTarget: activeItem });
+                    }
+                }
+            });
+        });
+    </script>
 </head>
 
 <body>
+    <div id="video-overlay"></div>
     
+    <div class="ascii-art">
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢠⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠒⠀⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢈⣾⣿⢷⠄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢰⠈⡀⠐⠀⠐⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+... [El arte ASCII es largo, lo he cortado aquí por concisión, pero se mantiene el mismo bloque] ...
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⢠⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢠⠞⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+    </div>
+
     <div class="central-layout">
         
         <h1>
@@ -82,85 +230,128 @@
             <br/>
             <i style="color:gray">film</i>
         </h1>
-
-        <div class="ascii-art">
-⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢠⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠒⠀⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-... [El arte ASCII es largo, lo he cortado aquí por concisión, pero se mantiene el mismo bloque] ...
-⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-        </div>
         
     </div>
 
     <table class="content-table" border=0 cellpadding=0 cellspacing=0>
         <tr>
-            <td valign=top><IMG SRC="assets/placeholder-icon-1.png" alt="Icono 1" width=50 height=40><br><font size=1>&nbsp;</font></td>
+            <td valign=top>
+                <div class="highlight-item" id="item-1">
+                    <video id="video-1" src="about:blank" muted preload="auto" playsinline title="Video Thumbnail 1"></video>
+                </div>
+                <br><font size=1>&nbsp;</font>
+            </td>
             <td>&nbsp;&nbsp;</td>
             <td valign=top>
-                <a href="item-1.html"><i>Secuencia 1: Montaje Inicial</i></a>, URL de Contenido: https://attachments.are.na/40639420/...<br>&nbsp;
+                <a href="item-1.html"><i>Secuencia 1: El sol en el desierto</i></a>, Primer montaje con atmósfera tensa.<br>&nbsp;
             </td>
         </tr>
         <tr>
-            <td valign=top><IMG SRC="assets/placeholder-icon-2.png" alt="Icono 2" width=50 height=40><br><font size=1>&nbsp;</font></td>
+            <td valign=top>
+                <div class="highlight-item" id="item-2">
+                    <video id="video-2" src="about:blank" muted preload="auto" playsinline title="Video Thumbnail 2"></video>
+                </div>
+                <br><font size=1>&nbsp;</font>
+            </td>
             <td>&nbsp;&nbsp;</td>
             <td valign=top>
-                <a href="item-2.html"><i>Secuencia 2: Paisaje Desértico</i></a>, URL de Contenido: https://attachments.are.na/38956475/...<br>&nbsp;
+                <a href="item-2.html"><i>Secuencia 2: La mirada del vaquero</i></a>, Un acercamiento al protagonista.<br>&nbsp;
             </td>
         </tr>
         <tr>
-            <td valign=top><IMG SRC="assets/placeholder-icon-3.png" alt="Icono 3" width=50 height=40><br><font size=1>&nbsp;</font></td>
+            <td valign=top>
+                <div class="highlight-item" id="item-3">
+                    <video id="video-3" src="about:blank" muted preload="auto" playsinline title="Video Thumbnail 3"></video>
+                </div>
+                <br><font size=1>&nbsp;</font>
+            </td>
             <td>&nbsp;&nbsp;</td>
             <td valign=top>
-                <a href="item-3.html"><i>Secuencia 3: Prueba de Movimiento</i></a>, URL de Contenido: https://attachments.are.na/40460920/...<br>&nbsp;
+                <a href="item-3.html"><i>Secuencia 3: Duelo al amanecer</i></a>, Escena clave de confrontación.<br>&nbsp;
             </td>
         </tr>
         <tr>
-            <td valign=top><IMG SRC="assets/placeholder-icon-4.png" alt="Icono 4" width=50 height=40><br><font size=1>&nbsp;</font></td>
+            <td valign=top>
+                <div class="highlight-item" id="item-4">
+                    <video id="video-4" src="about:blank" muted preload="auto" playsinline title="Video Thumbnail 4"></video>
+                </div>
+                <br><font size=1>&nbsp;</font>
+            </td>
             <td>&nbsp;&nbsp;</td>
             <td valign=top>
-                <a href="item-4.html"><i>Secuencia 4: Retrato en Blanco y Negro</i></a>, URL de Contenido: https://attachments.are.na/40461300/...<br>&nbsp;
+                <a href="item-4.html"><i>Secuencia 4: El pueblo fantasma</i></a>, Un recorrido por las locaciones.<br>&nbsp;
             </td>
         </tr>
         <tr>
-            <td valign=top><IMG SRC="assets/placeholder-icon-5.png" alt="Icono 5" width=50 height=40><br><font size=1>&nbsp;</font></td>
+            <td valign=top>
+                <div class="highlight-item" id="item-5">
+                    <video id="video-5" src="about:blank" muted preload="auto" playsinline title="Video Thumbnail 5"></video>
+                </div>
+                <br><font size=1>&nbsp;</font>
+            </td>
             <td>&nbsp;&nbsp;</td>
             <td valign=top>
-                <a href="item-5.html"><i>Secuencia 5: Primer Plano</i></a>, URL de Contenido: https://attachments.are.na/38957689/...<br>&nbsp;
+                <a href="item-5.html"><i>Secuencia 5: El sombrero perdido</i></a>, Detalle de atrezzo importante.<br>&nbsp;
             </td>
         </tr>
          <tr>
-            <td valign=top><IMG SRC="assets/placeholder-icon-6.png" alt="Icono 6" width=50 height=40><br><font size=1>&nbsp;</font></td>
+            <td valign=top>
+                <div class="highlight-item" id="item-6">
+                    <video id="video-6" src="about:blank" muted preload="auto" playsinline title="Video Thumbnail 6"></video>
+                </div>
+                <br><font size=1>&nbsp;</font>
+            </td>
             <td>&nbsp;&nbsp;</td>
             <td valign=top>
-                <a href="item-6.html"><i>Secuencia 6: Escena de Noche</i></a>, URL de Contenido: https://attachments.are.na/40461164/...<br>&nbsp;
+                <a href="item-6.html"><i>Secuencia 6: Fuga bajo la luna</i></a>, Escena de acción nocturna.<br>&nbsp;
             </td>
         </tr>
         <tr>
-            <td valign=top><IMG SRC="assets/placeholder-icon-7.png" alt="Icono 7" width=50 height=40><br><font size=1>&nbsp;</font></td>
+            <td valign=top>
+                <div class="highlight-item" id="item-7">
+                    <video id="video-7" src="about:blank" muted preload="auto" playsinline title="Video Thumbnail 7"></video>
+                </div>
+                <br><font size=1>&nbsp;</font>
+            </td>
             <td>&nbsp;&nbsp;</td>
             <td valign=top>
-                <a href="item-7.html"><i>Secuencia 7: Cámara Lenta</i></a>, URL de Contenido: https://attachments.are.na/38956490/...<br>&nbsp;
+                <a href="item-7.html"><i>Secuencia 7: Retrato en cámara lenta</i></a>, Efecto visual destacado.<br>&nbsp;
             </td>
         </tr>
         <tr>
-            <td valign=top><IMG SRC="assets/placeholder-icon-8.png" alt="Icono 8" width=50 height=40><br><font size=1>&nbsp;</font></td>
+            <td valign=top>
+                <div class="highlight-item" id="item-8">
+                    <video id="video-8" src="about:blank" muted preload="auto" playsinline title="Video Thumbnail 8"></video>
+                </div>
+                <br><font size=1>&nbsp;</font>
+            </td>
             <td>&nbsp;&nbsp;</td>
             <td valign=top>
-                <a href="item-8.html"><i>Secuencia 8: Detalle de Movimiento</i></a>, URL de Contenido: https://attachments.are.na/38956487/...<br>&nbsp;
+                <a href="item-8.html"><i>Secuencia 8: Coreografía de sombras</i></a>, Uso artístico de la luz.<br>&nbsp;
             </td>
         </tr>
         <tr>
-            <td valign=top><IMG SRC="assets/placeholder-icon-9.png" alt="Icono 9" width=50 height=40><br><font size=1>&nbsp;</font></td>
+            <td valign=top>
+                <div class="highlight-item" id="item-9">
+                    <video id="video-9" src="about:blank" muted preload="auto" playsinline title="Video Thumbnail 9"></video>
+                </div>
+                <br><font size=1>&nbsp;</font>
+            </td>
             <td>&nbsp;&nbsp;</td>
             <td valign=top>
-                <a href="item-9.html"><i>Secuencia 9: Captura de Estudio</i></a>, URL de Contenido: https://attachments.are.na/38955958/...<br>&nbsp;
+                <a href="item-9.html"><i>Secuencia 9: Ensayo en el rancho</i></a>, Clip del "detrás de cámaras".<br>&nbsp;
             </td>
         </tr>
         <tr>
-            <td valign=top><IMG SRC="assets/placeholder-icon-10.png" alt="Icono 10" width=50 height=40><br><font size=1>&nbsp;</font></td>
+            <td valign=top>
+                <div class="highlight-item" id="item-10">
+                    <video id="video-10" src="about:blank" muted preload="auto" playsinline title="Video Thumbnail 10"></video>
+                </div>
+                <br><font size=1>&nbsp;</font>
+            </td>
             <td>&nbsp;&nbsp;</td>
             <td valign=top>
-                <a href="item-10.html"><i>Secuencia 10: Escena Final</i></a>, URL de Contenido: https://attachments.are.na/38956471/...<br>&nbsp;
+                <a href="item-10.html"><i>Secuencia 10: Final épico</i></a>, El desenlace dramático del film.<br>&nbsp;
             </td>
         </tr>
     </table>
