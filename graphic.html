@@ -3,81 +3,62 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ejemplo de Párrafo de Lectura</title>
+    <title>ASCII Art con Imagen Superpuesta</title>
     <style>
-        /* CSS para el cuerpo y la fuente general */
+        /* --- 1. Estilos Globales (Tus Preferencias) --- */
         body {
-            font-family: Georgia, 'Times New Roman', Times, serif; /* Fuente con serifa, similar a la referencia */
-            font-size: 18px; /* Tamaño de letra legible */
-            line-height: 1; /* Altura de línea para un buen espaciado */
-            color: #333; /* Color de texto oscuro, pero no negro puro */
+            font-family: Georgia, 'Times New Roman', Times, serif; 
+            font-size: 18px; 
+            color: #333; 
             margin: 0;
-            padding: 2px 2px; /* Espacio alrededor del contenido principal */
-            background-color: #f9f9f9; /* Fondo muy claro */
-        }
-
-        /* Estilos clave para el contenedor del texto */
-        .contenedor-texto {
-           
-            width: 100%; 
-            margin: 0 2px;
-            text-align: justify; 
+            padding: 20px; /* Aumentamos el padding para ver mejor la figura */
+            background-color: #f9f9f9; 
+            text-align: center; /* Centra el contenedor de la figura */
         }
         
-        /* Estilos para el párrafo en sí */
-        .contenedor-texto p {
-            margin-bottom: 20px; /* Espacio entre párrafos (si hubiera más de uno) */
+        /* --- 2. Contenedor del ASCII Art --- */
+        .art-figure {
+            /* IMPORTANTE: El padre es relativo para que el hijo (imagen) se posicione sobre él */
+            position: relative; 
+            display: inline-block; /* Permite que el contenedor se ajuste al ancho del arte */
+            margin: 50px auto; /* Centra el bloque de la figura en la página */
+        }
+        
+        /* Estilos del texto del ASCII Art */
+        .art-figure p {
+            font-family: monospace; /* CRUCIAL para mantener la alineación */
+            white-space: pre; /* Mantiene espacios y saltos de línea */
+            line-height: 0.8; /* Espaciado ajustado para caracteres */
+            font-size: 14px; /* Un poco más pequeño para una mejor relación con la imagen */
+            margin: 0;
+            color: #333; /* El color de los bloques ASCII */
+        }
+
+        /* --- 3. Posicionamiento de la Imagen Superpuesta --- */
+        .art-figure img {
+            position: absolute; /* Permite mover la imagen libremente dentro del .art-figure */
+            height: 80px;
+            
+            /* Ajustes para centrar la imagen sobre el hueco de la figura: */
+            
+            /* Mueve el punto de referencia de la imagen (su esquina sup. izq.) al 50% del contenedor */
+            top: 50%;
+            left: 50%;
+            
+            /* Corrige el desplazamiento restando la mitad del ancho/alto de la imagen */
+            transform: translate(-50%, -50%); 
+            
+            /* Asegura que la imagen no se muestre por debajo del texto */
+            z-index: 10;
         }
 
     </style>
 </head>
 <body>
 
-    <div class="contenedor-texto">
-        <p>Across a body of work that spans photography, video, and installations, Nadim Asfar’s early works engage with the technic
-            al and experimental origins of image-making. In, for instance, he employs a cam
-            era-less photographic technique—the photogram—that is as old as photography itself to produce a series of floral “photogenic 
-            drawings” that are as much records of action as they are still lives disconnected from recognizable spatial and temporal marke
-            rs. The registration of action, both of photographed subject and the act of photographic capture itself, animates the artist’s p
-            ojects. In <img src="https://d2w9rnfcy7mm78.cloudfront.net/41008348/original_6bb10a690c5a8dc9bf8e60f533634292.png?1762812035?bc=0" height="120" alt="Tour Motomami Rosalía 2022">, 
-
-⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿
-⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡿⠀⢸⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿
-⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡿⠁⠀⠀⢻⣿⣿⣿⣿⣿⡿⠿⠛⠋⣉⣽
-⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡿⠀⠀⠀⠀⠈⠋⠉⠀⠀⠀⠀⢀⣤⣾⣿⣿
-⣿⡿⣿⡿⠿⠿⠟⠛⠋⠉⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣠⣶⣿⣿⣿⣿⣿
-⣿⣥⣄⣀⠀⠀⠀⠀⠀⠀⠀<img src="https://d2w9rnfcy7mm78.cloudfront.net/41008348/original_6bb10a690c5a8dc9bf8e60f533634292.png?1762812035?bc=0" height="80" alt="Tour Motomami Rosalía 2022">⠀⠀⠀⠀⠀⠀⢀⣴⣿⣿⣿⣿⣿⣿⣿⣿
-⣿⣿⣿⣿⣿⣶⣦⡄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠘⣿⣿⣿⣿⣿⣿⣿⣿⣿
-⣿⣿⣿⣿⣿⣿⠟⠀⠀⠀⠀⠀⣠⣤⣀⡀⠀⠀⢻⣿⣿⣿⣿⣿⣿⣿⣿
-⣿⣿⣿⣿⣿⡟⠀⠀⠀⢀⣴⣾⣿⣿⣿⣿⣿⣶⣮⣿⣿⣿⣿⣿⣿⣿⣿
-⣿⣿⣿⣿⠏⠀⠀⣠⣾⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿
-⣿⣿⣿⠏⣀⣴⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿
-⣿⣿⣿⣾⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿
-⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿
-⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡿⠀⢸⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿
-⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡿⠁⠀⠀⢻⣿⣿⣿⣿⣿⡿⠿⠛⠋⣉⣽
-⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡿⠀⠀⠀⠀⠈⠋⠉⠀⠀⠀⠀⢀⣤⣾⣿⣿
-⣿⡿⣿⡿⠿⠿⠟⠛⠋⠉⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣠⣶⣿⣿⣿⣿⣿
-⣿⣥⣄⣀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣴⣿⣿⣿⣿⣿⣿⣿⣿
-⣿⣿⣿⣿⣿⣶⣦⡄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠘⣿⣿⣿⣿⣿⣿⣿⣿⣿
-⣿⣿⣿⣿⣿⣿⠟⠀⠀⠀⠀⠀⣠⣤⣀⡀⠀⠀⢻⣿⣿⣿⣿⣿⣿⣿⣿
-⣿⣿⣿⣿⣿⡟⠀⠀⠀⢀⣴⣾⣿⣿⣿⣿⣿⣶⣮⣿⣿⣿⣿⣿⣿⣿⣿
-⣿⣿⣿⣿⠏⠀⠀⣠⣾⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿
-⣿⣿⣿⠏⣀⣴⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿
-⣿⣿⣿⣾⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿
-⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿
-⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡿⠀⢸⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿
-⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡿⠁⠀⠀⢻⣿⣿⣿⣿⣿⡿⠿⠛⠋⣉⣽
-⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡿⠀⠀⠀⠀⠈⠋⠉⠀⠀⠀⠀⢀⣤⣾⣿⣿
-⣿⡿⣿⡿⠿⠿⠟⠛⠋⠉⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣠⣶⣿⣿⣿⣿⣿
-⣿⣥⣄⣀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣴⣿⣿⣿⣿⣿⣿⣿⣿
-⣿⣿⣿⣿⣿⣶⣦⡄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠘⣿⣿⣿⣿⣿⣿⣿⣿⣿
-⣿⣿⣿⣿⣿⣿⠟⠀⠀⠀⠀⠀⣠⣤⣀⡀⠀⠀⢻⣿⣿⣿⣿⣿⣿⣿⣿
-⣿⣿⣿⣿⣿⡟⠀⠀⠀⢀⣴⣾⣿⣿⣿⣿⣿⣶⣮⣿⣿⣿⣿⣿⣿⣿⣿
-⣿⣿⣿⣿⠏⠀⠀⣠⣾⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿
-⣿⣿⣿⠏⣀⣴⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿
-⣿⣿⣿⣾⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿
-⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿
+    <div class="art-figure">
+        <p>
+⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿
 ⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡿⠀⢸⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿
 ⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡿⠁⠀⠀⢻⣿⣿⣿⣿⣿⡿⠿⠛⠋⣉⣽
 ⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡿⠀⠀⠀⠀⠈⠋⠉⠀⠀⠀⠀⢀⣤⣾⣿⣿
@@ -90,7 +71,9 @@
 ⣿⣿⣿⠏⣀⣴⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿
 ⣿⣿⣿⣾⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿
         </p>
+        
+        <img src="https://d2w9rnfcy7mm78.cloudfront.net/41008348/original_6bb10a690c5a8dc9bf8e60f533634292.png?1762812035?bc=0" alt="Tour Motomami Rosalía 2022">
     </div>
-
+    
 </body>
 </html>
