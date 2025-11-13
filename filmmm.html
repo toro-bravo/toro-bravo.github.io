@@ -10,32 +10,28 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
 
     <link rel="icon" href="assets/Ten-Gallon-Hat-icon.png">
-    <link rel="stylesheet" type="text/css" href="style.css">
-
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-F9YHR26YNQ"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        gtag('js', new Date());
-        gtag('config', 'G-F9YHR26YNQ');
-    </script>
 
     <style>
         /* ESTILOS BASE */
         body {
-            background-color: #0D47A1; /* Azul oscuro */
+            background-color: gray; 
             color: white;
             font-family: 'Times New Roman', Times, serif;
             font-size: 13px;
             margin-top: 0;
             margin-left: 1rem; 
             margin-right: 1rem; 
-          
+           
         }
 
         a, h1 {
             color: yellow;
             margin-top: 0; 
+        }
+        
+        /* CÓDIGO NUEVO: Estilo para el modo invertido */
+        .invert-mode {
+            filter: invert(100%);
         }
 
         /* Estilos generales de texto */
@@ -123,6 +119,15 @@
             
             <div class="text filter-options">
                 <div><a href='index' style="text-decoration:underline;">Back</a></div>
+                <button id="invertButton" style="
+                    background: none; 
+                    border: 1px solid yellow; 
+                    color: yellow; 
+                    padding: 2px 5px; 
+                    cursor: pointer;
+                    font-family: inherit;
+                    font-size: inherit;
+                ">don't click here either</button>
                 <div id="filters">
                     <a href="#" class="filter-link active" data-type="all" style="text-decoration:underline;">All</a>  |  
                     <a href="#" class="filter-link" data-type="film" style="text-decoration:underline;">Film</a>  |  
@@ -197,7 +202,7 @@
                         <video class="lazy-video" loop muted playsinline preload="auto" autoplay height="478" src="https://attachments.are.na/39203101/731aff0d6b3dc28f8b3927bbb0b1f215.mp4?1756729937"></video>
                     </div>
                     <div class="video-container">
-                        <video class="lazy-video" loop muted playsinline preload="auto" autoplay height="478" src="https://attachments.are.na/39203098/6ad155fc81a38272922627f8c4867ab4.mp4?1756729937"></video>
+                        <video class="lazy-video" loop muted playsinline preload="auto" autoplay height="478" src="https://attachments.are.na/39203098/6ad155fc81a38272922627f8f867ab4.mp4?1756729937"></video>
                     </div>
                 </div>
                 <div class="video-caption">
@@ -232,8 +237,16 @@
         document.addEventListener('DOMContentLoaded', function() {
             const filterLinks = document.querySelectorAll('.filter-link');
             const videoBlocks = document.querySelectorAll('.video-block');
-            // Ya no es necesario controlar los videos aquí, pues el HTML usa 'autoplay'.
             
+            // CÓDIGO NUEVO: Lógica del botón de inversión
+            const invertButton = document.getElementById('invertButton');
+            const body = document.body;
+            
+            invertButton.addEventListener('click', function() {
+                // Esto añade la clase 'invert-mode' si no está presente, y la quita si lo está.
+                body.classList.toggle('invert-mode'); 
+            });
+
             // Lógica de los filtros (Mantenida)
             filterLinks.forEach(link => {
                 link.addEventListener('click', function(e) {
@@ -252,7 +265,6 @@
                     });
                 });
             });
-            
         });
     </script>
 
