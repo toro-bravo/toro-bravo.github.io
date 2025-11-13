@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <title>toro bravo - film (Ajustes Finales)</title>
+    <title>film</title>
     <meta name="description" content="Toro Bravo film project page - Static list with video thumbnails.">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
@@ -9,13 +9,13 @@
     
     <style>
         /* ========================================================= */
-        /* === ESTILOS BASE Y ASCII (AJUSTADOS) ==================== */
+        /* === ESTILOS BASE Y ASCII ================================ */
         /* ========================================================= */
         body {
             background-color: #0D47A1;
             color: white;
             font-family: 'Times New Roman', Times, serif;
-            font-size: 13px;
+            font-size: 13px; /* Tamaño base */
             margin: 0;
             padding: 0;
             min-height: 100vh;
@@ -26,7 +26,6 @@
             color: yellow;
         }
 
-        /* --- Contenedor de la Zona Central (Título) --- */
         .central-layout {
             position: relative;
             padding: 50px 1rem 30px 1rem;
@@ -38,20 +37,18 @@
             margin-bottom: 20px;
         }
 
-
-        /* --- ASCII GRANDE Y CENTRADO (Background Gris Clarito) --- */
         .ascii-art {
             position: fixed; 
             top: 50%;
             left: 50%;
-            transform: translate(-50%, -50%); /* Centrar tanto en X como en Y */
+            transform: translate(-50%, -50%);
             white-space: pre;
             font-family: monospace;
-            font-size: 35px; /* Grande */
+            font-size: 35px;
             line-height: 0.8;
             text-align: center;
-            z-index: 1; /* Fondo */
-            opacity: 0.35; /* Gris claro */
+            z-index: 1; 
+            opacity: 0.35;
             color: #CCCCCC; 
             pointer-events: none;
         }
@@ -64,29 +61,41 @@
             margin-left: 1rem; 
             width: 100%;
             max-width: 800px;
-            z-index: 10; /* Asegurar que la tabla esté sobre el ASCII */
+            z-index: 10;
             position: relative;
         }
         
         .content-table td {
-            padding: 2px 0; /* Padding vertical reducido */
+            padding: 0px; /* Reducido a 0 para mínima separación vertical */
             color: white; 
+            vertical-align: top;
+        }
+
+        /* Ajuste específico para la celda de la ventanita para reducir el espacio lateral */
+        .content-table .video-cell {
+            padding-right: 5px; /* Espacio mínimo entre la ventanita y la descripción */
+            white-space: nowrap; /* Evita que el contenido de esta celda se rompa */
+        }
+        
+        /* === TAMAÑO DE TEXTO AJUSTADO === */
+        .description-text {
+            font-size: 26px; /* DOBLE del tamaño base de 13px */
+            line-height: 1.1; /* Asegurar que las líneas no estén demasiado separadas */
         }
 
         /* ========================================================= */
-        /* === ESTILOS DE VIDEO INTERACTIVO DENTRO DE LA TABLA ===== */
+        /* === ESTILOS DE VIDEO INTERACTIVO ======================== */
         /* ========================================================= */
         
-        /* Contenedor de video (reemplaza a IMG) - DOBLE TAMAÑO (100x80) */
         .highlight-item {
             display: block;
             overflow: hidden;
             box-sizing: border-box;
             background-color: black;
-            width: 100px; /* DOBLE */
-            height: 80px; /* DOBLE */
+            width: 100px; 
+            height: 80px;
             cursor: pointer; 
-            border: 1px solid white; /* Marco blanco sutil */
+            border: 1px solid white;
             position: relative; 
             transition: border-color 0.3s ease;
         }
@@ -104,7 +113,6 @@
             pointer-events: none; 
         }
 
-        /* Overlay (Fondo oscuro para el modo activo) */
         #video-overlay {
             position: fixed;
             top: 0;
@@ -116,7 +124,6 @@
             display: none; 
         }
         
-        /* Estado de la ventana activa (pantalla completa / lightbox) */
         .highlight-item.is-active {
             position: fixed; 
             top: 50% !important; 
@@ -126,7 +133,7 @@
             transform: translate(-50%, -50%);
             z-index: 1000; 
             box-shadow: 0 0 50px rgba(0, 0, 0, 0.8);
-            border: 5px solid white; /* Marco blanco */
+            border: 5px solid white;
         }
 
     </style>
@@ -257,113 +264,123 @@
 
     <table class="content-table" border=0 cellpadding=0 cellspacing=0>
         <tr>
-            <td valign=top>
+            <td valign=top class="video-cell">
                 <div class="highlight-item" id="item-1">
                     <video id="video-1" src="about:blank" muted preload="auto" playsinline title="Video Thumbnail 1"></video>
                 </div>
             </td>
-            <td>&nbsp;&nbsp;</td>
             <td valign=top>
-                <a href="item-1.html"><i>Secuencia 1: El sol en el desierto</i></a>, Primer montaje con atmósfera tensa.
+                <span class="description-text">
+                    <a href="item-1.html"><i>Secuencia 1: El sol en el desierto</i></a>, Primer montaje con atmósfera tensa.
+                </span>
             </td>
         </tr>
         <tr>
-            <td valign=top>
+            <td valign=top class="video-cell">
                 <div class="highlight-item" id="item-2">
                     <video id="video-2" src="about:blank" muted preload="auto" playsinline title="Video Thumbnail 2"></video>
                 </div>
             </td>
-            <td>&nbsp;&nbsp;</td>
             <td valign=top>
-                <a href="item-2.html"><i>Secuencia 2: La mirada del vaquero</i></a>, Un acercamiento al protagonista.
+                <span class="description-text">
+                    <a href="item-2.html"><i>Secuencia 2: La mirada del vaquero</i></a>, Un acercamiento al protagonista.
+                </span>
             </td>
         </tr>
         <tr>
-            <td valign=top>
+            <td valign=top class="video-cell">
                 <div class="highlight-item" id="item-3">
                     <video id="video-3" src="about:blank" muted preload="auto" playsinline title="Video Thumbnail 3"></video>
                 </div>
             </td>
-            <td>&nbsp;&nbsp;</td>
             <td valign=top>
-                <a href="item-3.html"><i>Secuencia 3: Duelo al amanecer</i></a>, Escena clave de confrontación.
+                <span class="description-text">
+                    <a href="item-3.html"><i>Secuencia 3: Duelo al amanecer</i></a>, Escena clave de confrontación.
+                </span>
             </td>
         </tr>
         <tr>
-            <td valign=top>
+            <td valign=top class="video-cell">
                 <div class="highlight-item" id="item-4">
                     <video id="video-4" src="about:blank" muted preload="auto" playsinline title="Video Thumbnail 4"></video>
                 </div>
             </td>
-            <td>&nbsp;&nbsp;</td>
             <td valign=top>
-                <a href="item-4.html"><i>Secuencia 4: El pueblo fantasma</i></a>, Un recorrido por las locaciones.
+                <span class="description-text">
+                    <a href="item-4.html"><i>Secuencia 4: El pueblo fantasma</i></a>, Un recorrido por las locaciones.
+                </span>
             </td>
         </tr>
         <tr>
-            <td valign=top>
+            <td valign=top class="video-cell">
                 <div class="highlight-item" id="item-5">
                     <video id="video-5" src="about:blank" muted preload="auto" playsinline title="Video Thumbnail 5"></video>
                 </div>
             </td>
-            <td>&nbsp;&nbsp;</td>
             <td valign=top>
-                <a href="item-5.html"><i>Secuencia 5: El sombrero perdido</i></a>, Detalle de atrezzo importante.
+                <span class="description-text">
+                    <a href="item-5.html"><i>Secuencia 5: El sombrero perdido</i></a>, Detalle de atrezzo importante.
+                </span>
             </td>
         </tr>
          <tr>
-            <td valign=top>
+            <td valign=top class="video-cell">
                 <div class="highlight-item" id="item-6">
                     <video id="video-6" src="about:blank" muted preload="auto" playsinline title="Video Thumbnail 6"></video>
                 </div>
             </td>
-            <td>&nbsp;&nbsp;</td>
             <td valign=top>
-                <a href="item-6.html"><i>Secuencia 6: Fuga bajo la luna</i></a>, Escena de acción nocturna.
+                <span class="description-text">
+                    <a href="item-6.html"><i>Secuencia 6: Fuga bajo la luna</i></a>, Escena de acción nocturna.
+                </span>
             </td>
         </tr>
         <tr>
-            <td valign=top>
+            <td valign=top class="video-cell">
                 <div class="highlight-item" id="item-7">
                     <video id="video-7" src="about:blank" muted preload="auto" playsinline title="Video Thumbnail 7"></video>
                 </div>
             </td>
-            <td>&nbsp;&nbsp;</td>
             <td valign=top>
-                <a href="item-7.html"><i>Secuencia 7: Retrato en cámara lenta</i></a>, Efecto visual destacado.
+                <span class="description-text">
+                    <a href="item-7.html"><i>Secuencia 7: Retrato en cámara lenta</i></a>, Efecto visual destacado.
+                </span>
             </td>
         </tr>
         <tr>
-            <td valign=top>
+            <td valign=top class="video-cell">
                 <div class="highlight-item" id="item-8">
                     <video id="video-8" src="about:blank" muted preload="auto" playsinline title="Video Thumbnail 8"></video>
                 </div>
             </td>
-            <td>&nbsp;&nbsp;</td>
             <td valign=top>
-                <a href="item-8.html"><i>Secuencia 8: Coreografía de sombras</i></a>, Uso artístico de la luz.
+                <span class="description-text">
+                    <a href="item-8.html"><i>Secuencia 8: Coreografía de sombras</i></a>, Uso artístico de la luz.
+                </span>
             </td>
         </tr>
         <tr>
-            <td valign=top>
+            <td valign=top class="video-cell">
                 <div class="highlight-item" id="item-9">
                     <video id="video-9" src="about:blank" muted preload="auto" playsinline title="Video Thumbnail 9"></video>
                 </div>
             </td>
-            <td>&nbsp;&nbsp;</td>
             <td valign=top>
-                <a href="item-9.html"><i>Secuencia 9: Ensayo en el rancho</i></a>, Clip del "detrás de cámaras".
+                <span class="description-text">
+                    <a href="item-9.html"><i>Secuencia 9: Ensayo en el rancho</i></a>, Clip del "detrás de cámaras".
+                </span>
             </td>
         </tr>
         <tr>
-            <td valign=top>
+            <td valign=top class="video-cell">
                 <div class="highlight-item" id="item-10">
                     <video id="video-10" src="about:blank" muted preload="auto" playsinline title="Video Thumbnail 10"></video>
                 </div>
             </td>
-            <td>&nbsp;&nbsp;</td>
             <td valign=top>
-                <a href="item-10.html"><i>Secuencia 10: Final épico</i></a>, El desenlace dramático del film.
+                <span class="description-text">
+                    <a href="item-10.html"><i>Secuencia 10: Final épico</i></a>, El desenlace dramático del film.
+                </span>
             </td>
         </tr>
     </table>
