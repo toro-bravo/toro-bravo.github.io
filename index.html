@@ -1,205 +1,129 @@
 <!DOCTYPE html>
+<html lang="es">
 <head>
-    <title>toro bravo</title>
-    <meta name="description" content="Portafolio de TORO BRAVO (Mateo Bravo Mir), director de cine de Barcelona y artista de postproducción, VFX y 3D. Creación de piezas audiovisuales únicas con multiformato y estética experimental.">
-    <meta name="keywords" content="director de cine, vfx artist, postproduccion, 3d artist, barcelona, toro bravo, atomico, film director, portfolio, multiformato, video experimental">    
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <link rel="icon" href="assets/Ten-Gallon-Hat-icon.png">
+    <title>Fondo de Patrón con Estilo Clásico</title>
+    
     <style>
-        body {
-            background-color: #0D47A1;
-            color: white;
-            font-family: 'Times New Roman', Times, serif;
-            font-size: 13px;
-            margin-top: 0;
-            margin-left: 1rem; 
-            margin-right: 1rem; 
+        /* --- 1. Estilos Generales (Tus Preferencias) --- */
+        
+        /* Aplicamos tu estilo a todo el documento, incluyendo márgenes y fuente */
+        html, body {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
             overflow: hidden; 
         }
 
-        a, h1 {
-            color: yellow;
-            margin-top: 0; 
+        body {
+            /* Estilos solicitados: color de fondo, color de texto y fuente */
+            background-color: #0D47A1; /* Azul oscuro */
+            color: white; 
+            font-family: 'Times New Roman', Times, serif; 
+            font-size: 13px;
+            margin-top: 0;
+            margin-left: 1rem;
+            margin-right: 1rem;
         }
 
-        /* ESTILOS PARA EL LAYOUT DE DOS COLUMNAS */
-
-        .two-column-layout {
-            display: flex; 
-            justify-content: space-between; 
+        /* --- 2. Estilos para el Fondo de Patrón Fijo (Ajuste Necesario) --- */
+        
+        /* El patrón necesita una fuente monospace, por lo que la aplicamos solo al fondo */
+        body {
+            /* * Fondo fijo: Se repite el bloque completo "⣿⣿..." * */
+            background-image: url("data:image/svg+xml;charset=UTF-8,<svg xmlns='http://www.w3.org/2000/svg' width='100%' height='100%'><text x='0' y='1em' font-size='1em' fill='currentColor' font-family='monospace' white-space='pre'>⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿
+⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿
+⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿
+⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿
+⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿
+⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿
+⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿
+⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿
+⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿
+⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿
+⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿</text></svg>");
+            background-repeat: repeat;
+            /* Nota: El 'currentColor' en el SVG toma el 'color: white;' del body. */
         }
 
-        .about-column {
-            flex: 1; 
-            min-width: 50%; 
+        /* --- 3. Estilos para los Elementos Aleatorios (Ajuste Necesario) --- */
+
+        .random-art {
+            position: absolute; 
+            white-space: pre; 
+            line-height: 1em; 
+            font-size: 1em; 
+            /* Importante: Usamos monospace para que la figura no se deforme */
+            font-family: monospace; 
+            /* Color de contraste para las figuras especiales */
+            color: #FFEB3B; /* Amarillo brillante para un buen contraste con el azul */
+            z-index: 10; 
         }
 
-        .right-column {
-            flex: 1; 
-            padding-left: 20px; 
-            text-align: right; 
-        }
-
-        /* Ajustar los elementos de bloque dentro de la columna derecha para alineación */
-        .right-column h2,
-        .right-column p,
-        .right-column ul {
-            margin-left: auto; 
-            max-width: fit-content; 
-        }
-
-        .right-column ul {
-            list-style: none; 
-            padding-left: 0; 
-        }
-
-        .right-column li {
-            text-align: right; 
-        }
-
-        /* NUEVOS ESTILOS PARA EL VIDEO DE FONDO */
-        #fullscreen-video {
-            position: fixed; /* Fija el video a la ventana */
-            right: 0;
-            bottom: 0;
-            min-width: 100%; 
-            min-height: 100%;
-            width: auto;
-            height: auto;
-            z-index: -999; /* Lo coloca detrás de todo el contenido */
-            display: none; /* Inicialmente oculto */
-            pointer-events: none; /* Asegura que no interfiera con otros clics */
-            background-color: #0D47A1; /* Color de fondo si el video no carga */
-            object-fit: cover; /* Asegura que el video cubra toda la pantalla sin distorsión */
+        /* Estilo de ejemplo para el contenido si lo llegas a usar */
+        .content {
+            position: relative;
+            text-align: center;
+            padding-top: 50px;
+            /* La fuente y color de este contenido es 'Times New Roman' y 'white' */
         }
     </style>
 </head>
-
 <body>
-    <h1>
-        TORO BRAVO
-        <br>
-        <i style="color:gray">director & postproduction / vfx / 3d artist [½ of <a href="https://www.instagram.com/_.atomico" target="_blank">@_.atomico</a>]</i>
-    </h1>
-
-    <div class="two-column-layout">
-        
-        <div class="about-column">
-            <h2>about</h2>
- <pre style="font-family: 'Times New Roman', Times, serif; font-size: 13px; line-height: 1;">
-⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣀⣠⣤⣶⣶⣦⣤⡀⠀⠀⠀⣀⣀⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣠⣴⣶⣿⣿⣿⣿⣿⣿⣿⣿⣿⠛⠛⠛⠋⠉⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣰⣿⣿⡿⠿⠿⠟⠿⠿⠿⠛⠛⠛⠛⠛⠋⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢻⣿⣿⣄⣀⣀⣀⣀⣤⣤⣤⣶⣖⣒⣻⣿⣭⣭⣭⣭⣭⣭⣍⣛⡓⠶⢤⣀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠉⠙⠓⠒⠛⠛⠉⠉⠉⠉⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⠉⠉⠲⣌⡳⡄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⣷⢸⡄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣀⣀⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⡟⢸⠇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣤⠖⠋⠉⠉⠉⠙⠒⠶⠤⢤⣤⣤⣀⣤⣤⣴⡾⢁⡾⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣀⡴⠋⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢈⣡⣤⣼⣧⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣠⠞⠉⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠰⣦⡀⠀⠀⠀⠀⠘⣿⣿⣿⣿⣿⡄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⡴⠋⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠻⣿⡀⠀⠀⠀⠀⢘⣿⣿⣿⣿⣿⣆⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣰⠏⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠹⣧⡀⠀⠀⠀⢸⣿⣿⣿⣿⣿⣿⣧⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣼⠃⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣠⠀⠀⠀⠀⠙⣷⡀⢀⣱⣀⣹⣿⣿⣿⣿⣿⣿⣧⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣼⠋⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣷⠀⠀⠀⠀⠀⠘⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣧⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⡴⠋⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣤⣤⣿⣷⣤⣄⠀⠀⠀⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣼⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⡴⠿⢿⡿⠿⠿⠿⣿⣷⠀⠀⠀⠸⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣧⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⡿⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠁⠀⠀⠀⠀⢹⡀⠀⣤⠀⠉⢿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-⠀⠀⠀⠀⠀⠀⠀⠀⠀⢸⠇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣤⣿⣿⣶⣼⣧⡀⠀⢻⣿⣿⣿⣿⣿⣿⣿⣿⣿⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-⠀⠀⠀⠀⠀⠀⠀⠀⠀⣾⡀⠀⠀⠀⠀⢠⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠞⠛⠛⠛⠋⣹⣿⣿⣷⡄⠘⣿⣿⣿⣿⣿⣿⣿⣿⣿⣧⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-⠀⠀⠀⠀⠀⠀⠀⠀⠀⣇⠀⠀⠀⠀⠀⣿⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣀⡉⠛⢻⣿⣿⣦⠙⣿⣿⣿⣿⣿⣿⣿⣿⣿⡄⠀⠀⠀⠀⠀⠀⠀⠀⠀
-⠀⠀⠀⠀⠀⠀⠀⠀⢰⠏⠀⠀⠀⢠⣿⣿⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢾⠿⢛⣿⣿⣿⣿⣿⣿⣿⠈⠻⢿⣿⣿⣿⣿⣿⣿⣿⡀⠀⠀⠀⠀⠀⠀⠀⠀
-⠀⠀⠀⠀⠀⠀⠀⢠⡏⠀⠀⠀⠀⢸⣿⣿⣧⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⢁⣠⣭⣍⡀⠀⠀⠀⠀⠀⠈⠙⠛⠻⢿⣿⣿⠃⠀⠀⠀⠀⠀⠀⠀⠀
-⠀⠀⠀⠀⠀⠀⠀⣼⡇⠀⠀⠀⠀⠀⠈⣿⣿⠟⠿⠶⠀⠀⠀⠀⣠⣶⢀⣤⣤⣶⣶⣤⣄⡴⠋⠀⠀⢘⡟⣴⣶⣶⣦⣶⣶⣤⣤⣀⣀⢹⣿⣄⠀⠀⠀⠀⠀⠀⠀⠀
-⠀⠀⠀⠀⠀⠀⠀⣿⡇⠀⠀⠀⠀⠀⣦⠀⠀⠀⠀⠀⣤⡀⠰⣿⣿⣿⣎⠙⠻⣿⣿⣿⣿⠀⠀⠀⣾⣿⣧⣉⣉⣽⣿⣿⣛⡿⢿⣿⣿⠀⠀⠉⠛⠶⠦⣤⣄⠤⢖⡆
-⠀⠀⠀⠀⠀⠀⠀⣿⠃⠀⠀⠀⠀⢰⣿⣿⣿⣷⣤⣴⣿⣿⣿⣿⣿⣿⣷⠀⠀⠈⠛⠋⢿⣄⠀⠀⠈⠙⠻⠿⣿⣿⣿⣿⣿⣿⣿⣧⣤⣶⣶⣦⣤⣄⣀⣠⡤⠚⠁⠀
-⠀⠀⠀⠀⠀⠀⠀⡟⠀⣾⠀⠀⠀⣼⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠛⠀⠀⠀⠀⠀⣿⣿⣿⣶⣦⣤⣤⣤⣴⣶⣶⣿⣿⣿⣿⣿⣁⠹⣦⠀⠀⠀⠀⠀⠀⠀⠀⠀
-⠀⠀⠀⠀⠀⠀⢸⠁⢾⣿⣦⣶⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡿⠃⠀⠀⠀⠀⣰⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣷⣌⣳⡀⠀⠀⠀⠀⠀⠀⠀
-⠀⠀⠀⠀⠀⠀⠸⠀⢸⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠀⠀⠀⠀⠀⣰⣿⣿⣿⣿⣿⣻⣿⣿⢿⣿⣿⣿⣿⣿⣿⡿⢡⣿⣿⣯⣻⣿⠀⠀⠀⠀⠀⠀⠀
-⠀⠀⠀⠀⠀⠀⠀⢀⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡇⠀⠀⠀⠀⢰⣿⣿⣿⣿⣿⣿⣟⣿⣿⣿⣿⣿⣿⣿⣿⠟⠁⠀⠙⢿⣿⣿⣿⠀⠀⠀⠀⠀⠀⠀
-⠀⠀⠀⠀⠀⠀⢰⢸⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣷⣄⠀⠀⠀⢀⣿⣿⠟⢹⣿⣿⣿⣿⣿⣿⣿⣿⣿⠋⠁⠀⠀⠀⠀⠀⢻⣿⣿⠀⠀⠀⠀⠀⠀⠀
-⠀⠀⠀⠀⠀⠀⡇⣾⣿⣿⣿⣿⠏⠀⠘⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣧⡀⠠⣾⡿⠏⠀⣾⣿⣿⣿⣿⣿⣿⣿⣿⠇⠀⠀⠀⠀⠀⠀⠀⠘⣿⣿⡆⠀⠀⠀⠀⠀⠀
-⠀⠀⠀⠀⠀⠀⣿⣿⣿⣿⣿⡏⠀⠀⠀⠸⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣷⡀⠙⠁⠀⠀⢻⣿⣿⣿⣿⣿⣿⣿⡏⠀⠀⠀⠀⠀⠀⠀⠀⢸⣿⣿⣿⡆⠀⠀⠀⠀⠀
-⠀⠀⠀⠀⠀⠀⣧⢻⣿⣿⣿⠀⠀⠀⠀⠀⠀⠉⢻⣿⣿⣿⣿⣿⣿⣿⣿⡏⠀⡀⠀⠀⠀⣿⣿⣿⣿⣿⣿⣿⣿⡇⠀⠀⠀⠀⠀⠀⠀⠀⠈⢻⣿⣿⣧⡀⠀⠀⠀⠀Mateo (b.02) is a film director based in Barcelona.
-⠀⠀⠀⠀⠀⠀⢨⣿⣿⣿⣿⠀⠀⠀⠀⠀⠀⠀⢸⣿⣿⣿⣿⠋⢀⡟⣿⣧⠀⢻⣦⠀⠀⠾⢿⣿⣿⣿⣿⣿⣿⣧⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⣿⣿⣿⣿⡄⠀⠀⠀
-⠀⠀⠀⠀⠀⠀⠋⠙⣿⣿⡏⠀⠀⠀⠀⠀⠀⢠⡿⠻⣿⣿⠇⢠⠟⠀⣿⡟⠀⠀⠙⠀⠘⣿⣿⣿⣿⣿⣿⣿⣿⠋⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⡿⠟⣻⣿⠃⠀⠀⠀
-⠀⠀⠀⠀⠀⢸⠄⢠⣿⣿⡇⠀⠀⠀⠀⠀⠀⢺⡇⢠⣿⡏⢠⣧⣤⣶⣿⠀⠀⠀⠀⠀⠲⣿⡿⠿⠿⠿⠛⠛⠋⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠙⠁⠀⠀⠀⠀Specialized on having fun and creating unique pieces
-⠀⠀⠀⠀⠀⢰⣾⣿⣿⠟⠀⠀⠀⠀⠀⠀⠀⠘⢧⣾⣿⠃⢿⣿⢁⣨⠟⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-⠀⠀⠀⠀⠀⣾⣿⡟⠁⠀⠀⠀⠀⠀⠀⠀⠀⢠⣼⣿⡇⠀⠀⠀⠀⠀mixing multiformat, playing with artificially flawed imagery and pursuing beauty ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-⠀⠀⠀⢀⣴⣿⣿⠀⠀⠀⠀⠀⠀⠀⠀⠀⣰⠋⠹⣿⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-⠀⠀⠀⢸⣿⣿⡇⠀⠀⠀⠀⠀⠀⠀⠀⣼⠋⠀⠀⢹⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-⠀⠀⢀⡾⠿⣿⡇⠀⠀⠀⠀⠀⠀⠀⢰⣿⣦⣤⣶⣾⣧⠀⠀⠀by pushing boundaries; experimenting with digital tools, 3D and post-production⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-⠀⢀⠎⠀⢀⣿⡇⠀⠀⠀⠀⠀⠀⠀⠸⠛⣿⣯⠿⠛⠁⠀Making the impossible possible.⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-⡠⢫⣾⣿⣿⣿⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-⠻⠿⠯⠿⠟⠋⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-   </pre>
-        </div>
-        
-        <div class="right-column">
-            <h2><a href="graphic.html">graphic</a></h2>
-            <p style="font-style: italic;">
-                some graphic designs I've made lately
-            </p>
-            
-            <h2><a href="film.html">film</a></h2>
-            <p>
-                Check this out!
-            </p>
-            
-            <h2>connect with me</h2>
-            <ul style="margin-bottom: 50px;">
-                <li>
-                    <a href="https://www.instagram.com/toro.bm">main instagram</a>
-                </li>
-                <li>
-                    <a href="https://www.instagram.com/_.atomico">business instagram</a>
-                </li>
-                <li>
-                    <a href="mailto:mbm.bravomir@gmail.com">e m a i l</a>
-                </li>
-                <li>
-                    <a href="https://soundcloud.com/toromekaniko/sets/on-the-fringe-of-the-spine">toro mekaniko ♬⋆.˚ 01:43 ─────●─ 03:50 ⇆ㅤ ㅤ◁ㅤ ❚❚ ㅤ▷ ㅤㅤ↻﻿</a>
-                </li>
-            </ul>
-            
-            <div id="secret-link-container" style="padding-top: 150px; text-align: center;"> 
-                <a href="#" id="video-trigger">don't click here</a>
-            </div>
-        </div>
+    <div class="content">
+        <h1>¡Patrón Clásico y ASCII Art!</h1>
+        <p>El cuerpo del documento usa Times New Roman, pero los patrones usan Monospace para alinearse.</p>
     </div>
     
-<marquee> ᕦ(òᴥó)ᕥ LAUS ORO - TRABAJO LIBRE ESTUDIANTE - AUDIOVISUAL - “Primavera - Fun Train” // LAUS PLATA - TRABAJO LIBRE ESTUDIANTE - AUDIOVISUAL - “Friday the 13th” // ISABEL COIXET’S FASHIONERS OF THE WORLD - BEST FASHION FILM AWARD (2023) - “No Land to Call Our Own” // LCI FASHION FILM FESTIVAL 2023 OFFICIAL SELECTION - “Amenoia”</marquee>
+    <script>
+        // --- JavaScript para Posicionamiento Aleatorio (Sin cambios, es la lógica) ---
 
-<video loop muted id="fullscreen-video" playsinline>
-    <source src="https://attachments.are.na/41087120/3d5dfa0d9a1cb5ef700407deb41fb777.mp4?1763050157" type="video/mp4">
-    Tu navegador no soporta el tag de video.
-</video>
+        const ART_FIGURA = `
+⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡿⠀⢸⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿
+⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡿⠁⠀⠀⢻⣿⣿⣿⣿⣿⡿⠿⠛⠋⣉⣽
+⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡿⠀⠀⠀⠀⠈⠋⠉⠀⠀⠀⠀⢀⣤⣾⣿⣿
+⣿⡿⣿⡿⠿⠿⠟⠛⠋⠉⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣠⣶⣿⣿⣿⣿⣿
+⣿⣥⣄⣀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣴⣿⣿⣿⣿⣿⣿⣿⣿
+⣿⣿⣿⣿⣿⣶⣦⡄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠘⣿⣿⣿⣿⣿⣿⣿⣿⣿
+⣿⣿⣿⣿⣿⣿⠟⠀⠀⠀⠀⠀⣠⣤⣀⡀⠀⠀⢻⣿⣿⣿⣿⣿⣿⣿⣿
+⣿⣿⣿⣿⣿⡟⠀⠀⠀⢀⣴⣾⣿⣿⣿⣿⣿⣶⣮⣿⣿⣿⣿⣿⣿⣿⣿
+⣿⣿⣿⣿⠏⠀⠀⣠⣾⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿
+⣿⣿⣿⠏⣀⣴⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿
+⣿⣿⣿⣾⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿
+        `.trim();
 
-<script>
-    document.getElementById('video-trigger').addEventListener('click', function(e) {
-        // 1. Previene la navegación por defecto del enlace
-        e.preventDefault();
+        const NUM_FIGURAS = 3;
 
-        // 2. Obtiene el elemento de video
-        var video = document.getElementById('fullscreen-video');
-
-        // 3. Muestra el video (cambia el display de 'none' a 'block')
-        video.style.display = 'block'; 
-
-        // 4. Intenta reproducir el video
-        var playPromise = video.play();
-
-        if (playPromise !== undefined) {
-            playPromise.then(_ => {
-                console.log("Video de fondo iniciado.");
-            })
-            .catch(error => {
-                // Esto podría ocurrir si el navegador bloquea la reproducción por alguna razón.
-                console.error("Error al intentar reproducir el video:", error);
-            });
+        function getRandomInt(max) {
+            return Math.floor(Math.random() * max);
         }
-    });
-</script>
 
+        function placeRandomArt(art) {
+            const div = document.createElement('div');
+            div.className = 'random-art';
+            div.textContent = art;
+            
+            document.body.appendChild(div);
+
+            // Medición
+            const bodyWidth = window.innerWidth;
+            const bodyHeight = window.innerHeight;
+            const artWidth = div.offsetWidth;
+            const artHeight = div.offsetHeight;
+
+            // Posicionamiento
+            const randomX = getRandomInt(bodyWidth - artWidth);
+            const randomY = getRandomInt(bodyHeight - artHeight);
+            
+            div.style.left = `${randomX}px`;
+            div.style.top = `${randomY}px`;
+        }
+
+        for (let i = 0; i < NUM_FIGURAS; i++) {
+            placeRandomArt(ART_FIGURA);
+        }
+    </script>
 </body>
 </html>
