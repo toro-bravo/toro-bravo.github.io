@@ -9,6 +9,9 @@
     
     <style>
         
+        /* ========================================================= */
+        /* === ESTILOS BASE Y ASCII ================================ */
+        /* ========================================================= */
         body {
             background-color: #0D47A1;
             color: white;
@@ -51,7 +54,10 @@
             pointer-events: none;
         }
 
-       
+        /* ========================================================= */
+        /* === ESTILOS DE LA LISTA (TABLA B) ======================= */
+        /* ========================================================= */
+        
         .content-table {
             margin-top: 20px;
             margin-left: 1rem; 
@@ -62,25 +68,23 @@
         }
         
         .content-table td {
-            padding: 0px; /* Reducido a 0 para mínima separación vertical */
+            padding: 0px; /* Mínima separación vertical */
             color: white; 
             vertical-align: top;
         }
 
-        /* Ajuste específico para la celda de la ventanita para reducir el espacio lateral */
         .content-table .video-cell {
-            padding-right: 5px; /* Espacio mínimo entre la ventanita y la descripción */
-            white-space: nowrap; /* Evita que el contenido de esta celda se rompa */
+            padding-right: 5px; /* Mínima separación lateral */
+            white-space: nowrap;
         }
         
-        /* === TAMAÑO DE TEXTO AJUSTADO === */
         .description-text {
-            font-size: 18px; /* DOBLE del tamaño base de 13px */
-            line-height: 1.1; /* Asegurar que las líneas no estén demasiado separadas */
+            font-size: 18px;
+            line-height: 1.1;
         }
 
         /* ========================================================= */
-        /* === ESTILOS DE VIDEO INTERACTIVO ======================== */
+        /* === ESTILOS DE VIDEO INTERACTIVO Y ASPECT RATIO ========= */
         /* ========================================================= */
         
         .highlight-item {
@@ -88,12 +92,29 @@
             overflow: hidden;
             box-sizing: border-box;
             background-color: black;
-            width: 100px; 
-            height: 80px;
-            cursor: pointer; 
-            border: 1px solid white;
-            position: relative; 
+            width: 100px; /* Ancho fijo para la miniatura */
+            cursor: pointer;
+            border: none; /* MARCO ELIMINADO */
+            position: relative;
             transition: border-color 0.3s ease;
+            
+            /* Valores por defecto. Se sobrescriben con las clases de aspect-ratio */
+            height: 100px; 
+            aspect-ratio: 1 / 1;
+        }
+
+        /* Clases CSS para definir el aspecto en la vista de lista */
+        .highlight-item[data-ratio="16:9"] {
+            height: calc(100px * 9 / 16);
+            aspect-ratio: 16 / 9;
+        }
+        .highlight-item[data-ratio="9:16"] {
+            height: calc(100px * 16 / 9);
+            aspect-ratio: 9 / 16;
+        }
+        .highlight-item[data-ratio="1:1"] {
+            height: 100px;
+            aspect-ratio: 1 / 1;
         }
 
         .highlight-item:hover {
@@ -105,7 +126,7 @@
             height: 100%;
             border: none;
             display: block;
-            object-fit: cover; 
+            object-fit: cover; /* Recortar si es necesario para llenar la miniatura */
             pointer-events: none; 
         }
 
@@ -120,16 +141,27 @@
             display: none; 
         }
         
+        /* ESTADO ACTIVO (Pantalla Completa) */
         .highlight-item.is-active {
-            position: fixed; 
-            top: 50% !important; 
-            left: 50% !important; 
-            width: 80vw !important; 
-            height: 80vh !important; 
+            position: fixed;
+            top: 50% !important;
+            left: 50% !important;
+            
+            /* Usamos max-width/height y dejamos que JS ajuste W/H exacto */
+            max-width: 90vw; 
+            max-height: 90vh;
+            width: auto !important;
+            height: auto !important;
+            
             transform: translate(-50%, -50%);
-            z-index: 1000; 
-            box-shadow: 0 0 50px rgba(0, 0, 0, 0.8);
-            border: 5px solid white;
+            z-index: 1000;
+            box-shadow: none; /* SOMBRA NEGRA ELIMINADA */
+            border: none; /* MARCO BLANCO ELIMINADO */
+        }
+
+        /* El video activo se ajusta a las dimensiones calculadas, respetando el ratio */
+        .highlight-item.is-active video {
+            object-fit: contain; 
         }
 
     </style>
@@ -140,11 +172,22 @@
             const item = event.currentTarget;
             const video = item.querySelector('video');
             const overlay = document.getElementById('video-overlay');
+            
+            // Obtener el aspect ratio del atributo data-ratio
+            const ratioString = item.getAttribute('data-ratio') || '16:9';
+            const [ratioW, ratioH] = ratioString.split(':').map(Number);
+            const aspectRatio = ratioW / ratioH;
+
+            // Dimensiones máximas para el modo activo (90% de la ventana)
+            const maxWidth = window.innerWidth * 0.9;
+            const maxHeight = window.innerHeight * 0.9;
 
             if (item.classList.contains('is-active')) {
                 // --- CERRAR ---
                 item.classList.remove('is-active');
                 overlay.style.display = 'none';
+                item.style.width = ''; // Limpiar el estilo en línea
+                item.style.height = ''; 
 
                 // Pausar y congelar
                 video.pause();
@@ -155,13 +198,31 @@
                 document.querySelectorAll('.highlight-item.is-active').forEach(activeItem => {
                     const activeVideo = activeItem.querySelector('video');
                     activeItem.classList.remove('is-active');
+                    activeItem.style.width = ''; 
+                    activeItem.style.height = ''; 
                     activeVideo.pause();
                     activeVideo.removeAttribute('loop');
                 });
                 
-                // --- ABRIR ---
+                // --- ABRIR Y CALCULAR TAMAÑO CON ASPECT RATIO ---
                 item.classList.add('is-active');
                 overlay.style.display = 'block';
+
+                let finalWidth, finalHeight;
+
+                if (maxWidth / maxHeight > aspectRatio) {
+                    // Limitado por la altura (más alto que la pantalla)
+                    finalHeight = maxHeight;
+                    finalWidth = maxHeight * aspectRatio;
+                } else {
+                    // Limitado por el ancho (más ancho que la pantalla)
+                    finalWidth = maxWidth;
+                    finalHeight = maxWidth / aspectRatio;
+                }
+                
+                // Aplicar las dimensiones calculadas al contenedor activo
+                item.style.width = `${finalWidth}px`;
+                item.style.height = `${finalHeight}px`;
 
                 // Reproducir en loop
                 video.setAttribute('loop', '');
@@ -189,6 +250,11 @@
             
             videoItems.forEach((item, index) => {
                 const videoEl = item.querySelector('video');
+                
+                // Aplicar la clase de aspect ratio en la vista de lista
+                const ratio = item.getAttribute('data-ratio') || '16:9';
+                item.classList.add(`highlight-item[data-ratio="${ratio}"]`);
+                
                 if (videoEl && videoUrls[index]) {
                     videoEl.src = videoUrls[index];
                     videoEl.load(); 
@@ -261,7 +327,7 @@
     <table class="content-table" border=0 cellpadding=0 cellspacing=0>
         <tr>
             <td valign=top class="video-cell">
-                <div class="highlight-item" id="item-1">
+                <div class="highlight-item" id="item-1" data-ratio="16:9">
                     <video id="video-1" src="about:blank" muted preload="auto" playsinline title="Video Thumbnail 1"></video>
                 </div>
             </td>
@@ -273,7 +339,7 @@
         </tr>
         <tr>
             <td valign=top class="video-cell">
-                <div class="highlight-item" id="item-2">
+                <div class="highlight-item" id="item-2" data-ratio="1:1">
                     <video id="video-2" src="about:blank" muted preload="auto" playsinline title="Video Thumbnail 2"></video>
                 </div>
             </td>
@@ -285,7 +351,7 @@
         </tr>
         <tr>
             <td valign=top class="video-cell">
-                <div class="highlight-item" id="item-3">
+                <div class="highlight-item" id="item-3" data-ratio="9:16">
                     <video id="video-3" src="about:blank" muted preload="auto" playsinline title="Video Thumbnail 3"></video>
                 </div>
             </td>
@@ -297,7 +363,7 @@
         </tr>
         <tr>
             <td valign=top class="video-cell">
-                <div class="highlight-item" id="item-4">
+                <div class="highlight-item" id="item-4" data-ratio="4:3">
                     <video id="video-4" src="about:blank" muted preload="auto" playsinline title="Video Thumbnail 4"></video>
                 </div>
             </td>
@@ -309,7 +375,7 @@
         </tr>
         <tr>
             <td valign=top class="video-cell">
-                <div class="highlight-item" id="item-5">
+                <div class="highlight-item" id="item-5" data-ratio="16:9">
                     <video id="video-5" src="about:blank" muted preload="auto" playsinline title="Video Thumbnail 5"></video>
                 </div>
             </td>
@@ -321,7 +387,7 @@
         </tr>
          <tr>
             <td valign=top class="video-cell">
-                <div class="highlight-item" id="item-6">
+                <div class="highlight-item" id="item-6" data-ratio="1:1">
                     <video id="video-6" src="about:blank" muted preload="auto" playsinline title="Video Thumbnail 6"></video>
                 </div>
             </td>
@@ -333,7 +399,7 @@
         </tr>
         <tr>
             <td valign=top class="video-cell">
-                <div class="highlight-item" id="item-7">
+                <div class="highlight-item" id="item-7" data-ratio="9:16">
                     <video id="video-7" src="about:blank" muted preload="auto" playsinline title="Video Thumbnail 7"></video>
                 </div>
             </td>
@@ -345,7 +411,7 @@
         </tr>
         <tr>
             <td valign=top class="video-cell">
-                <div class="highlight-item" id="item-8">
+                <div class="highlight-item" id="item-8" data-ratio="16:9">
                     <video id="video-8" src="about:blank" muted preload="auto" playsinline title="Video Thumbnail 8"></video>
                 </div>
             </td>
@@ -357,7 +423,7 @@
         </tr>
         <tr>
             <td valign=top class="video-cell">
-                <div class="highlight-item" id="item-9">
+                <div class="highlight-item" id="item-9" data-ratio="1:1">
                     <video id="video-9" src="about:blank" muted preload="auto" playsinline title="Video Thumbnail 9"></video>
                 </div>
             </td>
@@ -369,7 +435,7 @@
         </tr>
         <tr>
             <td valign=top class="video-cell">
-                <div class="highlight-item" id="item-10">
+                <div class="highlight-item" id="item-10" data-ratio="4:3">
                     <video id="video-10" src="about:blank" muted preload="auto" playsinline title="Video Thumbnail 10"></video>
                 </div>
             </td>
