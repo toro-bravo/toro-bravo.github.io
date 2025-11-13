@@ -3,10 +3,13 @@
 
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=0.6">
-    <title>MARTA.MKV [WORKS]</title>
+    
+    <title>toro bravo</title>
+    <meta name="description" content="Portafolio de TORO BRAVO (Mateo Bravo Mir), director de cine de Barcelona y artista de postproducción, VFX y 3D. Creación de piezas audiovisuales únicas con multiformato y estética experimental.">
+    <meta name="keywords" content="director de cine, vfx artist, postproduccion, 3d artist, barcelona, toro bravo, atomico, film director, portfolio, multiformato, video experimental"> 
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
 
-    <link rel="icon" href="assets/favicon.ico">
+    <link rel="icon" href="assets/Ten-Gallon-Hat-icon.png">
     <link rel="stylesheet" type="text/css" href="style.css">
 
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-F9YHR26YNQ"></script>
@@ -18,47 +21,49 @@
     </script>
 
     <style>
-        /* Estilos base */
+        /* ESTILOS BASE */
         body {
-            /* Asegurar un fondo claro por defecto (eliminando la necesidad de .dark) */
-            background-color: #ffffff;
-            color: #000000;
+            background-color: #0D47A1; /* Azul oscuro */
+            color: white;
+            font-family: 'Times New Roman', Times, serif;
+            font-size: 13px;
+            margin-top: 0;
+            margin-left: 1rem; 
+            margin-right: 1rem; 
+            overflow: hidden; 
         }
 
-        .change {
-            cursor: pointer;
+        a, h1 {
+            color: yellow;
+            margin-top: 0; 
+        }
+
+        /* Estilos generales de texto */
+        .text {
+            margin: 0 0 9px 0;
+            width: auto;
+            color: white; 
+            font-size: 13px;
+            font-family: 'Times New Roman', Times, serif;
+            letter-spacing: -.3px;
         }
 
         /* Estilo para el contenedor principal y centrado */
         #content {
-            max-width: 850px; /* Ancho máximo para el contenido (ajustable) */
-            margin: 0 auto; /* Centrar el contenedor principal en la página */
+            max-width: 850px; 
+            margin: 0 auto; 
             padding: 20px 0;
-        }
-
-        /* Estilo para los textos generales */
-        .text {
-            margin: 0 0 9px 0;
-            width: auto; /* Ajustar ancho automáticamente, no fijo */
-            color: black;
-            font-size: 11pt;
-            font-family: "Times New Roman", Times, serif;
-            letter-spacing: -.3px;
+            overflow: auto; 
         }
 
         /* Estilo para los bloques de video y su centrado */
         .video-block {
             display: flex;
             flex-direction: column;
-            align-items: center; /* Centrar el video y el pie de imagen */
+            align-items: center; 
             margin-bottom: 30px;
         }
         
-        .logo-img {
-            height: 1em;
-            vertical-align: baseline;
-        }
-
         .filter-options {
             display: flex;
             justify-content: space-between;
@@ -72,6 +77,7 @@
         .filter-link.active {
             font-weight: bold;
             text-decoration: none !important;
+            color: white; 
         }
 
         .lazy-video {
@@ -81,54 +87,31 @@
         /* Estilo de pie de imagen/descripción (caption) */
         .video-caption {
             margin: 5px 0 0 0;
-            text-align: center; /* Centrar el texto del pie de imagen */
+            text-align: center; 
             width: 100%; 
-            font-size: 10pt;
-            font-family: "Times New Roman", Times, serif;
+            font-size: 13px;
+            font-family: 'Times New Roman', Times, serif;
             letter-spacing: -.3px;
+            color: white; 
         }
         
         /* Contenedor del video */
         .video-container {
             position: relative;
             margin: 0 auto;
-            display: flex; /* Para centrar el video dentro si fuera necesario */
+            display: flex; 
             justify-content: center;
             align-items: center;
         }
         
-        /* Mensaje de reproducción */
-        .play-message {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 50%;
-            height: 50%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            background-color: rgba(0, 0, 0, 0); /* transparencia */
-            color: #000000; /* Color del texto en modo claro */
-            font-size: 11pt;
-            font-weight: regular;
-            text-align: left;
-            font-family: "Times New Roman", Times, serif;
-            letter-spacing: -0.3px;
-            pointer-events: none; 
-            opacity: 1; 
-            z-index: 10; 
-        }
+        /* Mensaje de reproducción: ELIMINADO para simplificar */
         
-        .play-message.hidden {
-            opacity: 0;
-        }
-        
-        /* HR separator style (simplified for light mode) */
+        /* HR separator style */
         hr {
             border: none;
             height: 1px;
-            background-color: #ccc;
-            margin: 20px auto; /* Centrar el separador */
+            background-color: yellow; 
+            margin: 20px auto; 
             width: 100%;
         }
 
@@ -144,17 +127,17 @@
                 <div><a href='index' style="text-decoration:underline;">Back</a></div>
                 <div id="filters">
                     <a href="#" class="filter-link active" data-type="all" style="text-decoration:underline;">All</a>  |  
-                    <a href="#" class="filter-link" data-type="music" style="text-decoration:underline;">Music Video</a>  |  
-                    <a href="#" class="filter-link" data-type="commercial" style="text-decoration:underline;">Commercial</a>  |  
-                    <a href="#" class="filter-link" data-type="film" style="text-decoration:underline;">Film</a>
+                    <a href="#" class="filter-link" data-type="film" style="text-decoration:underline;">Film</a>  |  
+                    <a href="#" class="filter-link" data-type="3d" style="text-decoration:underline;">3D</a>  |  
+                    <a href="#" class="filter-link" data-type="reel" style="text-decoration:underline;">Reel</a>  |  
+                    <a href="#" class="filter-link" data-type="graphic" style="text-decoration:underline;">Graphic</a>
                 </div>
             </div>
 
             <HR>
-            <div class="video-block music">
+            <div class="video-block film">
                 <div class="video-container">
-                    <video class="lazy-video" loop muted playsinline preload="auto" width="792" height="478" src="https://attachments.are.na/40639420/49cba57fd621af86dd418f1d5ff3e83d.mp4?1761601404"></video>
-                    <span class="play-message">tap to play (˶◡‿◡)(´❥`)₊♪𝄞𝄢ཐི⋆♱</span>
+                    <video class="lazy-video" loop muted playsinline preload="auto" autoplay width="792" height="478" src="https://attachments.are.na/40639420/49cba57fd621af86dd418f1d5ff3e83d.mp4?1761601404"></video>
                 </div>
                 <div class="video-caption">
                     **ROSALÍA feat. Björk & Yves Tumor - Berghain** <i>(Music Video)</i><br> 3 mins 26 seconds, 3840x2160<br>
@@ -163,10 +146,9 @@
             </div>
 
             <HR>
-            <div class="video-block music">
+            <div class="video-block film">
                 <div class="video-container">
-                    <video class="lazy-video" loop muted playsinline preload="auto" width="849" height="356" src="https://attachments.are.na/40461475/c7d3143746527fc2da5deb4721a8226b.mp4?1760993060"></video>
-                    <span class="play-message">tap to play ☆..:*ヽ༼ ♥ ل͜ ♥ ༽ﾉ..:*☆ </span>
+                    <video class="lazy-video" loop muted playsinline preload="auto" autoplay width="849" height="356" src="https://attachments.are.na/40461475/c7d3143746527fc2da5deb4721a8226b.mp4?1760993060"></video>
                 </div>
                 <div class="video-caption">
                     **SAINt JHN - Glitching** <i>(Music Video)</i><br> 2 mins 46 seconds, 3840x1608<br>
@@ -175,10 +157,9 @@
             </div>
 
             <HR>
-            <div class="video-block music">
+            <div class="video-block film">
                 <div class="video-container">
-                    <video class="lazy-video" loop muted playsinline preload="auto" width="382" height="680" src="https://attachments.are.na/40460920/cfaa4638ba61e1d3018ea6db62b2d1a1.mp4?1760992063"></video>
-                    <span class="play-message">tap to play ¯\_( ͡❛ ͜ʖ ͡❛)_/¯</span>
+                    <video class="lazy-video" loop muted playsinline preload="auto" autoplay width="382" height="680" src="https://attachments.are.na/40460920/cfaa4638ba61e1d3018ea6db62b2d1a1.mp4?1760992063"></video>
                 </div>
                 <div class="video-caption">
                     **ROSALÍA - MOTOMAMI** <i>(TikTok LIVE Performance)</i><br> 28 mins 47 seconds, 1080x1920<br>
@@ -187,10 +168,9 @@
             </div>
 
             <HR>
-            <div class="video-block music">
+            <div class="video-block 3d">
                 <div class="video-container">
-                    <video class="lazy-video" loop muted playsinline preload="auto" width="849" height="478" src="https://attachments.are.na/40461105/1609c23b16b77c730f1089008715cceb.mp4?1760992421"></video>
-                    <span class="play-message">tap to play εїз Ƹ̴Ӂ̴Ʒ Ƹ̵̡Ӝ̵̨̄Ʒ </span>
+                    <video class="lazy-video" loop muted playsinline preload="auto" autoplay width="849" height="478" src="https://attachments.are.na/40461105/1609c23b16b77c730f1089008715cceb.mp4?1760992421"></video>
                 </div>
                 <div class="video-caption">
                     **ROSALÍA - MOTOMAMI World Tour** <i>(Interlude Visuals Animation)</i><br> 1200x1466<br>
@@ -199,10 +179,9 @@
             </div>
 
             <HR>
-            <div class="video-block music">
+            <div class="video-block film">
                 <div class="video-container">
-                    <video class="lazy-video" loop muted playsinline preload="auto" width="849" height="478" src="https://attachments.are.na/38955958/748cc2bcbaf4ebe10a1fcf69967b7dcb.mp4"></video>
-                    <span class="play-message">tap to play (ㆆ_ㆆ) </span>
+                    <video class="lazy-video" loop muted playsinline preload="auto" autoplay width="849" height="478" src="https://attachments.are.na/38955958/748cc2bcbaf4ebe10a1fcf69967b7dcb.mp4"></video>
                 </div>
                 <div class="video-caption">
                     **SQUID - Cro-Magnon Man** <i>(Music Video)</i><br> 4 mins 28 seconds, 3840x2160<br>
@@ -211,19 +190,16 @@
             </div>
 
             <HR>
-            <div class="video-block commercial">
+            <div class="video-block graphic">
                 <div class="videos-wrapper" style="display:flex; justify-content:center; gap: 10px;">
                     <div class="video-container">
-                        <video class="lazy-video" loop muted playsinline preload="auto" width="478" height="478" src="https://attachments.are.na/40461235/502775fc46b3501dc7e6779a25df5ce2.mp4?1760992662"></video>
-                        <span class="play-message">tap to play <('o'<)~ </span>
+                        <video class="lazy-video" loop muted playsinline preload="auto" autoplay width="478" height="478" src="https://attachments.are.na/40461235/502775fc46b3501dc7e6779a25df5ce2.mp4?1760992662"></video>
                     </div>
                     <div class="video-container">
-                        <video class="lazy-video" loop muted playsinline preload="auto" height="478" src="https://attachments.are.na/39203101/731aff0d6b3dc28f8b3927bbb0b1f215.mp4?1756729937"></video>
-                        <span class="play-message">again</span>
+                        <video class="lazy-video" loop muted playsinline preload="auto" autoplay height="478" src="https://attachments.are.na/39203101/731aff0d6b3dc28f8b3927bbb0b1f215.mp4?1756729937"></video>
                     </div>
                     <div class="video-container">
-                        <video class="lazy-video" loop muted playsinline preload="auto" height="478" src="https://attachments.are.na/39203098/6ad155fc81a38272922627f8c4867ab4.mp4?1756729937"></video>
-                        <span class="play-message">and again... </span>
+                        <video class="lazy-video" loop muted playsinline preload="auto" autoplay height="478" src="https://attachments.are.na/39203098/6ad155fc81a38272922627f8c4867ab4.mp4?1756729937"></video>
                     </div>
                 </div>
                 <div class="video-caption">
@@ -233,10 +209,9 @@
             </div>
 
             <HR>
-            <div class="video-block music">
+            <div class="video-block film">
                 <div class="video-container">
-                    <video class="lazy-video" loop muted playsinline preload="auto" width="849" height="478" src="https://attachments.are.na/38956471/b6b340e646d1d867e246db075a1a94b3.mp4?1755854566"></video>
-                    <span class="play-message">tap to play (͠≖ ͜ʖ͠≖) </span>
+                    <video class="lazy-video" loop muted playsinline preload="auto" autoplay width="849" height="478" src="https://attachments.are.na/38956471/b6b340e646d1d867e246db075a1a94b3.mp4?1755854566"></video>
                 </div>
                 <div class="video-caption">
                     **TINI - posta** <i>(Music Video)</i><br> 2 mins 37 seconds, 1920x1080<br>
@@ -245,10 +220,9 @@
             </div>
 
             <HR>
-            <div class="video-block music">
+            <div class="video-block film">
                 <div class="video-container">
-                    <video class="lazy-video" loop muted playsinline preload="auto" width="849" height="478" src="https://attachments.are.na/38956480/a28d35104d63b8c40ed8c7899b52ee01.mp4?1755854577"></video>
-                    <span class="play-message">tap to play ૮꒰ ˶• ༝ •˶꒱ა ♡ </span>
+                    <video class="lazy-video" loop muted playsinline preload="auto" autoplay width="849" height="478" src="https://attachments.are.na/38956480/a28d35104d63b8c40ed8c7899b52ee01.mp4?1755854577"></video>
                 </div>
                 <div class="video-caption">
                     **Sasha Keable - FEEL SOMETHING** <i>(Music Video)</i><br> 3 mins 15 seconds, 3840x2160<br>
@@ -257,31 +231,20 @@
             </div>
 
         </div> </div> <script>
-        
-        // Se eliminó la función startTime() y checkTime() para quitar el reloj.
-        // Se eliminó el código del modo oscuro.
-
-        // ==============================================
-        // LÓGICA DE FILTROS Y HOVER/TOUCH-TO-PLAY 
-        // ==============================================
-
         document.addEventListener('DOMContentLoaded', function() {
             const filterLinks = document.querySelectorAll('.filter-link');
             const videoBlocks = document.querySelectorAll('.video-block');
-            // Obtener todos los videos para control
-            const videosToControl = document.querySelectorAll('.lazy-video'); 
-
-            // Lógica de los filtros (SIN CAMBIOS en su funcionalidad)
+            // Ya no es necesario controlar los videos aquí, pues el HTML usa 'autoplay'.
+            
+            // Lógica de los filtros (Mantenida)
             filterLinks.forEach(link => {
                 link.addEventListener('click', function(e) {
                     e.preventDefault();
                     const filterType = this.getAttribute('data-type');
                     
-                    // Manejar la clase 'active'
                     filterLinks.forEach(l => l.classList.remove('active'));
                     this.classList.add('active');
                     
-                    // Mostrar/Ocultar bloques de video
                     videoBlocks.forEach(block => {
                         if (filterType === 'all' || block.classList.contains(filterType)) {
                             block.classList.remove('hidden');
@@ -292,77 +255,9 @@
                 });
             });
             
+            // SE ELIMINA toda la lógica de control de video (play/pause/displayFirstFrame/eventos de touch/hover)
+            // ya que ahora se usa la propiedad 'autoplay' en el HTML.
             
-            const playVideo = (videoElement) => {
-                videoElement.play().catch(e => {
-                    // Manejo de error de reproducción automática (autoplay)
-                });
-            };
-
-            const pauseVideo = (videoElement) => {
-                videoElement.pause();
-            };
-            
-            
-            const hidePlayMessage = (videoElement) => {
-                
-                const message = videoElement.parentNode.querySelector('.play-message');
-                if (message) {
-                    message.classList.add('hidden');
-                }
-            };
-
-            // Función para forzar la visualización del primer fotograma 
-            const displayFirstFrame = (videoElement) => {
-                if (videoElement.readyState >= 2) { 
-                    // Intenta forzar la reproducción para cargar el fotograma
-                    videoElement.play().then(() => {
-                        // Si la reproducción inicia, pausarla inmediatamente
-                        videoElement.pause();
-                        hidePlayMessage(videoElement); // Ocultar si el fotograma carga correctamente
-                    }).catch(e => {
-                        // Si falla el autoplay, se mantiene el mensaje visible para el toque/click.
-                    });
-                }
-            };
-
-            // 1. Asignar eventos de interacción y forzar la carga
-            videosToControl.forEach(video => {
-                
-                // Asegura que el video se muestre al cargar los datos
-                video.addEventListener('loadeddata', function() {
-                    displayFirstFrame(this);
-                });
-
-                // Si el video ya está cargado cuando se ejecuta el script (navegadores de escritorio)
-                if (video.readyState >= 2) {
-                    displayFirstFrame(video);
-                }
-
-                // Eventos de ESCRITORIO (Hover)
-                video.addEventListener('mouseover', function() {
-                    playVideo(this);
-                    hidePlayMessage(this); // Ocultar mensaje al hacer hover
-                });
-
-                video.addEventListener('mouseout', function() {
-                    pauseVideo(this);
-                });
-                
-                // Eventos de MÓVIL (tap to play, levantar para pausar)
-                video.addEventListener('touchstart', function() {
-                    playVideo(this);
-                    hidePlayMessage(this); // Ocultar el mensaje en el primer toque
-                });
-
-                video.addEventListener('touchend', function() {
-                    pauseVideo(this);
-                });
-
-                video.addEventListener('touchcancel', function() {
-                    pauseVideo(this);
-                });
-            });
         });
     </script>
 
