@@ -3,79 +3,77 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Endless Rocket 🚀</title>
+    <title>Fondo de Pantalla ASCII Art</title>
     <style>
-        /* CSS para usar una fuente monoespaciada, esencial para el ASCII Art */
-        body {
-            background-color: #000000; /* Fondo negro como el espacio */
-            color: #FFFFFF; /* Texto blanco */
-            font-family: 'Courier New', Courier, monospace;
-            font-size: 10px; /* Tamaño de fuente más pequeño para más líneas */
-            line-height: 1; /* Sin espacio entre líneas */
+        /*
+         * 1. Aseguramos que la página ocupe todo el viewport
+         */
+        html, body {
             margin: 0;
-            padding: 20px;
+            padding: 0;
+            width: 100%;
+            height: 100%;
         }
 
-        /* Usamos la etiqueta PRE para que los espacios y saltos de línea se respeten */
-        pre {
-            margin: 0;
+        /*
+         * 2. Estilos para el fondo con el patrón ASCII art
+         */
+        body {
+            /* Fuente monospace para que los caracteres ASCII mantengan un tamaño uniforme */
+            font-family: monospace;
+            
+            /* Color de fondo para que coincida con los espacios vacíos del arte */
+            background-color: #000; /* Fondo negro */
+            
+            /* Color del texto (los caracteres del arte) */
+            color: #fff; /* Caracteres blancos */
+            
+            /* El corazón de la solución: usamos el patrón como imagen de fondo */
+            background-image: url("data:image/svg+xml;charset=UTF-8,<svg xmlns='http://www.w3.org/2000/svg' width='100%' height='100%'><text x='0' y='1em' font-size='1em' fill='currentColor' font-family='monospace' white-space='pre'>⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿
+⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡿⠀⢸⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿
+⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡿⠁⠀⠀⢻⣿⣿⣿⣿⣿⡿⠿⠛⠋⣉⣽
+⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡿⠀⠀⠀⠀⠈⠋⠉⠀⠀⠀⠀⢀⣤⣾⣿⣿
+⣿⡿⣿⡿⠿⠿⠟⠛⠋⠉⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣠⣶⣿⣿⣿⣿⣿
+⣿⣥⣄⣀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣴⣿⣿⣿⣿⣿⣿⣿⣿
+⣿⣿⣿⣿⣿⣶⣦⡄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠘⣿⣿⣿⣿⣿⣿⣿⣿⣿
+⣿⣿⣿⣿⣿⣿⠟⠀⠀⠀⠀⠀⣠⣤⣀⡀⠀⠀⢻⣿⣿⣿⣿⣿⣿⣿⣿
+⣿⣿⣿⣿⣿⡟⠀⠀⠀⢀⣴⣾⣿⣿⣿⣿⣿⣶⣮⣿⣿⣿⣿⣿⣿⣿⣿
+⣿⣿⣿⣿⠏⠀⠀⣠⣾⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿
+⣿⣿⣿⠏⣀⣴⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿
+⣿⣿⣿⣾⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿</text></svg>");
+
+            /* Hacemos que la imagen de fondo se repita infinitamente */
+            background-repeat: repeat; 
+            
+            /* Establecemos el tamaño del patrón para que coincida con el tamaño del arte original */
+            /* Ajusta este valor si quieres que el patrón sea más grande o más pequeño */
+            background-size: auto; 
+            
+            /* Opcional: Centrar el patrón si no quieres que empiece en (0,0) */
+            background-position: center center;
+        }
+
+        /*
+         * 3. Estilo para el contenido de la página (solo de ejemplo)
+         */
+        .content {
+            position: relative; /* Para asegurar que el contenido esté por encima del fondo */
+            text-align: center;
+            padding-top: 50px;
+        }
+        
+        .content h1 {
+            color: lime; /* Texto de contenido en color diferente para que resalte */
+            background-color: rgba(0, 0, 0, 0.7); /* Fondo semi-transparente para la legibilidad */
+            display: inline-block;
+            padding: 10px;
         }
     </style>
 </head>
 <body>
-
-    <pre id="rocket-container">
-</pre>
-
-    <script>
-        // Paso 1: Definir las partes del cohete
-        const rocketHead = `
-⢸⡟⠳⢤⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-⠸⡇⠀⠀⠙⠲⣄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-⠀⡇⠀⣀⠤⢊⠜⠳⣄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-⠀⢻⠭⠄⠂⠁⠀⠀⠈⠳⣄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-⠀⠸⡇⠀⠀⠀⠀⠀⠀⠀⠈⢳⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-⠀⠀⢻⠀⠀⠀⠀⠀⠀⠀⠀⠀⠙⣦⡤⠤⠤⠶⣦⡀⠀⠀⠀⠀
-⠀⠀⠈⣇⠀⠀⠀⠀⠀⠀⡀⠀⠀⠈⢯⡉⠉⠀⠀⢳⡄⠀⠀⠀
-⠀⠀⠀⠸⡆⠀⠀⠀⠰⣏⢹⡄⠀⠀⠀⢳⡀⠀⠀⠀⠹⣄⠀⠀
-⠀⠀⠀⣠⢿⡄⠀⠀⠀⠹⣏⠹⣄⡠⠎⠁⣻⣤⣤⣀⣀⡘⢦⠀
-⠀⢀⡴⡣⠃⢻⡀⠀⠀⣀⠼⣆⠹⣆⣠⠞⠋⠳⣄⠀⠀⠉⠉⠁
-⠀⠀⢻⡀⠀⠀⢻⡉⠁⠀⣀⣸⣧⠘⣇⣠⢔⡿⠛⠀⠀⠀⠀⠀
-⠀⠀⠀⢳⡀⠀⠀⡿⣞⠋⠁⣀⡬⣧⡘⣿⢋⡀⠙⠢⡀⠀⠀⠀
-⠀⠀⠀⠀⢳⡀⣸⠃⠹⣶⠽⠖⢋⠉⠋⠁⠀⢈⣱⠀⠹⡄⠀⠀
-⠀⠀⠀⠀⠀⢳⡟⠀⠀⠀⠀⡇⢈⠀⢀⡀⠐⡞⠃⠀⠀⣷⠀⠀
-`; // Cuerpo superior del cohete.
-
-        // Esta es la pieza clave: una línea de arte ASCII que funciona como el cuerpo
-        // que se repetirá. Nota cómo las líneas se alinean con el arte de arriba.
-        const rocketBodySegment = `
-⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢧⠘⢴⠁⠑⢤⠇⠀⢰⠲⡿⠀⠀
-⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⢧⣀⡞⠓⠦⡄⠀⣸⠀⠀⠀⠀
-⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠉⠀⠀⠀⢹⣴⠃⠀⠀⠀⠀
-`; // Repetiremos esta parte.
-
-        const rocketTail = `
-⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⠁⠀⠀⠀⠀⠀
-🔥 **¡COHETE INTERMINABLE EN VUELO!** 🔥
-`; // Cola y mensaje final.
-
-        // Paso 2: Definir cuántas veces se debe repetir el cuerpo
-        // Un número grande (ej. 2500) lo hace parecer muy largo,
-        // replicando el efecto "endless".
-        const repetitionCount = 2500; // Puedes ajustar este valor
-
-        // Paso 3: Construir el cohete
-        let fullRocket = rocketHead;
-
-        for (let i = 0; i < repetitionCount; i++) {
-            fullRocket += rocketBodySegment;
-        }
-
-        fullRocket += rocketTail;
-
-        // Paso 4: Insertar el cohete completo en el contenedor PRE del HTML
-        document.getElementById('rocket-container').textContent = fullRocket;
-    </script>
-
+    <div class="content">
+        <h1>¡Fondo de Pantalla con ASCII Art!</h1>
+        <p>El patrón se repite por toda la superficie de la página.</p>
+    </div>
 </body>
 </html>
