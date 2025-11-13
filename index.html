@@ -57,21 +57,19 @@
         .right-column li {
             text-align: right; 
         }
-
-        /* NUEVOS ESTILOS PARA EL VIDEO DE FONDO */
+        
         #fullscreen-video {
-            position: fixed; /* Fija el video a la ventana */
-            right: 0;
-            bottom: 0;
-            min-width: 100%; 
-            min-height: 100%;
-            width: auto;
-            height: auto;
+            position: fixed; /* Fija el video a la ventana (viewport) */
+            top: 0; /* Lo alinea a la parte superior */
+            left: 0; /* Lo alinea a la izquierda */
+            min-width: 100%; /* El ancho mínimo es el 100% del viewport */
+            min-height: 100%; /* La altura mínima es el 100% del viewport */
             z-index: -999; /* Lo coloca detrás de todo el contenido */
             display: none; /* Inicialmente oculto */
             pointer-events: none; /* Asegura que no interfiera con otros clics */
             background-color: #0D47A1; /* Color de fondo si el video no carga */
-            object-fit: cover; /* Asegura que el video cubra toda la pantalla sin distorsión */
+            object-fit: cover; /* Asegura que el video cubra toda la pantalla sin distorsión, recortando si el aspecto no coincide */
+        }
         }
     </style>
 </head>
@@ -172,7 +170,7 @@
 
 <video loop muted id="fullscreen-video" playsinline>
     <source src="https://attachments.are.na/41087120/3d5dfa0d9a1cb5ef700407deb41fb777.mp4?1763050157" type="video/mp4">
-    Tu navegador no soporta el tag de video.
+
 </video>
 
 <script>
@@ -200,24 +198,16 @@
         }
     });
 
-    // ------------------------------------------
-    // NUEVO CÓDIGO PARA PAUSAR EL MARQUEE CON HOVER
-    // ------------------------------------------
-
-    // 1. Obtenemos el elemento marquee por su ID
     const marquee = document.getElementById('texto-marquee');
-
-    // Comprobamos que el elemento exista antes de añadir los listeners
     if (marquee) {
-        // 2. Añadimos el evento para pausar cuando el ratón entra
+ 
         marquee.addEventListener('mouseover', function() {
-            this.stop(); // El método .stop() pausa el desplazamiento del marquee
+            this.stop();
             console.log("Marquee pausado.");
         });
 
-        // 3. Añadimos el evento para reanudar cuando el ratón sale
         marquee.addEventListener('mouseout', function() {
-            this.start(); // El método .start() reanuda el desplazamiento del marquee
+            this.start();
             console.log("Marquee reanudado.");
         });
     }
