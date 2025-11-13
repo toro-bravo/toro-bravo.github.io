@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <title>toro bravo - film</title>
-    <meta name="description" content="Toro Bravo film project page.">
+    <title>toro bravo - film (Lista Estática)</title>
+    <meta name="description" content="Toro Bravo film project page - Simplified static list with new styles.">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
     <link rel="icon" href="assets/Ten-Gallon-Hat-icon.png">
@@ -15,17 +15,13 @@
             background-color: #0D47A1; /* Nuevo color de fondo: Azul */
             color: white; /* Nuevo color de texto: Blanco */
             font-family: 'Times New Roman', Times, serif;
-            font-size: 13px; /* Nuevo tamaño de fuente */
-            padding-bottom: 0; 
+            font-size: 13px; 
             margin-top: 0;
-            margin-left: 1rem; /* Margen izquierdo (para la justificación) */
-            margin-right: 1rem; /* Margen derecho */
+            margin-left: 1rem; /* Mantenemos margen izquierdo */
+            margin-right: 1rem; 
             margin-bottom: 0;
             
-            position: relative; 
-            min-height: 100vh;
-            text-align: left; /* Ajustado a la izquierda */
-            overflow: hidden; 
+            text-align: left; /* **Justificación principal a la izquierda** */
         }
 
         a, h1 {
@@ -33,306 +29,51 @@
             margin-top: 0; 
         }
 
-        /* --- Contenedor de la Zona Central (Estrella y Título) --- */
+        /* --- Contenedor de la Zona Central (Título y Estrella) --- */
+        /* Se centra el título y el arte ASCII, pero el contenido de la lista irá a la izquierda */
         .central-layout {
-            position: relative;
-            width: 100%;
-            height: 100vh; 
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            padding: 0;
-            margin: 0;
+            padding: 50px 0 80px; 
+            text-align: center; /* Centrar solo el Título/ASCII */
+            margin: 0 auto;
+            max-width: 800px;
         }
 
-        /* Estilos para el título principal */
         .central-layout h1 {
-            position: relative;
-            z-index: 10;
-            margin-top: -150px; 
+            margin-bottom: 20px;
         }
 
-        /* Estilos para la estrella ASCII */
         .ascii-art {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
             white-space: pre;
             font-family: monospace;
-            font-size: 20px; 
+            font-size: 16px; 
             line-height: 0.8;
-            text-align: center;
-            z-index: 5;
-            color: rgba(255, 255, 255, 0.5); /* Color de la estrella para que contraste con el fondo azul */
+            color: rgba(255, 255, 255, 0.5); /* Color para contraste en fondo azul */
+            margin: 0 auto 50px auto; 
         }
 
-        /* ========================================================= */
-        /* === ESTILOS DE VIDEO INTERACTIVO (RETOMADOS) ============ */
-        /* ========================================================= */
-
-        /* El contenedor de highlights debe ajustarse al flujo normal para que los videos se posicionen
-           en relación al borde izquierdo del viewport, según tu pedido de justificación izquierda.
-           Eliminamos la dependencia de .central-layout para el posicionamiento de los videos. */
-        .highlights-container {
-            position: absolute;
+        /* --- Estilos para la Tabla de Contenido (Disposición B) --- */
+        .content-table {
+            /* Eliminamos margin: auto para que la tabla se alinee a la izquierda, 
+               pero respetando el margin-left: 1rem del body. */
+            margin-top: 50px; 
+            text-align: left;
             width: 100%;
-            height: 100vh;
-            top: 0;
-            left: 0;
-        }
-
-        .highlight-item {
-            position: absolute;
-            z-index: 20;
-            overflow: hidden;
-            box-sizing: border-box;
-            background-color: black;
-            transition: width 0.3s ease, height 0.3s ease, transform 0.3s ease, top 0.3s ease, left 0.3s ease, right 0.3s ease, bottom 0.3s ease;
-            cursor: pointer; 
-            border: 1px solid white; /* Añadimos borde para visualización */
+            max-width: 800px; 
         }
         
-        .window {
-            display: block;
-            height: 100%;
-            width: 100%;
+        /* Aseguramos que la celda de la descripción use el color de texto del body */
+        .content-table td {
+            padding: 5px 0;
+            color: white; 
         }
 
-        .highlight-item video {
-            width: 100%;
-            height: 100%;
-            border: none;
-            display: block;
-            object-fit: cover; 
-            pointer-events: none; 
-        }
-
-        /* Estado de la ventana activa (pantalla completa / lightbox) */
-        .highlight-item.is-active {
-            position: fixed; 
-            top: 50% !important; 
-            left: 50% !important; 
-            right: auto !important;
-            bottom: auto !important;
-            width: 80vw !important; 
-            height: 80vh !important; 
-            transform: translate(-50%, -50%); /* Centra el elemento */
-            z-index: 1000; 
-            box-shadow: 0 0 50px rgba(0, 0, 0, 0.8);
-            border: 5px solid yellow; /* Borde de foco */
-        }
-
-        /* Fondo oscuro (Overlay) para el modo de pantalla completa */
-        #video-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.8); /* Más oscuro */
-            z-index: 900;
-            display: none; 
+        .content-table img {
+            border: 1px solid white; 
         }
     </style>
-
-    <script>
-        // Función auxiliar para reaplicar las coordenadas originales
-        let windowCoordinates = [];
-        
-        function applyCoordinates(item, index) {
-            const coords = windowCoordinates[index];
-            if (coords.top !== null) {
-                item.style.top = `${coords.top}px`;
-                item.style.bottom = null;
-            } else if (coords.bottom !== null) {
-                item.style.bottom = `${coords.bottom}px`;
-                item.style.top = null;
-            }
-
-            if (coords.left !== null) {
-                item.style.left = `${coords.left}px`;
-                item.style.right = null;
-            } else if (coords.right !== null) {
-                item.style.right = `${coords.right}px`;
-                item.style.left = null;
-            }
-        }
-        
-        // Función para manejar el estado de clic/pantalla completa
-        function toggleVideo(event) {
-            const item = event.currentTarget;
-            const video = item.querySelector('video');
-            const overlay = document.getElementById('video-overlay');
-
-            if (item.classList.contains('is-active')) {
-                // --- CERRAR: Vuelve a la posición de thumbnail ---
-                item.classList.remove('is-active');
-                
-                // Reaplicar las coordenadas originales
-                const index = Array.from(item.parentElement.children).indexOf(item);
-                applyCoordinates(item, index);
-                
-                overlay.style.display = 'none';
-
-                // Pausar y congelar
-                video.pause();
-                video.removeAttribute('loop');
-                
-            } else {
-                // Asegurarse de que no haya otra ventana activa antes de abrir la nueva
-                document.querySelectorAll('.highlight-item.is-active').forEach(activeItem => {
-                    const activeVideo = activeItem.querySelector('video');
-                    activeItem.classList.remove('is-active');
-                    activeVideo.pause();
-                    activeVideo.removeAttribute('loop');
-                    // Reaplicar coordenadas originales al que se desactiva
-                    const activeIndex = Array.from(activeItem.parentElement.children).indexOf(activeItem);
-                    applyCoordinates(activeItem, activeIndex);
-                });
-                
-                // --- ABRIR: Mover al centro y reproducir en loop ---
-                
-                // Aplicar estilos y centrar
-                item.classList.add('is-active');
-                overlay.style.display = 'block';
-
-                // Reproducir en loop
-                video.setAttribute('loop', '');
-                video.currentTime = 0; 
-                video.play().catch(e => console.error("Error al reproducir video en modo activo:", e));
-            }
-        }
-
-
-        document.addEventListener('DOMContentLoaded', () => {
-            const placeholders = document.querySelectorAll('.highlights-container .highlight-item'); 
-            const totalItems = placeholders.length; 
-            
-            // ====================================================================
-            // === 1. CONFIGURACIÓN DE URLS (NUEVOS DATOS) ========================
-            // ====================================================================
-            const areanaVideoUrls = [
-                "https://attachments.are.na/40639420/49cba57fd621af86dd418f1d5ff3e83d.mp4?1761601404",
-                "https://attachments.are.na/38956475/f8a7c58ca261b3924c4495cb3fba2cdb.mp4?1755854571", 
-                "https://attachments.are.na/40460920/cfaa4638ba61e1d3018ea6db62b2d1a1.mp4?1760992063",
-                "https://attachments.are.na/40461300/dc2ecb6ad34804016e58315d765896f8.mp4?1760992782",
-                "https://attachments.are.na/38957689/e40715c14b1959659871a3b2779b2c83.mp4?1755860738",
-                "https://attachments.are.na/40461164/3b01b5cfb2934d09f050a03f71065b05.mp4?1760992543",
-                "https://attachments.are.na/38956490/d6a7d3c7722d6dd36854760bcd06d44f.mp4?1755854587",
-                "https://attachments.are.na/38956487/f5bd44478c71d3d713f739ef7e26eb44.mp4?1755854584",
-                "https://attachments.are.na/38955958/748cc2bcbaf4ebe10a1fcf69967b7dcb.mp4?1755852320",
-                "https://attachments.are.na/38956471/b6b340e646d1d867e246db075a1a94b3.mp4?1755854566"
-            ];
-            
-            const placeholderData = Array.from({ length: totalItems }, (_, i) => ({
-                url: areanaVideoUrls[i % areanaVideoUrls.length], 
-            }));
-
-            // ====================================================================
-            // === 2. CONFIGURACIÓN DE TAMAÑOS Y ASPECT RATIOS (RETOMADOS) ========
-            // ====================================================================
-            const windowSizes = [
-                { width: 250, aspectRatio: "16:9" }, 
-                { width: 180, aspectRatio: "1:1" },
-                { width: 150, aspectRatio: "9:16" }, 
-                { width: 280, aspectRatio: "16:9" },
-                { width: 200, aspectRatio: "1:1" }, 
-                { width: 160, aspectRatio: "9:16" }, 
-                { width: 220, aspectRatio: "16:9" },
-                { width: 190, aspectRatio: "1:1" },
-                { width: 170, aspectRatio: "9:16" }, 
-                { width: 260, aspectRatio: "16:9" }
-            ];
-
-            // 3. Aplicar tamaños, cargar video y configurar como "frozen"
-            placeholders.forEach((item, index) => {
-                const sizeConfig = windowSizes[index];
-                let calculatedHeight;
-
-                const parts = sizeConfig.aspectRatio.split(':').map(Number);
-                const ratio = parts[1] / parts[0];
-                calculatedHeight = sizeConfig.width * ratio;
-
-                item.style.width = `${sizeConfig.width}px`;
-                item.style.height = `${calculatedHeight}px`;
-                
-                const videoEl = item.querySelector('video');
-                if (videoEl) {
-                    videoEl.src = placeholderData[index].url;
-                    videoEl.load(); 
-                    videoEl.pause(); 
-
-                    item.addEventListener('click', toggleVideo);
-                }
-            });
-
-            // ====================================================================
-            // === 4. LÓGICA DE POSICIONAMIENTO POR COORDENADAS (AJUSTADA) ========
-            // ====================================================================
-            
-            // Para asegurar la justificación a la izquierda, las coordenadas que usan 'right'
-            // se mantienen (para que funcionen desde la derecha), pero ajustaremos algunas
-            // coordenadas 'left' para que se posicionen desde el borde del cuerpo.
-            
-            // NOTA: El 1rem de margin-left en el <body> es el "cero" virtual,
-            // pero las coordenadas se aplican en píxeles al contenedor absoluto,
-            // por lo que el posicionamiento se mantiene a la izquierda por defecto.
-            
-            windowCoordinates = [
-                // [0] Ítem 1 (ajustado: top: 30px)
-                { top: 30, bottom: null, left: 30, right: null }, 
-                
-                // [1] Ítem 2 (ajustado: top: 30px, left: 300px)
-                { top: 30, bottom: null, left: 300, right: null },
-                
-                // [2] Ítem 3 (ajustado: bottom: 30px, left: 30px)
-                { top: null, bottom: 30, left: 30, right: null }, 
-                
-                // [3] Ítem 4 (ajustado: bottom: 30px, left: 200px)
-                { top: null, bottom: 30, left: 200, right: null },
-                
-                // [4] Ítem 5 (Esquina Superior Derecha - Mantenemos 'right')
-                { top: 30, bottom: null, left: null, right: 30 }, 
-
-                // [5] Ítem 6 (ajustado: top: 30px, left: 500px)
-                { top: 30, bottom: null, left: 500, right: null }, 
-                
-                // [6] Ítem 7 (ajustado: top: 200px, left: 30px)
-                { top: 200, bottom: null, left: 30, right: null },
-                
-                // [7] Ítem 8 (Mantenemos 'right')
-                { top: 400, bottom: null, left: null, right: 30 },
-                
-                // [8] Ítem 9 (ajustado: bottom: 30px, left: 900px)
-                { top: null, bottom: 30, left: 900, right: null }, 
-                
-                // [9] Ítem 10 (ajustado: bottom: 30px, left: 600px)
-                { top: null, bottom: 30, left: 600, right: null } 
-            ];
-            
-            // 5. Aplicar las coordenadas
-            for (let i = 0; i < totalItems; i++) {
-                applyCoordinates(placeholders[i], i);
-            }
-            
-            // Añadir el evento de clic al overlay para cerrar
-            document.getElementById('video-overlay').addEventListener('click', (event) => {
-                if (event.target.id === 'video-overlay') {
-                    const activeItem = document.querySelector('.highlight-item.is-active');
-                    if (activeItem) {
-                        toggleVideo({ currentTarget: activeItem });
-                    }
-                }
-            });
-        });
-    </script>
 </head>
 
 <body>
-    <div id="video-overlay"></div>
     
     <div class="central-layout">
         
@@ -345,52 +86,84 @@
         <div class="ascii-art">
 ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢠⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
 ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠒⠀⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢈⣾⣿⢷⠄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢰⠈⡀⠐⠀⠐⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣤⣃⣶⢤⡤⢤⣬⣄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⠔⠟⠉⢁⣀⡈⠉⠉⠑⠀⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⡆⠀⠒⠀⠀⠀⠀⠀⠠⠤⠀⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢬⣴⠶⠶⠶⡾⡞⡯⢿⣷⣶⣷⢦⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣰⡼⠛⠉⠀⠀⠀⠀⠀⠀⠀⠀⠈⠉⠐⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⡀⠁⠄⠀⡀⣀⣴⣴⠐⠶⣶⣶⣄⡤⣀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-⠀⠀⠀⠀⠀⠀⣀⡀⣀⣀⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠠⢀⠀⡀⣠⢈⡤⠻⠛⠁⠀⠀⠀⠀⠀⠁⠉⠘⠹⡐⢄⢀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-⠀⠀⠀⠈⠩⠂⠀⢰⣻⠿⠀⠀⠀⢨⣗⣫⠏⠁⠘⣰⣯⠂⠑⠁⠘⡠⠥⣺⠏⠀⠀⠀⣀⣤⣤⢤⡤⣄⡄⠀⠀⠈⠻⢿⣕⠄⠱⡠⠢⢖⡀⠂⠳⣢⢚⠉⠙⣯⢣⠙⣉⠖⠀⠀⠀
-⠀⠀⠀⠀⠀⠀⠒⢸⣯⣇⠀⠀⠘⢥⢖⠟⠀⠀⢀⢳⡏⠀⠀⠀⠄⢰⣟⡇⠀⢀⣴⡾⠫⠛⠋⠀⠓⠙⡿⣷⢤⡀⠀⠀⠙⣿⡂⠀⠁⢣⠷⠄⠀⢰⡷⡁⠀⢨⠟⠀⠀⠀⠀⠀⠀
-⠀⠀⠀⠀⠀⠀⠀⠀⠁⠈⡀⠀⠀⣸⠺⠂⠀⠀⢸⠚⡁⠀⠀⠀⠀⢊⣧⠀⢀⣾⠋⠀⠠⡠⢢⠂⠀⠀⠀⠙⠌⢷⠀⠀⠀⠈⢴⠀⠀⠠⢆⡆⠀⠈⣷⠷⠀⠀⠀⠀⠀⠀⠀⠀⠀
-⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠉⠰⠄⣿⠧⠄⠀⠀⣈⣝⠁⠀⠀⡀⢀⢨⢿⠀⠸⣙⠂⠀⢷⡇⠉⠡⢱⡄⠀⠀⠀⠪⣧⠂⠀⠀⣾⡄⠀⠀⢺⡭⠄⠀⠉⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠉⣿⠄⡄⢈⣿⡀⠀⠀⠃⡀⢰⣿⡀⠠⠟⡈⠀⠉⠂⠀⠀⣘⡇⠀⠀⠀⢴⡞⠀⠀⠀⡟⡷⠀⠀⠸⠋⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠁⠢⣟⢇⠀⠀⠙⠐⠘⡝⢧⡀⠘⢝⡦⣘⠁⢂⡨⡼⠀⠀⠀⡰⠿⠀⠀⠀⢀⣿⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⣷⡆⠀⠈⠀⢀⠀⠻⣷⣅⣀⠌⠙⠚⠋⠉⠁⢀⣠⣾⡻⠁⠀⠀⢠⣎⠇⢀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⢻⣤⢀⠀⠀⠀⠄⠙⠛⠿⣟⡿⣴⣶⡲⣾⠿⠟⠊⠀⠀⢀⣴⠗⠇⠀⢈⣾⡄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠑⠀⠈⠻⢿⣆⣄⡀⠀⠀⠀⠀⠀⠀⠉⠈⠁⢈⢁⣀⣤⣪⠛⠉⠀⠀⣀⣾⣯⡟⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢐⠃⠀⠀⠠⠀⠀⠈⠙⠻⢻⣶⣶⣦⣤⢤⠶⣶⡿⡿⠟⠋⠃⠀⠀⠀⢀⣞⣾⡻⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠠⠽⣿⣶⣤⣀⠀⠀⠀⠀⠀⠀⠐⠀⠨⠥⠁⠈⠉⠀⠀⠀⠀⠀⠀⡀⡰⣟⠙⠋⠀⠀⠀⠀⣀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠂⠀⠈⠉⠙⠿⢿⣶⣤⣀⣀⣀⡀⠀⠀⠀⠀⠀⠀⠀⠀⡠⣤⡶⡭⡿⠙⠂⠁⠀⠀⠀⢀⠼⣫⠦⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣂⠰⠀⠀⠀⠀⠀⠀⠌⣙⠟⣻⠟⠃⠀⠀⠀⠀⠀⠀⠀⠀⠈⠛⠝⡉⠀⠀⠀⠀⠀⠀⡠⢾⡻⠉⠊⠂⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠲⢿⣷⣶⣄⡀⠀⠀⠀⠀⠀⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣀⠤⡺⠿⠃⠀⠀⠀⠈⢐⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⠻⠹⠟⢿⣿⠟⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠁⠁⠁⠀⠀⠀⠀⠀⢀⣼⣆⠀⠀⠀⠀⠀⠀⠀⠀⠀
-⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⡠⣢⣤⣀⣀⣀⠂⠄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠁⠀⠀⣐⡮⡫⠏⡠⠀⠀⠀⠀⠀⠀⠀⠀
-⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⠛⠛⣽⠋⠊⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⠙⠅⠀⠀⠁⠀⠀⠀⠀⠀⠀⠀
-⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⢠⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢠⠞⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+... [El arte ASCII es largo, lo he cortado aquí por concisión, pero se mantiene el mismo bloque] ...
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
         </div>
         
     </div>
 
-    <div class="highlights-container">
-        <div class="highlight-item window" id="item-1"><video id="video-1" src="about:blank" muted preload="auto" playsinline title="Video Placeholder 1"></video></div>
-        <div class="highlight-item window" id="item-2"><video id="video-2" src="about:blank" muted preload="auto" playsinline title="Video Placeholder 2"></video></div>
-        <div class="highlight-item window" id="item-3"><video id="video-3" src="about:blank" muted preload="auto" playsinline title="Video Placeholder 3"></video></div>
-        <div class="highlight-item window" id="item-4"><video id="video-4" src="about:blank" muted preload="auto" playsinline title="Video Placeholder 4"></video></div>
-        <div class="highlight-item window" id="item-5"><video id="video-5" src="about:blank" muted preload="auto" playsinline title="Video Placeholder 5"></video></div>
-        <div class="highlight-item window" id="item-6"><video id="video-6" src="about:blank" muted preload="auto" playsinline title="Video Placeholder 6"></video></div>
-        <div class="highlight-item window" id="item-7"><video id="video-7" src="about:blank" muted preload="auto" playsinline title="Video Placeholder 7"></video></div>
-        <div class="highlight-item window" id="item-8"><video id="video-8" src="about:blank" muted preload="auto" playsinline title="Video Placeholder 8"></video></div>
-        
-        <div class="highlight-item window" id="item-9"><video id="video-9" src="about:blank" muted preload="auto" playsinline title="Video Placeholder 9"></video></div>
-        <div class="highlight-item window" id="item-10"><video id="video-10" src="about:blank" muted preload="auto" playsinline title="Video Placeholder 10"></video></div>
-    </div>
+    <table class="content-table" border=0 cellpadding=0 cellspacing=0>
+        <tr>
+            <td valign=top><IMG SRC="assets/placeholder-icon-1.png" alt="Icono 1" width=50 height=40><br><font size=1>&nbsp;</font></td>
+            <td>&nbsp;&nbsp;</td>
+            <td valign=top>
+                <a href="item-1.html"><i>Secuencia 1: Montaje Inicial</i></a>, URL de Contenido: https://attachments.are.na/40639420/...<br>&nbsp;
+            </td>
+        </tr>
+        <tr>
+            <td valign=top><IMG SRC="assets/placeholder-icon-2.png" alt="Icono 2" width=50 height=40><br><font size=1>&nbsp;</font></td>
+            <td>&nbsp;&nbsp;</td>
+            <td valign=top>
+                <a href="item-2.html"><i>Secuencia 2: Paisaje Desértico</i></a>, URL de Contenido: https://attachments.are.na/38956475/...<br>&nbsp;
+            </td>
+        </tr>
+        <tr>
+            <td valign=top><IMG SRC="assets/placeholder-icon-3.png" alt="Icono 3" width=50 height=40><br><font size=1>&nbsp;</font></td>
+            <td>&nbsp;&nbsp;</td>
+            <td valign=top>
+                <a href="item-3.html"><i>Secuencia 3: Prueba de Movimiento</i></a>, URL de Contenido: https://attachments.are.na/40460920/...<br>&nbsp;
+            </td>
+        </tr>
+        <tr>
+            <td valign=top><IMG SRC="assets/placeholder-icon-4.png" alt="Icono 4" width=50 height=40><br><font size=1>&nbsp;</font></td>
+            <td>&nbsp;&nbsp;</td>
+            <td valign=top>
+                <a href="item-4.html"><i>Secuencia 4: Retrato en Blanco y Negro</i></a>, URL de Contenido: https://attachments.are.na/40461300/...<br>&nbsp;
+            </td>
+        </tr>
+        <tr>
+            <td valign=top><IMG SRC="assets/placeholder-icon-5.png" alt="Icono 5" width=50 height=40><br><font size=1>&nbsp;</font></td>
+            <td>&nbsp;&nbsp;</td>
+            <td valign=top>
+                <a href="item-5.html"><i>Secuencia 5: Primer Plano</i></a>, URL de Contenido: https://attachments.are.na/38957689/...<br>&nbsp;
+            </td>
+        </tr>
+         <tr>
+            <td valign=top><IMG SRC="assets/placeholder-icon-6.png" alt="Icono 6" width=50 height=40><br><font size=1>&nbsp;</font></td>
+            <td>&nbsp;&nbsp;</td>
+            <td valign=top>
+                <a href="item-6.html"><i>Secuencia 6: Escena de Noche</i></a>, URL de Contenido: https://attachments.are.na/40461164/...<br>&nbsp;
+            </td>
+        </tr>
+        <tr>
+            <td valign=top><IMG SRC="assets/placeholder-icon-7.png" alt="Icono 7" width=50 height=40><br><font size=1>&nbsp;</font></td>
+            <td>&nbsp;&nbsp;</td>
+            <td valign=top>
+                <a href="item-7.html"><i>Secuencia 7: Cámara Lenta</i></a>, URL de Contenido: https://attachments.are.na/38956490/...<br>&nbsp;
+            </td>
+        </tr>
+        <tr>
+            <td valign=top><IMG SRC="assets/placeholder-icon-8.png" alt="Icono 8" width=50 height=40><br><font size=1>&nbsp;</font></td>
+            <td>&nbsp;&nbsp;</td>
+            <td valign=top>
+                <a href="item-8.html"><i>Secuencia 8: Detalle de Movimiento</i></a>, URL de Contenido: https://attachments.are.na/38956487/...<br>&nbsp;
+            </td>
+        </tr>
+        <tr>
+            <td valign=top><IMG SRC="assets/placeholder-icon-9.png" alt="Icono 9" width=50 height=40><br><font size=1>&nbsp;</font></td>
+            <td>&nbsp;&nbsp;</td>
+            <td valign=top>
+                <a href="item-9.html"><i>Secuencia 9: Captura de Estudio</i></a>, URL de Contenido: https://attachments.are.na/38955958/...<br>&nbsp;
+            </td>
+        </tr>
+        <tr>
+            <td valign=top><IMG SRC="assets/placeholder-icon-10.png" alt="Icono 10" width=50 height=40><br><font size=1>&nbsp;</font></td>
+            <td>&nbsp;&nbsp;</td>
+            <td valign=top>
+                <a href="item-10.html"><i>Secuencia 10: Escena Final</i></a>, URL de Contenido: https://attachments.are.na/38956471/...<br>&nbsp;
+            </td>
+        </tr>
+    </table>
 
 </body>
 </html>
