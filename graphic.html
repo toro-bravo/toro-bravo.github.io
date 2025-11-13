@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ASCII Art con Imagen Superpuesta</title>
+    <title>ASCII Art con Imagen Flotante</title>
     <style>
         /* --- 1. Estilos Globales (Tus Preferencias) --- */
         body {
@@ -11,47 +11,37 @@
             font-size: 18px; 
             color: #333; 
             margin: 0;
-            padding: 20px; /* Aumentamos el padding para ver mejor la figura */
+            padding: 20px; 
             background-color: #f9f9f9; 
-            text-align: center; /* Centra el contenedor de la figura */
         }
         
-        /* --- 2. Contenedor del ASCII Art --- */
+        /* Contenedor del arte para controlar el ancho y centrar */
         .art-figure {
-            /* IMPORTANTE: El padre es relativo para que el hijo (imagen) se posicione sobre él */
-            position: relative; 
-            display: inline-block; /* Permite que el contenedor se ajuste al ancho del arte */
-            margin: 50px auto; /* Centra el bloque de la figura en la página */
+            width: 100%;
+            max-width: 800px; /* Limita el ancho para que la figura no sea demasiado grande */
+            margin: 50px auto; /* Centra el bloque de la figura */
+            text-align: left; /* Alineación del texto dentro del bloque */
         }
         
-        /* Estilos del texto del ASCII Art */
+        /* --- 2. Estilos del ASCII Art (Cruciales) --- */
         .art-figure p {
-            font-family: monospace; /* CRUCIAL para mantener la alineación */
-            white-space: pre; /* Mantiene espacios y saltos de línea */
+            font-family: monospace; /* CRUCIAL: Mantiene la alineación de los caracteres */
+            white-space: pre-wrap; /* Permite que el texto se ajuste alrededor del float */
             line-height: 0.8; /* Espaciado ajustado para caracteres */
-            font-size: 14px; /* Un poco más pequeño para una mejor relación con la imagen */
+            font-size: 14px; 
             margin: 0;
-            color: #333; /* El color de los bloques ASCII */
+            color: #333;
+            /* Se necesita overflow para contener el float, asegurando que el fondo del p no se colapse */
+            overflow: hidden; 
         }
 
-        /* --- 3. Posicionamiento de la Imagen Superpuesta --- */
+        /* --- 3. Estilos de la Imagen Flotante --- */
         .art-figure img {
-            position: absolute; /* Permite mover la imagen libremente dentro del .art-figure */
+            float: left; /* Hace que el texto (ASCII art) fluya a la derecha de la imagen */
             height: 80px;
-            
-            /* Ajustes para centrar la imagen sobre el hueco de la figura: */
-            
-            /* Mueve el punto de referencia de la imagen (su esquina sup. izq.) al 50% del contenedor */
-            top: 50%;
-            left: 50%;
-            
-            /* Corrige el desplazamiento restando la mitad del ancho/alto de la imagen */
-            transform: translate(-50%, -50%); 
-            
-            /* Asegura que la imagen no se muestre por debajo del texto */
-            z-index: 10;
+            margin: 0 10px 10px 0; /* Espacio alrededor de la imagen: Arriba Der. Abajo Izq. */
+            vertical-align: middle; /* Intenta alinear la imagen verticalmente con la línea de texto */
         }
-
     </style>
 </head>
 <body>
@@ -63,7 +53,7 @@
 ⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡿⠁⠀⠀⢻⣿⣿⣿⣿⣿⡿⠿⠛⠋⣉⣽
 ⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡿⠀⠀⠀⠀⠈⠋⠉⠀⠀⠀⠀⢀⣤⣾⣿⣿
 ⣿⡿⣿⡿⠿⠿⠟⠛⠋⠉⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣠⣶⣿⣿⣿⣿⣿
-⣿⣥⣄⣀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣴⣿⣿⣿⣿⣿⣿⣿⣿
+⣿⣥⣄⣀⠀⠀⠀⠀<img src="https://d2w9rnfcy7mm78.cloudfront.net/41008348/original_6bb10a690c5a8dc9bf8e60f533634292.png?1762812035?bc=0" height="80" alt="Tour Motomami Rosalía 2022">⠀⠀⠀⠀⠀⠀⠀⢀⣴⣿⣿⣿⣿⣿⣿⣿⣿
 ⣿⣿⣿⣿⣿⣶⣦⡄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠘⣿⣿⣿⣿⣿⣿⣿⣿⣿
 ⣿⣿⣿⣿⣿⣿⠟⠀⠀⠀⠀⠀⣠⣤⣀⡀⠀⠀⢻⣿⣿⣿⣿⣿⣿⣿⣿
 ⣿⣿⣿⣿⣿⡟⠀⠀⠀⢀⣴⣾⣿⣿⣿⣿⣿⣶⣮⣿⣿⣿⣿⣿⣿⣿⣿
@@ -71,8 +61,6 @@
 ⣿⣿⣿⠏⣀⣴⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿
 ⣿⣿⣿⣾⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿
         </p>
-        
-        <img src="https://d2w9rnfcy7mm78.cloudfront.net/41008348/original_6bb10a690c5a8dc9bf8e60f533634292.png?1762812035?bc=0" alt="Tour Motomami Rosalía 2022">
     </div>
     
 </body>
