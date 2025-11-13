@@ -23,8 +23,6 @@
             margin-top: 0; 
         }
 
-        /* ESTILOS PARA EL LAYOUT DE DOS COLUMNAS */
-
         .two-column-layout {
             display: flex; 
             justify-content: space-between; 
@@ -41,12 +39,17 @@
             text-align: right; 
         }
 
-        /* Ajustar los elementos de bloque dentro de la columna derecha para alineación */
         .right-column h2,
-        .right-column p,
         .right-column ul {
             margin-left: auto; 
             max-width: fit-content; 
+        
+        }
+         
+        .right-column p {
+            margin-left: auto; 
+            max-width: fit-content; 
+            padding-top: 7px; 
         }
 
         .right-column ul {
@@ -62,8 +65,8 @@
             position: fixed; /* Fija el video a la ventana (viewport) */
             top: 0; /* Lo alinea a la parte superior */
             left: 0; /* Lo alinea a la izquierda */
-            width: 100%; /* El ancho mínimo es el 100% del viewport */
-            height: 100%; /* La altura mínima es el 100% del viewport */
+            width: 100%; 
+            height: 100%; 
             z-index: -999; /* Lo coloca detrás de todo el contenido */
             display: none; /* Inicialmente oculto */
             pointer-events: none; /* Asegura que no interfiera con otros clics */
@@ -118,7 +121,7 @@
 ⠀⠀⠀⠀⠀⠀⢰⢸⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣷⣄⠀⠀⠀⢀⣿⣿⠟⢹⣿⣿⣿⣿⣿⣿⣿⣿⣿⠋⠁⠀⠀⠀⠀⠀⢻⣿⣿⠀⠀⠀⠀⠀⠀⠀
 ⠀⠀⠀⠀⠀⠀⡇⣾⣿⣿⣿⣿⠏⠀⠘⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣧⡀⠠⣾⡿⠏⠀⣾⣿⣿⣿⣿⣿⣿⣿⣿⠇⠀⠀⠀⠀⠀⠀⠀⠘⣿⣿⡆⠀⠀⠀⠀⠀⠀
 ⠀⠀⠀⠀⠀⠀⣿⣿⣿⣿⣿⡏⠀⠀⠀⠸⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣷⡀⠙⠁⠀⠀⢻⣿⣿⣿⣿⣿⣿⣿⡏⠀⠀⠀⠀⠀⠀⠀⠀⢸⣿⣿⣿⡆⠀⠀⠀⠀⠀
-⠀⠀⠀⠀⠀⠀⣧⢻⣿⣿⣿⠀⠀⠀⠀⠀⠀⠉⢻⣿⣿⣿⣿⣿⣿⣿⣿⡏⠀⡀⠀⠀⠀⣿⣿⣿⣿⣿⣿⣿⣿⡇⠀⠀⠀⠀⠀⠀⠀⠀⠈⢻⣿⣿⣧⡀⠀⠀⠀⠀Mateo (b.02) is a film director based in Barcelona.
+⠀⠀⠀⠀⠀⠀⣧⢻⣿⣿⣿⠀⠀⠀⠀⠀⠀⠉⢻⣿⣿⣿⣿⣿⣿⣿⣿⡏⠀⡀⠀⠀⠀⣿⣿⣿⣿⣿⣿⣿⣿⡇⠀⠀⠀⠀⠀⠀⠀⠀⠈⢻⣿⣿⣧⡀⠀⠀⠀⠀Mateo (b.2002) is a film director based in Barcelona.
 ⠀⠀⠀⠀⠀⠀⢨⣿⣿⣿⣿⠀⠀⠀⠀⠀⠀⠀⢸⣿⣿⣿⣿⠋⢀⡟⣿⣧⠀⢻⣦⠀⠀⠾⢿⣿⣿⣿⣿⣿⣿⣧⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⣿⣿⣿⣿⡄⠀⠀⠀
 ⠀⠀⠀⠀⠀⠀⠋⠙⣿⣿⡏⠀⠀⠀⠀⠀⠀⢠⡿⠻⣿⣿⠇⢠⠟⠀⣿⡟⠀⠀⠙⠀⠘⣿⣿⣿⣿⣿⣿⣿⣿⠋⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⡿⠟⣻⣿⠃⠀⠀⠀
 ⠀⠀⠀⠀⠀⢸⠄⢠⣿⣿⡇⠀⠀⠀⠀⠀⠀⢺⡇⢠⣿⡏⢠⣧⣤⣶⣿⠀⠀⠀⠀⠀⠲⣿⡿⠿⠿⠿⠛⠛⠋⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠙⠁⠀⠀⠀⠀Specialized on having fun and creating unique pieces
@@ -126,7 +129,7 @@
 ⠀⠀⠀⠀⠀⣾⣿⡟⠁⠀⠀⠀⠀⠀⠀⠀⠀⢠⣼⣿⡇⠀⠀⠀⠀⠀      mixing multiformat, playing with artificially flawed imagery and pursuing beauty ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
 ⠀⠀⠀⢀⣴⣿⣿⠀⠀⠀⠀⠀⠀⠀⠀⠀⣰⠋⠹⣿⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
 ⠀⠀⠀⢸⣿⣿⡇⠀⠀⠀⠀⠀⠀⠀⠀⣼⠋⠀⠀⢹⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-⠀⠀⢀⡾⠿⣿⡇⠀⠀⠀⠀⠀⠀⠀⢰⣿⣦⣤⣶⣾⣧     by pushing boundaries; experimenting with digital tools, 3D and post-production⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⢀⡾⠿⣿⡇⠀⠀⠀⠀⠀⠀⠀⢰⣿⣦⣤⣶⣾⣧      by pushing boundaries; experimenting with digital tools, 3D and post-production.⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
 ⠀⢀⠎⠀⢀⣿⡇⠀⠀⠀⠀⠀⠀⠀⠸⠛⣿⣯⠿⠛⠁    Making the impossible possible.⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
 ⡠⢫⣾⣿⣿⣿⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
 ⠻⠿⠯⠿⠟⠋⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
@@ -136,12 +139,12 @@
         <div class="right-column">
             <h2><a href="graphic.html">graphic</a></h2>
             <p style="font-style: italic;">
-                some graphic designs I've made lately
+                here you'll find some graphic designs I've made lately
             </p>
             
             <h2><a href="film.html">film</a></h2>
             <p>
-                Check this out!
+                check this out!
             </p>
             
             <h2>connect with me</h2>
