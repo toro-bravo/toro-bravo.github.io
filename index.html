@@ -157,18 +157,16 @@
                 text-align: center;
             }
 
-             #watermark {
-                position: absolute;
-                bottom: 0; 
-                right: 0;  
-                color: #aaaaaa;
-                font-size: 8pt;
-                z-index: 50;
-                transform: rotate(-90deg); /* Rota el elemento -90 grados (sentido antihorario) */
-                transform-origin: 100% 100%; /* Define el punto de rotación en la esquina inferior derecha del elemento */
-                padding-bottom: 2px;
-                marging-left: 800px;
-            }
+            #watermark {
+    position: absolute;
+    top: 0;
+    right: 0;
+    color: #aaaaaa;
+    font-size: 8pt;
+    z-index: 50;
+    transform-origin: 100% 0;
+    transform: rotate(-90deg) translateY(-100%);
+    }
         }
         /* ------------------------------------------------ */
     </style>
