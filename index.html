@@ -33,19 +33,7 @@
             min-width: 50%; 
         }
 
-        .footer-attribution {
-    position: absolute;
-    bottom: 0; 
-    right: 0;  
-    color: #aaaaaa;
-    font-size: 8pt;
-    z-index: 50;
-    transform: rotate(-90deg); /* Rota el elemento -90 grados (sentido antihorario) */
-    transform-origin: 100% 100%; /* Define el punto de rotación en la esquina inferior derecha del elemento */
-    padding-right: 15px; 
-    padding-bottom: 15px;
-        margin-right: 5px; 
-}
+       
         /* ------------------------------------------------ */
         /* ESTILOS ESPECÍFICOS PARA EL CONTENIDO DUAL (ESCRITORIO vs MÓVIL) */
         /* ------------------------------------------------ */
@@ -104,18 +92,20 @@
             object-fit: cover; 
         }
 
-        .marquee-fixed-bottom {
-            position: fixed; /* Lo fija en relación a la ventana del navegador */
-            bottom: 0;       /* Lo coloca en la parte inferior */
-            left: 0;         /* Lo alinea a la izquierda */
-            width: 100%;     /* Asegura que ocupe todo el ancho */
-            z-index: 1000;   /* Lo pone por encima de la mayoría de los demás elementos */
-            padding-top: 3px; /* Pequeño espacio superior para el texto */
-            padding-bottom: 3px; /* Pequeño espacio inferior para el texto */
-            color: white;
-            font-size: 13px;
-        }
-        
+     .footer-attribution {
+    position: absolute;
+    bottom: 0; 
+    right: 0;  
+    color: #aaaaaa;
+    font-size: 8pt;
+    z-index: 50;
+    transform: rotate(-90deg); /* Rota el elemento -90 grados (sentido antihorario) */
+    transform-origin: 100% 100%; /* Define el punto de rotación en la esquina inferior derecha del elemento */
+    padding-right: 15px; 
+    padding-bottom: 15px;
+    margin-right: 5px; 
+
+         }
         /* ------------------------------------------------ */
         /* MEDIA QUERY PARA MÓVILES (max-width: 750px)  */
         /* ------------------------------------------------ */
