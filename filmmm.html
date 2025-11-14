@@ -13,8 +13,9 @@
     <style>
         /* ESTILOS BASE */
         body {
-            background-color: black; 
-            color: white;
+            
+            background-color: #E5E5E5; 
+            color: black; /* Cambiado a negro para contraste con fondo claro */
             font-family: 'Times New Roman', Times, serif;
             font-size: 13px;
             margin-top: 0;
@@ -27,16 +28,31 @@
             margin-top: 0; 
         }
         
-        /* 💡 CORRECCIÓN 1: Estilo para el modo invertido (afecta a TODO) */
+        /* 💡 AJUSTE 2: Estilo para el modo invertido (afecta a TODO) */
         .invert-mode {
-            filter: invert(100%);
+            /* Desactivamos el filtro de inversión que ya no se necesita,
+               y definimos los colores específicos para el modo oscuro */
+            background-color: #231511; 
+            color: white; 
+        }
+
+        /* AJUSTE para enlaces/títulos en modo invertido */
+        .invert-mode a, 
+        .invert-mode h1 {
+            color: yellow; /* Mantenemos el amarillo, pero el contraste con el fondo oscuro funciona */
+        }
+        
+        /* AJUSTE para textos en modo invertido */
+        .invert-mode .text,
+        .invert-mode .video-caption {
+            color: white;
         }
 
         /* Estilos generales de texto */
         .text {
             margin: 0 0 9px 0;
             width: auto;
-            color: white; 
+            color: black; /* Cambiado a negro para contraste con fondo claro */
             font-size: 13px;
             font-family: 'Times New Roman', Times, serif;
             letter-spacing: -.3px;
@@ -50,14 +66,14 @@
             overflow: auto; 
         }
 
-        /* 🖼️ CORRECCIÓN 2: Estilo para los bloques de video (Responsivo y Centrado) */
+        /* Estilo para los bloques de video (Responsivo y Centrado) */
         .video-block {
             display: flex;
             flex-direction: column;
             align-items: center; 
             margin-bottom: 30px;
-            max-width: 850px; /* Ancho máximo en pantallas grandes */
-            width: 95%; /* Ocupa casi todo el ancho disponible */
+            max-width: 850px; 
+            width: 95%; 
             margin-left: auto; 
             margin-right: auto;
         }
@@ -75,14 +91,19 @@
         .filter-link.active {
             font-weight: bold;
             text-decoration: none !important;
-            color: white; 
+            color: black; /* Cambiado a negro para contraste con fondo claro */
+        }
+        
+        /* AJUSTE para filter-link en modo invertido */
+        .invert-mode .filter-link.active {
+            color: white;
         }
 
-        /* 🖼️ CORRECCIÓN 2: Videos adaptables */
+        /* Videos adaptables */
         .lazy-video {
             display: block;
-            width: 100%; /* Ocupa el 100% del ancho del contenedor */
-            height: auto; /* Mantiene la proporción */
+            width: 100%; 
+            height: auto; 
             max-width: 100%; 
         }
 
@@ -94,7 +115,7 @@
             font-size: 13px;
             font-family: 'Times New Roman', Times, serif;
             letter-spacing: -.3px;
-            color: white; 
+            color: black; /* Cambiado a negro para contraste con fondo claro */
         }
         
         /* Contenedor del video */
@@ -114,6 +135,11 @@
             background-color: yellow; 
             margin: 20px auto; 
             width: 100%;
+        }
+        
+        /* AJUSTE para HR en modo invertido */
+        .invert-mode hr {
+            background-color: yellow; /* Se mantiene igual */
         }
     </style>
 
