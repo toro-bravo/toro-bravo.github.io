@@ -90,24 +90,9 @@
             pointer-events: none; 
             background-color: #0D47A1; 
             object-fit: cover; 
-        }
-
-     .footer-attribution {
-    position: absolute;
-    bottom: 0; 
-    right: 0;  
-    color: #aaaaaa;
-    font-size: 8pt;
-    z-index: 50;
-    transform: rotate(-90deg); /* Rota el elemento -90 grados (sentido antihorario) */
-    transform-origin: 100% 100%; /* Define el punto de rotación en la esquina inferior derecha del elemento */
-    padding-bottom: 2px;
-    marging-left: 800px;
-
          }
-        /* ------------------------------------------------ */
-        /* MEDIA QUERY PARA MÓVILES (max-width: 750px)  */
-        /* ------------------------------------------------ */
+
+        
         @media (max-width: 750px) {
             
             body {
@@ -170,6 +155,19 @@
             #secret-link-container {
                 padding-top: 50px !important; 
                 text-align: center;
+            }
+
+             #watermark {
+                position: absolute;
+                bottom: 0; 
+                right: 0;  
+                color: #aaaaaa;
+                font-size: 8pt;
+                z-index: 50;
+                transform: rotate(-90deg); /* Rota el elemento -90 grados (sentido antihorario) */
+                transform-origin: 100% 100%; /* Define el punto de rotación en la esquina inferior derecha del elemento */
+                padding-bottom: 2px;
+                marging-left: 800px;
             }
         }
         /* ------------------------------------------------ */
@@ -313,6 +311,12 @@
             <div id="secret-link-container" style="padding-top: 150px; text-align: center;"> 
                 <a href="#" id="video-trigger">don't click here</a>
             </div>
+
+            <div id="watermark" style="padding-top: 100px; text-align: center;"> 
+                <a>Website designed by @marta.mkv</a>
+            </div>
+
+            
         </div>
     </div>
     
@@ -360,10 +364,6 @@
         });
     }
 </script>
-
-<div class="footer-attribution">
-        Website designed by @marta.mkv
-</div>
     
 </body>
 </html>
