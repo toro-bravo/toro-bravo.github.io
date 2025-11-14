@@ -13,9 +13,9 @@
     <style>
         /* ESTILOS BASE */
         body {
-            
+            /* 💡 AJUSTE 1: Color de fondo por defecto */
             background-color: #E5E5E5; 
-            color: black; /* Cambiado a negro para contraste con fondo claro */
+            color: black; /* Texto base, se invertirá con el filtro */
             font-family: 'Times New Roman', Times, serif;
             font-size: 13px;
             margin-top: 0;
@@ -28,45 +28,30 @@
             margin-top: 0; 
         }
         
-        /* 💡 AJUSTE 2: Estilo para el modo invertido (afecta a TODO) */
         .invert-mode {
-            /* Desactivamos el filtro de inversión que ya no se necesita,
-               y definimos los colores específicos para el modo oscuro */
+            filter: invert(100%);
+            
             background-color: #231511; 
-            color: white; 
         }
 
-        /* AJUSTE para enlaces/títulos en modo invertido */
-        .invert-mode a, 
-        .invert-mode h1 {
-            color: yellow; /* Mantenemos el amarillo, pero el contraste con el fondo oscuro funciona */
+            background-color: #231511 !important; 
         }
         
-        /* AJUSTE para textos en modo invertido */
-        .invert-mode .text,
-        .invert-mode .video-caption {
-            color: white;
-        }
-
-        /* Estilos generales de texto */
         .text {
             margin: 0 0 9px 0;
             width: auto;
-            color: black; /* Cambiado a negro para contraste con fondo claro */
+            color: black; 
             font-size: 13px;
             font-family: 'Times New Roman', Times, serif;
             letter-spacing: -.3px;
         }
 
-        /* Estilo para el contenedor principal y centrado */
         #content {
             width: 100%; 
             margin: 0 auto; 
             padding: 20px 0;
             overflow: auto; 
         }
-
-        /* Estilo para los bloques de video (Responsivo y Centrado) */
         .video-block {
             display: flex;
             flex-direction: column;
@@ -91,12 +76,7 @@
         .filter-link.active {
             font-weight: bold;
             text-decoration: none !important;
-            color: black; /* Cambiado a negro para contraste con fondo claro */
-        }
-        
-        /* AJUSTE para filter-link en modo invertido */
-        .invert-mode .filter-link.active {
-            color: white;
+            color: black; 
         }
 
         /* Videos adaptables */
@@ -115,7 +95,7 @@
             font-size: 13px;
             font-family: 'Times New Roman', Times, serif;
             letter-spacing: -.3px;
-            color: black; /* Cambiado a negro para contraste con fondo claro */
+            color: black; 
         }
         
         /* Contenedor del video */
@@ -135,11 +115,6 @@
             background-color: yellow; 
             margin: 20px auto; 
             width: 100%;
-        }
-        
-        /* AJUSTE para HR en modo invertido */
-        .invert-mode hr {
-            background-color: yellow; /* Se mantiene igual */
         }
     </style>
 
