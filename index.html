@@ -34,13 +34,18 @@
         }
 
         .footer-attribution {
-            position: absolute;
-            bottom: 15px;
-            right: 15px;
-            color: #aaaaaa;
-            font-size: 8pt;
-            z-index: 50;
-        }
+    position: absolute;
+    bottom: 0; 
+    right: 0;  
+    color: #aaaaaa;
+    font-size: 8pt;
+    z-index: 50;
+    transform: rotate(-90deg); /* Rota el elemento -90 grados (sentido antihorario) */
+    transform-origin: 100% 100%; /* Define el punto de rotación en la esquina inferior derecha del elemento */
+    padding-right: 15px; 
+    padding-bottom: 15px;
+        margin-right: 5px; 
+}
         /* ------------------------------------------------ */
         /* ESTILOS ESPECÍFICOS PARA EL CONTENIDO DUAL (ESCRITORIO vs MÓVIL) */
         /* ------------------------------------------------ */
