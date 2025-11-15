@@ -100,7 +100,18 @@
             object-fit: cover; 
          }
 
-        
+        #texto-marquee {
+    margin: 0;
+    padding: 0;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: 100%; /* Asegura que ocupe todo el ancho */
+    z-index: 1000; /* Asegura que esté encima de otros elementos */
+    line-height: 1.5; /* Ajusta este valor si quieres que el texto esté más compacto */
+
+}
         @media (max-width: 750px) {
             
             body {
@@ -164,18 +175,7 @@
                 padding-top: 50px !important; 
                 text-align: center;
             }
-#texto-marquee {
-    margin: 0;
-    padding: 0;
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    width: 100%; /* Asegura que ocupe todo el ancho */
-    z-index: 1000; /* Asegura que esté encima de otros elementos */
-    line-height: 1.5; /* Ajusta este valor si quieres que el texto esté más compacto */
 
-}
         }
         
     </style>    
