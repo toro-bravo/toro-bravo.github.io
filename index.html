@@ -164,10 +164,22 @@
                 padding-top: 50px !important; 
                 text-align: center;
             }
+#texto-marquee {
+    margin: 0;
+    padding: 0;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: 100%; /* Asegura que ocupe todo el ancho */
+    z-index: 1000; /* Asegura que esté encima de otros elementos */
+    line-height: 1.5; /* Ajusta este valor si quieres que el texto esté más compacto */
 
+}
         }
-        /* ------------------------------------------------ */
-    </style>
+        
+    </style>    
+    
 </head>
 <body>
     <h1>
@@ -314,7 +326,7 @@
         </div>
     </div>
     
-<marquee id="texto-marquee" class="marquee-fixed-bottom"> ᕦ(òᴥó)ᕥ LAUS ORO - TRABAJO LIBRE ESTUDIANTE - AUDIOVISUAL - “Primavera - Fun Train” // LAUS PLATA - TRABAJO LIBRE ESTUDIANTE - AUDIOVISUAL - “Friday the 13th” // ISABEL COIXET’S FASHIONERS OF THE WORLD - BEST FASHION FILM AWARD (2023) - “No Land to Call Our Own” // LCI FASHION FILM FESTIVAL 2023 OFFICIAL SELECTION - “Amenoia”</marquee>
+<marquee id="texto-marquee"> ᕦ(òᴥó)ᕥ LAUS ORO - TRABAJO LIBRE ESTUDIANTE - AUDIOVISUAL - “Primavera - Fun Train” // LAUS PLATA - TRABAJO LIBRE ESTUDIANTE - AUDIOVISUAL - “Friday the 13th” // ISABEL COIXET’S FASHIONERS OF THE WORLD - BEST FASHION FILM AWARD (2023) - “No Land to Call Our Own” // LCI FASHION FILM FESTIVAL 2023 OFFICIAL SELECTION - “Amenoia”</marquee>
 
 <video loop muted id="fullscreen-video" playsinline>
     <source src="https://attachments.are.na/41087120/3d5dfa0d9a1cb5ef700407deb41fb777.mp4?1763050157" type="video/mp4">
