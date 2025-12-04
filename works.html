@@ -3,10 +3,10 @@
 
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    
+
     <title>toro bravo</title>
-    <meta name="keywords" content="director de cine, vfx artist, postproduccion, 3d artist, barcelona, toro bravo, atomico, film director, portfolio, multiformato, video experimental"> 
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+    <meta name="keywords" content="director de cine, vfx artist, postproduccion, 3d artist, barcelona, toro bravo, atomico, film director, portfolio, multiformato, video experimental">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <link rel="icon" href="assets/Ten-Gallon-Hat-icon.png">
 
@@ -14,31 +14,31 @@
         /* ESTILOS BASE */
         body {
             /* Color de fondo por defecto */
-            background-color: #F5F5F5; 
-            color: black; 
+            background-color: #F5F5F5;
+            color: black;
             font-family: 'Times New Roman', Times, serif;
             font-size: 13px;
             margin-top: 0;
-            margin-left: 1rem; 
-            margin-right: 1rem; 
+            margin-left: 1rem;
+            margin-right: 1rem;
         }
 
         a, h1 {
             color: #0D47A1;
-            margin-top: 0; 
+            margin-top: 0;
         }
-        
+
         /* AJUSTE: Estilo para el modo invertido */
         .invert-mode {
             filter: invert(100%);
             /* Sobreescribimos el color de fondo que fue invertido por el filtro */
-            background-color: #231511 !important; 
+            background-color: #231511 !important;
         }
-        
+
         /* 💡 NUEVA REGLA: Estilo para el enlace estático "over here" */
         .static-link {
-            color: #F5F5F5 !important; /* Color fijo y pequeño */
-            font-size: 8px; /* Texto muy pequeño */
+            color: #F5F5F5 !important;
+            font-size: 8px;
             text-decoration: none;
             margin-left: 10px;
         }
@@ -47,12 +47,12 @@
         .invert-mode .static-link {
             filter: invert(100%);
         }
-        
+
         /* Estilos generales de texto */
         .text {
             margin: 0 0 9px 0;
             width: auto;
-            color: black; 
+            color: black;
             font-size: 13px;
             font-family: 'Times New Roman', Times, serif;
             letter-spacing: -.3px;
@@ -60,30 +60,30 @@
 
         /* Estilo para el contenedor principal y centrado */
         #content {
-            width: 100%; 
-            margin: 0 auto; 
+            width: 100%;
+            margin: 0 auto;
             padding: 20px 0;
-            overflow: auto; 
+            overflow: auto;
         }
 
         /* Estilo para los bloques de video (Responsivo y Centrado) */
         .video-block {
             display: flex;
             flex-direction: column;
-            align-items: center; 
+            align-items: center;
             margin-bottom: 30px;
-            max-width: 850px; 
-            width: 95%; 
-            margin-left: auto; 
+            max-width: 850px;
+            width: 95%;
+            margin-left: auto;
             margin-right: auto;
         }
-        
+
         .filter-options {
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
-        
+
         .video-block.hidden {
             display: none;
         }
@@ -91,44 +91,44 @@
         .filter-link.active {
             font-weight: bold;
             text-decoration: none !important;
-            color: black; 
+            color: black;
         }
 
         /* Videos adaptables */
         .lazy-video {
             display: block;
-            width: 100%; 
-            height: auto; 
-            max-width: 100%; 
+            width: 100%;
+            height: auto;
+            max-width: 100%;
         }
 
         /* Estilo de pie de imagen/descripción (caption) */
         .video-caption {
             margin: 5px 0 0 0;
-            text-align: center; 
-            width: 100%; 
+            text-align: center;
+            width: 100%;
             font-size: 13px;
             font-family: 'Times New Roman', Times, serif;
             letter-spacing: -.3px;
-            color: black; 
+            color: black;
         }
-        
+
         /* Contenedor del video */
         .video-container {
             position: relative;
             margin: 0 auto;
-            display: flex; 
+            display: flex;
             justify-content: center;
             align-items: center;
-            width: 100%; 
+            width: 100%;
         }
-        
+
         /* HR separator style */
         hr {
             border: none;
             height: 1px;
-            background-color: #0D47A1; 
-            margin: 20px auto; 
+            background-color: #0D47A1;
+            margin: 20px auto;
             width: 100%;
         }
     </style>
@@ -138,116 +138,246 @@
 <body>
     <div id="content">
         <div class="container">
-            
+
             <div class="text filter-options">
                 <div><h2><a href='index' style="text-decoration:underline;">Back</a></h2></div>
-                
-                <div style="display:flex; align-items:flex-end;"> 
+
+                <div style="display:flex; align-items:flex-end;">
                     <button id="invertButton" style="
-                        background: none; 
-                        border: 0px solid yellow; 
-                        color: #0D47A1; 
+                        background: none;
+                        border: 0px solid yellow;
+                        color: #0D47A1;
                         cursor: help;
                         font-family: monospace;
                         font-size: 40px;
                     ">𓃓</button>
                     <a href="graphic.html" class="static-link">over here</a>
                 </div>
-                
+
                 <div id="filters"><h2>
-                    <a href="#" class="filter-link active" data-type="all" style="text-decoration:underline;">All</a>  |  
-                    <a href="#" class="filter-link" data-type="film" style="text-decoration:underline;">Film</a>  |  
-                    <a href="#" class="filter-link" data-type="3d" style="text-decoration:underline;">3D</a>  |  
-                    <a href="#" class="filter-link" data-type="reel" style="text-decoration:underline;">Reel</a>  |  
-                    <a href="#" class="filter-link" data-type="graphic" style="text-decoration:underline;">Graphic</a> </h2>
-                </div>
+                    <a href="#" class="filter-link active" data-type="all" style="text-decoration:underline;">All</a>  |  
+                    <a href="#" class="filter-link" data-type="director" style="text-decoration:underline;">DIRECTOR</a>  |  
+                    <a href="#" class="filter-link" data-type="postproduction" style="text-decoration:underline;">POSTPRODUCTION</a>  |  
+                    <a href="#" class="filter-link" data-type="graphic" style="text-decoration:underline;">GRAPHIC</a>  |  
+                    <a href="#" class="filter-link" data-type="film" style="text-decoration:underline;">FILM</a>
+                </h2></div>
             </div>
 
             <HR>
-            <div class="video-block film">
+
+            <div class="video-block director">
                 <div class="video-container">
-                    <video class="lazy-video" loop muted playsinline preload="auto" autoplay src="https://attachments.are.na/40639420/49cba57fd621af86dd418f1d5ff3e83d.mp4?1761601404"></video>
+                    <video class="lazy-video" loop muted playsinline preload="auto" autoplay src="assets/placeholder-video.mp4"></video>
                 </div>
                 <div class="video-caption">
-                    **ROSALÍA feat. Björk & Yves Tumor - Berghain** <i>(Music Video)</i><br> 3840x2160<br>
-                    Directed by Nicolás Méndez <a href="https://youtu.be/htQBS2Ikz6c?si=lKYYVofQ_3Q1dR8v&t=1" target="_blank">[watch]</a>
+                    **CORA NOVOA - “No Faith, No Fear”** <i>(Music Video)</i><br> [RESOLUCIÓN]<br>
+                    Directed by [NAME] <a href="https://youtu.be/placeholder" target="_blank">[watch]</a>
                 </div>
             </div>
 
-            <div class="video-block film">
+            <div class="video-block director">
                 <div class="video-container">
-                    <video class="lazy-video" loop muted playsinline preload="auto" autoplay src="https://attachments.are.na/40461475/c7d3143746527fc2da5deb4721a8226b.mp4?1760993060"></video>
+                    <video class="lazy-video" loop muted playsinline preload="auto" autoplay src="assets/placeholder-video.mp4"></video>
                 </div>
                 <div class="video-caption">
-                    **SAINt JHN - Glitching** <i>(Music Video)</i><br> 3840x1608<br>
-                    Directed by Alex Gargot <a href="https://youtu.be/nVJXUAcT-OA?si=HzAZKQmgO3bXuAWx" target="_blank">[watch]</a>
+                    **CORA NOVOA - “Todo X Ti”** <i>(Music Video)</i><br> [RESOLUCIÓN]<br>
+                    Directed by [NAME] <a href="https://youtu.be/placeholder" target="_blank">[watch]</a>
                 </div>
             </div>
 
-            <div class="video-block film">
+            <div class="video-block director">
                 <div class="video-container">
-                    <video class="lazy-video" loop muted playsinline preload="auto" autoplay src="https://attachments.are.na/40460920/cfaa4638ba61e1d3018ea6db62b2d1a1.mp4?1760992063"></video>
+                    <video class="lazy-video" loop muted playsinline preload="auto" autoplay src="assets/placeholder-video.mp4"></video>
                 </div>
                 <div class="video-caption">
-                    **ROSALÍA - MOTOMAMI** <i>(TikTok LIVE Performance)</i><br> 1080x1920<br>
-                    Directed by STILLZ <a href="https://youtu.be/y51P8HNpwaM?si=wplt-Xjci438Zolv&t=28" target="_blank">[watch]</a>
+                    **TRIQUELL - Paco Deluxe “Visualizers”** <i>(Visualizers)</i><br> [RESOLUCIÓN]<br>
+                    Directed by [NAME] <a href="https://youtu.be/placeholder" target="_blank">[watch]</a>
                 </div>
             </div>
 
-            <div class="video-block 3d">
+            <div class="video-block director">
                 <div class="video-container">
-                    <video class="lazy-video" loop muted playsinline preload="auto" autoplay src="https://attachments.are.na/40461105/1609c23b16b77c730f1089008715cceb.mp4?1760992421"></video>
+                    <video class="lazy-video" loop muted playsinline preload="auto" autoplay src="assets/placeholder-video.mp4"></video>
                 </div>
                 <div class="video-caption">
-                    **ROSALÍA - MOTOMAMI World Tour** <i>(Interlude Visuals Animation)</i><br> 1200x1466<br>
-                    Designed by @viktorhstudios
+                    **TORO MEKANIKO - “No Me Gusta Como me miras Ni Como Te Mueves”** <i>(MV)</i><br> [RESOLUCIÓN]<br>
+                    Directed by [NAME] <a href="https://youtu.be/placeholder" target="_blank">[watch]</a>
                 </div>
             </div>
 
-            <div class="video-block film">
+            <div class="video-block director">
+                <div class="video-container">
+                    <video class="lazy-video" loop muted playsinline preload="auto" autoplay src="assets/placeholder-video.mp4"></video>
+                </div>
+                <div class="video-caption">
+                    **MARIA RODÉS - Malo** <i>(Visualizer)</i><br> [RESOLUCIÓN]<br>
+                    Directed by [NAME] <a href="https://youtu.be/placeholder" target="_blank">[watch]</a>
+                </div>
+            </div>
+
+            <div class="video-block director">
+                <div class="video-container">
+                    <video class="lazy-video" loop muted playsinline preload="auto" autoplay src="assets/placeholder-video.mp4"></video>
+                </div>
+                <div class="video-caption">
+                    **NO LAND TO CALL OUR OWN x Paula Azategui** <i>(Project)</i><br> [RESOLUCIÓN]<br>
+                    Directed by [NAME] <a href="https://youtu.be/placeholder" target="_blank">[watch]</a>
+                </div>
+            </div>
+
+            <div class="video-block postproduction">
+                <div class="video-container">
+                    <video class="lazy-video" loop muted playsinline preload="auto" autoplay src="assets/placeholder-video.mp4"></video>
+                </div>
+                <div class="video-caption">
+                    **AUDI x The Clueless AI - “The Face of Technology“** <i>(Campaign)</i><br> [RESOLUCIÓN]<br>
+                    Postproduction by [NAME] <a href="https://youtu.be/placeholder" target="_blank">[watch]</a>
+                </div>
+            </div>
+
+            <div class="video-block postproduction">
+                <div class="video-container">
+                    <video class="lazy-video" loop muted playsinline preload="auto" autoplay src="assets/placeholder-video.mp4"></video>
+                </div>
+                <div class="video-caption">
+                    **ROSALIA “LUX” - Listening Parties** <i>(Event Visuals)</i><br> [RESOLUCIÓN]<br>
+                    Postproduction by [NAME] <a href="https://youtu.be/placeholder" target="_blank">[watch]</a>
+                </div>
+            </div>
+
+            <div class="video-block postproduction">
+                <div class="video-container">
+                    <video class="lazy-video" loop muted playsinline preload="auto" autoplay src="assets/placeholder-video.mp4"></video>
+                </div>
+                <div class="video-caption">
+                    **“SIPS by PEPSI” - GALLERY SESIONS** <i>(Campaign)</i><br> [RESOLUCIÓN]<br>
+                    Postproduction by [NAME] <a href="https://youtu.be/placeholder" target="_blank">[watch]</a>
+                </div>
+            </div>
+
+            <div class="video-block postproduction">
+                <div class="video-container">
+                    <video class="lazy-video" loop muted playsinline preload="auto" autoplay src="assets/placeholder-video.mp4"></video>
+                </div>
+                <div class="video-caption">
+                    **MONACO “L’enfant” - Fashion Film** <i>(Fashion Film)</i><br> [RESOLUCIÓN]<br>
+                    Postproduction by [NAME] <a href="https://youtu.be/placeholder" target="_blank">[watch]</a>
+                </div>
+            </div>
+
+            <div class="video-block postproduction">
+                <div class="video-container">
+                    <video class="lazy-video" loop muted playsinline preload="auto" autoplay src="assets/placeholder-video.mp4"></video>
+                </div>
+                <div class="video-caption">
+                    **VEN’NUS x MUSHKA - “No Existiran”** <i>(Music Video)</i><br> [RESOLUCIÓN]<br>
+                    Postproduction by [NAME] <a href="https://youtu.be/placeholder" target="_blank">[watch]</a>
+                </div>
+            </div>
+
+            <div class="video-block postproduction">
+                <div class="video-container">
+                    <video class="lazy-video" loop muted playsinline preload="auto" autoplay src="assets/placeholder-video.mp4"></video>
+                </div>
+                <div class="video-caption">
+                    **RALY - “Velvet”** <i>(Project)</i><br> [RESOLUCIÓN]<br>
+                    Postproduction by [NAME] <a href="https://youtu.be/placeholder" target="_blank">[watch]</a>
+                </div>
+            </div>
+
+            <div class="video-block graphic">
                 <div class="video-container">
                     <video class="lazy-video" loop muted playsinline preload="auto" autoplay src="https://attachments.are.na/38955958/748cc2bcbaf4ebe10a1fcf69967b7dcb.mp4"></video>
                 </div>
                 <div class="video-caption">
-                    **SQUID - Cro-Magnon Man** <i>(Music Video)</i><br> 3840x2160<br>
-                    Directed by Rory Alexander Stewart <a href="https://youtu.be/Eb3zur0WewU?si=7VpN0ezsDPHI-qxk" target="_blank">[watch]</a>
+                    **SQUID - Cro-Magnon Man** <i>(Graphic)</i><br> 3840x2160<br>
+                    Graphic by [NAME] <a href="https://youtu.be/Eb3zur0WewU?si=7VpN0ezsDPHI-qxk" target="_blank">[watch]</a>
+                </div>
+            </div>
+
+            <div class="video-block graphic">
+                <div class="video-container">
+                    <video class="lazy-video" loop muted playsinline preload="auto" autoplay src="assets/placeholder-video.mp4"></video>
+                </div>
+                <div class="video-caption">
+                    **CALIFATO ¾ & ÁNGELES TOLEDANO - “Romanze 恋愛小説”** <i>(Graphic)</i><br> [RESOLUCIÓN]<br>
+                    Graphic by [NAME] <a href="https://youtu.be/placeholder" target="_blank">[watch]</a>
+                </div>
+            </div>
+
+            <div class="video-block graphic">
+                <div class="video-container">
+                    <video class="lazy-video" loop muted playsinline preload="auto" autoplay src="assets/placeholder-video.mp4"></video>
+                </div>
+                <div class="video-caption">
+                    **LA CENDEJAS - “Pa Enamorar”** <i>(Graphic)</i><br> [RESOLUCIÓN]<br>
+                    Graphic by [NAME] <a href="https://youtu.be/placeholder" target="_blank">[watch]</a>
+                </div>
+            </div>
+
+            <div class="video-block graphic">
+                <div class="video-container">
+                    <video class="lazy-video" loop muted playsinline preload="auto" autoplay src="assets/placeholder-video.mp4"></video>
+                </div>
+                <div class="video-caption">
+                    **ROSALIA “LUX” - Listening Parties** <i>(Graphic)</i><br> [RESOLUCIÓN]<br>
+                    Graphic by [NAME] <a href="https://youtu.be/placeholder" target="_blank">[watch]</a>
+                </div>
+            </div>
+
+            <div class="video-block graphic">
+                <div class="video-container">
+                    <video class="lazy-video" loop muted playsplaysinline preload="auto" autoplay src="assets/placeholder-video.mp4"></video>
+                </div>
+                <div class="video-caption">
+                    **Other graphic pieces** <i>(Graphic)</i><br> [RESOLUCIÓN]<br>
+                    Graphic by [NAME] <a href="https://youtu.be/placeholder" target="_blank">[watch]</a>
                 </div>
             </div>
 
             <div class="video-block film">
                 <div class="video-container">
-                    <video class="lazy-video" loop muted playsinline preload="auto" autoplay src="https://attachments.are.na/38956471/b6b340e646d1d867e246db075a1a94b3.mp4?1755854566"></video>
+                    <video class="lazy-video" loop muted playsinline preload="auto" autoplay src="assets/placeholder-video.mp4"></video>
                 </div>
                 <div class="video-caption">
-                    **TINI - posta** <i>(Music Video)</i><br> 1920x1080<br>
-                    Directed by Bàrbara Farré <a href="https://youtu.be/uA_lWK3VecE?si=EV4uQuxjbrExIJXa" target="_blank">[watch]</a>
+                    **ZALANDO - “Sentirte bien te queda bien”** <i>(Social)</i><br> [RESOLUCIÓN]<br>
+                    Film by [NAME] <a href="https://youtu.be/placeholder" target="_blank">[watch]</a>
                 </div>
             </div>
-
 
             <div class="video-block film">
                 <div class="video-container">
-                    <video class="lazy-video" loop muted playsinline preload="auto" autoplay src="https://attachments.are.na/38956480/a28d35104d63b8c40ed8c7899b52ee01.mp4?1755854577"></video>
+                    <video class="lazy-video" loop muted playsinline preload="auto" autoplay src="assets/placeholder-video.mp4"></video>
                 </div>
                 <div class="video-caption">
-                    **Sasha Keable - FEEL SOMETHING** <i>(Music Video)</i><br> 3840x2160<br>
-                    Directed by Billy King <a href="https://youtu.be/dNjHfgGHlKQ?si=mnovlJoe3J_xD0mB" target="_blank">[watch]</a>
+                    **“La Causa del Accidente que Provocó el Incendio”** <i>(BTS)</i><br> [RESOLUCIÓN]<br>
+                    Film by [NAME] <a href="https://youtu.be/placeholder" target="_blank">[watch]</a>
                 </div>
             </div>
 
-        </div> 
-    </div> 
+            <div class="video-block film">
+                <div class="video-container">
+                    <video class="lazy-video" loop muted playsinline preload="auto" autoplay src="assets/placeholder-video.mp4"></video>
+                </div>
+                <div class="video-caption">
+                    **CAROLINA HERRERA - “Stallion Leather”** <i>(BTS)</i><br> [RESOLUCIÓN]<br>
+                    Film by [NAME] <a href="https://youtu.be/placeholder" target="_blank">[watch]</a>
+                </div>
+            </div>
+
+        </div>
+    </div>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const filterLinks = document.querySelectorAll('.filter-link');
             const videoBlocks = document.querySelectorAll('.video-block');
-            
+
             // Lógica del botón de inversión: alterna la clase 'invert-mode' en el <body>
             const invertButton = document.getElementById('invertButton');
             const body = document.body;
-            
+
             invertButton.addEventListener('click', function() {
-                body.classList.toggle('invert-mode'); 
+                body.classList.toggle('invert-mode');
             });
 
             // Lógica de los filtros (Mantenida)
@@ -255,10 +385,10 @@
                 link.addEventListener('click', function(e) {
                     e.preventDefault();
                     const filterType = this.getAttribute('data-type');
-                    
+
                     filterLinks.forEach(l => l.classList.remove('active'));
                     this.classList.add('active');
-                    
+
                     videoBlocks.forEach(block => {
                         if (filterType === 'all' || block.classList.contains(filterType)) {
                             block.classList.remove('hidden');
