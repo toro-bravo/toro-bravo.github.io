@@ -4,46 +4,71 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ASCII Art con Imagen Flotante</title>
-    <style>
-        /* --- 1. Estilos Globales (Tus Preferencias) --- */
-        body {
-            font-family: 'Times New Roman', Times, serif; 
-            font-size: 18px; 
-            color: #333; 
-            margin: 0;
-            padding: 20px; 
-            background-color: #f9f9f9; 
-        }
-        
-        /* Contenedor del arte para controlar el ancho y centrar */
-        .art-figure {
-            width: 100%;
-            max-width: 800px; /* Limita el ancho para que la figura no sea demasiado grande */
-            margin: 50px auto; /* Centra el bloque de la figura */
-            text-align: left; /* Alineación del texto dentro del bloque */
-        }
-        
-        /* --- 2. Estilos del ASCII Art (Cruciales) --- */
-        .art-figure p {
-            font-family: monospace; /* CRUCIAL: Mantiene la alineación de los caracteres */
-            white-space: pre-wrap; /* Permite que el texto se ajuste alrededor del float */
-            line-height: 0.8; /* Espaciado ajustado para caracteres */
-            font-size: 14px; 
-            margin: 0;
-            color: #333;
-            /* Se necesita overflow para contener el float, asegurando que el fondo del p no se colapse */
-            overflow: hidden; 
-        }
+  <style>
+/* --- ESTILOS CONSOLIDADOS Y CORREGIDOS --- */
 
-        /* --- 3. Estilos de la Imagen Flotante --- */
-        .art-figure img {
-            float: left; /* Hace que el texto (ASCII art) fluya a la derecha de la imagen */
-            height: 80px;
-            margin: 0 10px 10px 0; /* Espacio alrededor de la imagen: Arriba Der. Abajo Izq. */
-            vertical-align: middle; /* Intenta alinear la imagen verticalmente con la línea de texto */
-        }
+/* Aplicamos los estilos al cuerpo de la página una sola vez */
+body {
+    font-family: 'Times New Roman', Times, serif; 
+    font-size: 13px; 
+    color: #333; 
+    margin: 0;
+    padding: 0; 
+    
+    background-color: #f9f9f9; 
+    
+}
 
-        cursor {
+/* Contenedor del arte para controlar el ancho y CENTRAR */
+.art-figure {
+    width: 100%;
+    max-width: 800px; /* Limita el ancho */
+    margin: 50px auto; 
+    padding: 0 20px; 
+    text-align: left; 
+}
+
+/* --- Estilos del ASCII Art (Cruciales) --- */
+.art-figure p {
+    font-family: monospace; 
+    white-space: pre-wrap; 
+    line-height: 0.8; 
+    font-size: 14px; 
+    margin: 0;
+    color: #333;
+    overflow: hidden; /* Contiene el float */
+}
+
+/* --- Estilos de la Imagen Flotante --- */
+.art-figure img {
+    float: left; 
+    height: 80px;
+    margin: 0 10px 10px 0; 
+    vertical-align: middle; 
+}
+
+/* --- Estilos del Cursor (Debe ir al final para que los selectores generales no interfieran) --- */
+
+* {
+  cursor: none;
+}
+
+button {
+  font-family: 'Times New Roman', Times, serif; 
+  border: none;
+  background-color: #ff0000;
+  padding: 2px 2px;
+  border-radius: 0px;
+  font-size: 1em;
+  color: rgb(47, 0, 255);
+  user-select: none;
+
+  display: block;
+  margin: auto;
+  margin-top: calc(50vh - 10px);
+}
+
+cursor {
   background-image: url("https://i.imgur.com/8XJEOVU.png");
   background-size: 12px;
   background-repeat: no-repeat;
@@ -54,40 +79,17 @@
   pointer-events: none;
 }
 
-body {
-    font-family: 'Times New Roman', Times, serif; 
-    font-size: 18px; 
-  color: #333; 
-  height: 100vh;
-  width: 100vw;
-  margin: 0;
-  padding: 0;
-  overflow: hidden;
+/* Estilos para el texto de copyright/navegación */
+center {
+    margin: 20px 0;
 }
-
-* {
-  cursor: none;
-}
-button {
-  border: none;
-  background-color: #a800c9;
-  padding: 4px 8px;
-  border-radius: 4px;
-  font-size: 2em;
-  color: white;
-  user-select: none;
-
-  display: block;
-  margin: auto;
-  margin-top: calc(50vh - 10px);
-}
-
-    </style>
+</style>
 </head>
 <body>
-<body>
-<center>original code by u/Paredes0<br><a href="/index.html">go back</a></center>
-<!-- <button>Click me</button> -->
+<div style="text-align: center; margin: 20px 0;">
+        original code by u/Paredes0<br><a href="/index.html">← go back</a>
+    </div>
+<button>Click me</button>
   <script src="cursor-hell.js"></script>
     <div class="art-figure">
         <p>
@@ -95,8 +97,8 @@ button {
 ⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡿⠀⢸⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿
 ⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡿⠁⠀⠀⢻⣿⣿⣿⣿⣿⡿⠿⠛⠋⣉⣽
 ⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡿⠀⠀⠀⠀⠈⠋⠉⠀⠀⠀⠀⢀⣤⣾⣿⣿
-⣿⡿⣿⡿⠿⠿⠟⠛⠋⠉⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣠⣶⣿⣿⣿⣿⣿
-⣿⣥⣄⣀⠀⠀click aquí!⠀⢀⣴⣿⣿⣿⣿⣿⣿⣿⣿
+⣿⣿⣿⡿⠿⠿⠟⠛⠋⠉⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣠⣶⣿⣿⣿⣿⣿
+⣿⣥⣄⣀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣴⣿⣿⣿⣿⣿⣿⣿⣿
 ⣿⣿⣿⣿⣿⣶⣦⡄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠘⣿⣿⣿⣿⣿⣿⣿⣿⣿
 ⣿⣿⣿⣿⣿⣿⠟⠀⠀⠀⠀⠀⣠⣤⣀⡀⠀⠀⢻⣿⣿⣿⣿⣿⣿⣿⣿
 ⣿⣿⣿⣿⣿⡟⠀⠀⠀⢀⣴⣾⣿⣿⣿⣿⣿⣶⣮⣿⣿⣿⣿⣿⣿⣿⣿
