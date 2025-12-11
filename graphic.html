@@ -42,6 +42,43 @@
             margin: 0 10px 10px 0; /* Espacio alrededor de la imagen: Arriba Der. Abajo Izq. */
             vertical-align: middle; /* Intenta alinear la imagen verticalmente con la línea de texto */
         }
+
+        cursor {
+  background-image: url("https://i.imgur.com/8XJEOVU.png");
+  background-size: 12px;
+  background-repeat: no-repeat;
+  height: 20px;
+  width: 20px;
+  display: block;
+  position: absolute;
+  pointer-events: none;
+}
+
+body {
+  height: 100vh;
+  width: 100vw;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
+
+* {
+  cursor: none;
+}
+button {
+  border: none;
+  background-color: #a800c9;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 2em;
+  color: white;
+  user-select: none;
+
+  display: block;
+  margin: auto;
+  margin-top: calc(50vh - 10px);
+}
+
     </style>
 </head>
 <body>
