@@ -33,29 +33,22 @@
             flex: 1; 
             min-width: 50%; 
             margin-top: 0;
-            margin-bottom: 0;     /* Elimina el margen inferior */
-            padding-bottom: 0;    /* Elimina el padding inferior por si acaso */
+            margin-bottom: 0;     
+            padding-bottom: 0;    
         }
 
+          
     
-       
-        /* ------------------------------------------------ */
-        /* ESTILOS ESPECÍFICOS PARA EL CONTENIDO DUAL (ESCRITORIO vs MÓVIL) */
-        /* ------------------------------------------------ */
-
-        /* OCULTAR la versión MÓVIL por defecto (se activa en la media query) */
         .about-column-mobile, .about-text-mobile {
             display: none; 
         }
 
-        /* MOSTRAR la versión ESCRITORIO por defecto */
+       
         .about-column-desktop {
             display: block; 
         }
 
-        /* ------------------------------------------------ */
-        /* ESTILOS DE COLUMNA DERECHA (Right Column) */
-        /* ------------------------------------------------ */
+        
 
         .right-column {
             flex: 1; 
@@ -107,58 +100,58 @@
     bottom: 0;
     left: 0;
     right: 0;
-    width: 100%; /* Asegura que ocupe todo el ancho */
-    z-index: 1000; /* Asegura que esté encima de otros elementos */
-    line-height: 1.5; /* Ajusta este valor si quieres que el texto esté más compacto */
+    width: 100%; 
+    z-index: 1000; 
+    line-height: 1.5; 
 
 }
         @media (max-width: 750px) {
             
             body {
                 font-size: 14px;
-                overflow: auto; /* Permitir scroll vertical en móvil */
+                overflow: auto;
             }
 
             .two-column-layout {
-                flex-direction: column; /* Apila las columnas */
+                flex-direction: column; 
             }
 
             .about-column {
                 min-width: 100%; 
             }
 
-            /* CAMBIO CLAVE DE VISIBILIDAD */
+            
             .about-column-desktop {
-                display: none; /* OCULTA la versión de ESCRITORIO en móvil */
+                display: none; 
             }
             
             .about-column-mobile, .about-text-mobile {
-                display: block; /* MUESTRA la versión de MÓVIL */
+                display: block; 
             }
 
-            /* Estilos CLAVE para el arte ASCII de MÓVIL (para que quepa) */
+           
             .about-column-mobile {
                 font-size: 8px !important; 
                 margin: 0;
                 padding: 0;
-                overflow-x: auto; /* Permite scroll solo en el ASCII si es necesario */
+                overflow-x: auto; 
                 width: 100%;
                 box-sizing: border-box;
             }
             
-            /* Estilos para el texto descriptivo de MÓVIL (para que sea legible) */
+         
             .about-text-mobile p {
                 font-size: 13px;
                 margin-top: 5px; 
             }
 
             .right-column {
-                padding-left: 0; /* Elimina el padding de escritorio */
-                text-align: left; /* Alineación a la izquierda en móvil */
+                padding-left: 0; 
+                text-align: left; 
                 margin-top: 20px;
             }
 
-            /* Asegura que los elementos en la columna derecha se alineen a la izquierda */
+           
             .right-column h2,
             .right-column ul,
             .right-column p {
@@ -334,7 +327,7 @@
 <marquee id="texto-marquee"> ᕦ(òᴥó)ᕥ LAUS ORO - TRABAJO LIBRE ESTUDIANTE - AUDIOVISUAL - “Primavera - Fun Train” // LAUS PLATA - TRABAJO LIBRE ESTUDIANTE - AUDIOVISUAL - “Friday the 13th” // ISABEL COIXET’S FASHIONERS OF THE WORLD - BEST FASHION FILM AWARD (2023) - “No Land to Call Our Own” // LCI FASHION FILM FESTIVAL 2023 OFFICIAL SELECTION - “Amenoia”</marquee>
 
 <video loop muted id="fullscreen-video" playsinline>
-    <source src="https://attachments.are.na/41989248/50c87f59dbc90fef9dfe173914bee00a.mp4?1766431480" type="video/mp4">
+    <source src="assets/50c87f59dbc90fef9dfe173914bee00a.mp4" type="video/mp4">
 </video>
 
 <script>
